@@ -356,6 +356,7 @@ input, textarea, select {
   height: 38px;
   border-radius: 50%;
   object-fit: cover;
+  object-position: center 20%;
   border: 2px solid var(--accent-gold);
 }
 
@@ -558,7 +559,7 @@ input, textarea, select {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top center;
+  object-position: center 22%;
   transition: transform 0.5s ease;
 }
 
@@ -2574,18 +2575,24 @@ input, textarea, select {
 
 .contact-image-wrapper {
   position: relative;
-  height: 250px;
+  height: clamp(260px, 30vw, 320px);
   border-radius: var(--radius-lg);
   overflow: hidden;
   border: 1px solid var(--border-card);
   max-width: 100%;
+  box-shadow: var(--shadow-md);
 }
 
 .contact-card-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top center;
+  object-position: center center;
+  transition: transform 0.5s ease;
+}
+
+.contact-image-wrapper:hover .contact-card-img {
+  transform: scale(1.02);
 }
 
 .contact-img-badge {
@@ -2602,6 +2609,8 @@ input, textarea, select {
   display: flex;
   align-items: center;
   gap: 0.45rem;
+  border: 1px solid var(--border-card);
+  z-index: 2;
 }
 
 .contact-cards-stack {
