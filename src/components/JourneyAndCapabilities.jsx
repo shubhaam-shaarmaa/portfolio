@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CareerJourney from './CareerJourney';
 import Skills from './Skills';
 import EngineeringFoundation from './EngineeringFoundation';
@@ -8,6 +8,25 @@ import Certifications from './Certifications';
 
 export default function JourneyAndCapabilities() {
   const [activeTab, setActiveTab] = useState('progression'); // 'progression' | 'skills' | 'engineering-ai' | 'credentials'
+
+  useEffect(() => {
+    const handleHash = () => {
+      const hash = window.location.hash;
+      if (hash === '#skills' || hash === '#capabilities') {
+        setActiveTab('skills');
+      } else if (hash === '#engineering' || hash === '#ai-journey') {
+        setActiveTab('engineering-ai');
+      } else if (hash === '#identity' || hash === '#certifications') {
+        setActiveTab('credentials');
+      } else if (hash === '#journey' || hash === '#progression') {
+        setActiveTab('progression');
+      }
+    };
+
+    handleHash();
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
+  }, []);
 
   const tabs = [
     {

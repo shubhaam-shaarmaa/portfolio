@@ -304,6 +304,26 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       fireEvent.keyDown(window, { key: 'Escape' });
       expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
     });
+
+    test('renders friendly empty state when no initiatives match filter combination and resets cleanly', () => {
+      render(<FeaturedWork />);
+
+      // Filter by Completed
+      const completedFilterBtn = screen.getByRole('button', { name: /Completed \(/i });
+      fireEvent.click(completedFilterBtn);
+
+      // Filter by AI & GenAI (AI projects are currently IN PROGRESS, so 0 matches)
+      const aiPill = screen.getByRole('button', { name: 'AI & GenAI' });
+      fireEvent.click(aiPill);
+
+      expect(screen.getByText(/No initiatives match the selected combination/i)).toBeInTheDocument();
+
+      // Click Reset All Filters
+      const resetBtn = screen.getByRole('button', { name: /Reset All Filters/i });
+      fireEvent.click(resetBtn);
+
+      expect(screen.getByText(/Institutional Trade Lifecycle & Exception Resolver/i)).toBeInTheDocument();
+    });
   });
 
   // =========================================================================
@@ -386,6 +406,12 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
 
       expect(screen.getByText(/Resolved: 3 \/ 3/i)).toBeInTheDocument();
       expect(screen.getByText(/All breaks resolved!/i)).toBeInTheDocument();
+
+      // Click Reset Simulator
+      const resetBtn = screen.getByRole('button', { name: /Reset/i });
+      fireEvent.click(resetBtn);
+
+      expect(screen.getByText(/Resolved: 0 \/ 3/i)).toBeInTheDocument();
     });
   });
 
@@ -664,6 +690,17 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       expect(screen.getByText(/Institutional Trade Lifecycle & Exception Resolver/i)).toBeInTheDocument();
       expect(screen.getByText(/BFSI Document Research Assistant/i)).toBeInTheDocument();
     });
+
+    test('switches tab when window hash changes to #projects', () => {
+      render(<SelectedWork />);
+
+      act(() => {
+        window.location.hash = '#projects';
+        window.dispatchEvent(new Event('hashchange'));
+      });
+
+      expect(screen.getByText(/Institutional Trade Lifecycle & Exception Resolver/i)).toBeInTheDocument();
+    });
   });
 
   // =========================================================================
@@ -696,6 +733,24 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       fireEvent.click(credTab);
       expect(screen.getByRole('heading', { name: /TECHNO-FUNCTIONAL SOLUTIONS/i })).toBeInTheDocument();
       expect(screen.getByText(/Infosys Certified Business Consultant/i)).toBeInTheDocument();
+    });
+
+    test('switches tab when window hash changes to #engineering or #skills', () => {
+      render(<JourneyAndCapabilities />);
+
+      act(() => {
+        window.location.hash = '#engineering';
+        window.dispatchEvent(new Event('hashchange'));
+      });
+
+      expect(screen.getByText(/Frontend Architecture & UI/i)).toBeInTheDocument();
+
+      act(() => {
+        window.location.hash = '#skills';
+        window.dispatchEvent(new Event('hashchange'));
+      });
+
+      expect(screen.getByText('User Stories')).toBeInTheDocument();
     });
   });
 

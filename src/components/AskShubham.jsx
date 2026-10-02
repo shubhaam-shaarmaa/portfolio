@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 
 export const ASK_ITEMS = [
   {
@@ -11,19 +11,19 @@ export const ASK_ITEMS = [
     id: 'capital-markets',
     q: "What's your Capital Markets & Middle-Office experience?",
     a: '4+ years at Infosys supporting a US investment management client. Hands-on with the 7-stage trade lifecycle, pre-settlement constraint validation, SSI break triage, and T+1 DTCC cut-off windows.',
-    link: { label: 'Inspect Trade Lifecycle Case Study', href: '#work' }
+    link: { label: 'Inspect Trade Lifecycle Case Study', href: '#case-studies' }
   },
   {
     id: 'tech-ba',
     q: 'How does your engineering background help you as a BA?',
     a: 'I write SQL data verification queries, map JSON REST API schemas, audit database tables, and run JAD sessions speaking fluent engineer language. Zero translation loss between business desks and dev squads.',
-    link: { label: 'View Engineering Foundation', href: '#journey' }
+    link: { label: 'View Engineering Foundation', href: '#engineering' }
   },
   {
     id: 'ai-roadmap',
     q: 'What are you building in AI & GenAI?',
     a: 'Building toward production AI systems: BFSI document research RAG assistants, middle-office trade exception triage agents with MCP tools, and LLM evaluation benchmarks.',
-    link: { label: 'Explore AI Roadmap', href: '#journey' }
+    link: { label: 'Explore AI Roadmap', href: '#ai-journey' }
   },
   {
     id: 'career',
@@ -35,7 +35,7 @@ export const ASK_ITEMS = [
     id: 'specs',
     q: 'Can I inspect a real work sample or spec artifact?',
     a: 'Yes — you can inspect full Gherkin user stories, middle-office SQL exception scripts, and JSON API schemas right in the selected work section.',
-    link: { label: 'Inspect Spec Artifacts', href: '#work' }
+    link: { label: 'Inspect Spec Artifacts', href: '#projects' }
   }
 ];
 
@@ -48,6 +48,29 @@ export default function AskShubham() {
   ]);
   const [askedIds, setAskedIds] = useState(new Set());
   const [isTyping, setIsTyping] = useState(false);
+  const terminalRef = useRef(null);
+  const timerRef = useRef(null);
+
+  // Auto-scroll terminal when a new message or typing state changes
+  useEffect(() => {
+    if (terminalRef.current) {
+      if (typeof terminalRef.current.scrollTo === 'function') {
+        terminalRef.current.scrollTo({
+          top: terminalRef.current.scrollHeight,
+          behavior: 'smooth'
+        });
+      } else {
+        terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
+      }
+    }
+  }, [thread, isTyping]);
+
+  // Clean up any pending timer on unmount
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
 
   const remainingItems = ASK_ITEMS.filter((item) => !askedIds.has(item.id));
 
@@ -59,7 +82,8 @@ export default function AskShubham() {
     setAskedIds((prev) => new Set([...prev, item.id]));
     setIsTyping(true);
 
-    setTimeout(() => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => {
       setThread((prev) => [
         ...prev,
         {
@@ -73,6 +97,8 @@ export default function AskShubham() {
   };
 
   const handleShowAll = () => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    setIsTyping(false);
     setThread([
       {
         type: 'bot',
@@ -89,6 +115,8 @@ export default function AskShubham() {
   };
 
   const handleReset = () => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    setIsTyping(false);
     setThread([
       {
         type: 'bot',
@@ -174,7 +202,7 @@ export default function AskShubham() {
 
             {/* Right Chat Terminal Output */}
             <div className="ask-terminal-col">
-              <div className="terminal-screen" role="log" aria-live="polite">
+              <div ref={terminalRef} className="terminal-screen" role="log" aria-live="polite">
                 {thread.map((msg, idx) => (
                   <div key={idx} className={`terminal-msg msg-${msg.type}`}>
                     {msg.title && (

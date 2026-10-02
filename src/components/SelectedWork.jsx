@@ -1,9 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CapitalMarketsCaseStudies from './CapitalMarketsCaseStudies';
 import FeaturedWork from './FeaturedWork';
 
 export default function SelectedWork() {
   const [activeWorkTab, setActiveWorkTab] = useState('case-study'); // 'case-study' | 'all-initiatives'
+
+  useEffect(() => {
+    const handleHash = () => {
+      const hash = window.location.hash;
+      if (hash === '#projects') {
+        setActiveWorkTab('all-initiatives');
+      } else if (hash === '#case-studies') {
+        setActiveWorkTab('case-study');
+      }
+    };
+
+    handleHash();
+    window.addEventListener('hashchange', handleHash);
+    return () => window.removeEventListener('hashchange', handleHash);
+  }, []);
 
   return (
     <section id="work" className="work-unified-section">

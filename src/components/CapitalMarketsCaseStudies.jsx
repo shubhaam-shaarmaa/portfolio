@@ -368,6 +368,16 @@ export default function CapitalMarketsCaseStudies({ isEmbedded = false }) {
                   <i className="fa-solid fa-check-double"></i> All breaks resolved!
                 </span>
               )}
+              {resolvedExceptions.length > 0 && (
+                <button
+                  type="button"
+                  className="triage-reset-btn"
+                  onClick={() => setResolvedExceptions([])}
+                  title="Reset triage queue"
+                >
+                  <i className="fa-solid fa-rotate-left"></i> Reset
+                </button>
+              )}
             </div>
           </div>
 

@@ -93,14 +93,31 @@ export default function FeaturedWork({ isEmbedded = false }) {
         </div>
 
         {/* Structured Projects Grid */}
-        <div className="projects-grid mt-3">
-          {filteredProjects.map((proj) => {
-            const statusClass =
-              proj.status === 'COMPLETED' ? 'badge-completed' :
-              proj.status === 'IN PROGRESS' ? 'badge-in-progress' : 'badge-planned';
+        {filteredProjects.length === 0 ? (
+          <div className="empty-projects-state">
+            <i className="fa-solid fa-filter-circle-xmark text-dim"></i>
+            <h4>No initiatives match the selected combination.</h4>
+            <p>Try resetting the status or focus area filters to view all work.</p>
+            <button
+              type="button"
+              className="btn btn-secondary btn-sm"
+              onClick={() => {
+                setSelectedFilter('ALL');
+                setDomainFilter('ALL');
+              }}
+            >
+              <i className="fa-solid fa-rotate-left"></i> Reset All Filters
+            </button>
+          </div>
+        ) : (
+          <div className="projects-grid mt-3">
+            {filteredProjects.map((proj) => {
+              const statusClass =
+                proj.status === 'COMPLETED' ? 'badge-completed' :
+                proj.status === 'IN PROGRESS' ? 'badge-in-progress' : 'badge-planned';
 
-            return (
-              <div key={proj.id} className="project-card">
+              return (
+                <div key={proj.id} className="project-card">
                 {/* Header */}
                 <div className="project-card-header">
                   <div className="project-header-top">
@@ -211,6 +228,7 @@ export default function FeaturedWork({ isEmbedded = false }) {
             );
           })}
         </div>
+      )}
 
         {/* Modal: Interactive Deliverable Inspection */}
         {activeModalProject && activeModalProject.specPreview && (

@@ -3808,6 +3808,7 @@ input, textarea, select {
   .profile-portrait-img {
     max-height: 280px;
     object-fit: cover;
+    object-position: top center;
   }
 
   .executive-card-body {
@@ -4417,4 +4418,60 @@ input, textarea, select {
     padding: 1rem;
   }
 }
+
+/* Empty Filter State for Featured Work */
+.empty-projects-state {
+  text-align: center;
+  padding: 3.5rem 1.5rem;
+  background: var(--bg-card);
+  border: 1px dashed var(--border-card);
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+
+.empty-projects-state i {
+  font-size: 2.25rem;
+  color: var(--text-dim);
+  margin-bottom: 0.25rem;
+}
+
+.empty-projects-state h4 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.empty-projects-state p {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  max-width: 480px;
+}
+
+/* Exception Triage Reset Button */
+.triage-reset-btn {
+  background: transparent;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  color: var(--accent-gold);
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  transition: var(--transition);
+}
+
+.triage-reset-btn:hover {
+  background: var(--accent-gold-dim);
+  border-color: var(--accent-gold);
+}
+
 

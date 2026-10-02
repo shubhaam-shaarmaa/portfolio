@@ -31,6 +31,16 @@ export default function App() {
 
       const scrollPos = window.scrollY + 250;
 
+      // Ensure contact is highlighted if user reaches the bottom of the page
+      if (
+        typeof document !== 'undefined' &&
+        document.documentElement &&
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 60
+      ) {
+        setActiveSection('contact');
+        return;
+      }
+
       for (let sec of sectionIds) {
         const el = document.getElementById(sec);
         if (el) {
