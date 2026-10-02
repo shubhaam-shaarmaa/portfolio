@@ -1,9 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FEATURED_PROJECTS } from '../data/projectsData';
 
 export default function FeaturedWork() {
   const [activeModalProject, setActiveModalProject] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState('ALL');
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        setActiveModalProject(null);
+      }
+    };
+
+    if (activeModalProject) {
+      window.addEventListener('keydown', handleKeyDown);
+    }
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [activeModalProject]);
 
   const filteredProjects = selectedFilter === 'ALL'
     ? FEATURED_PROJECTS
@@ -150,15 +163,21 @@ export default function FeaturedWork() {
 
         {/* Modal: Interactive Deliverable Inspection */}
         {activeModalProject && activeModalProject.specPreview && (
-          <div className="modal-backdrop" onClick={() => setActiveModalProject(null)}>
-            <div className="modal-card" onClick={(e) => e.stopPropagation()}>
+          <div className="modal-backdrop" onClick={() => setActiveModalProject(null)} role="presentation">
+            <div
+              className="modal-card"
+              onClick={(e) => e.stopPropagation()}
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="modal-project-title"
+            >
               <div className="modal-header">
                 <div>
                   <div className="modal-top-meta">
                     <span className="project-category">{activeModalProject.category}</span>
                     <span className="modal-status-tag">{activeModalProject.status}</span>
                   </div>
-                  <h3 className="modal-title">{activeModalProject.title}</h3>
+                  <h3 id="modal-project-title" className="modal-title">{activeModalProject.title}</h3>
                   <span className="modal-sub">{activeModalProject.projectType}</span>
                 </div>
                 <button

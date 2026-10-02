@@ -331,6 +331,11 @@ export default function CapitalMarketsCaseStudies() {
             </div>
             <div className="desk-stats">
               <span>Resolved: {resolvedExceptions.length} / {exceptionsList.length}</span>
+              {resolvedExceptions.length === exceptionsList.length && (
+                <span className="desk-all-resolved text-emerald text-xs">
+                  <i className="fa-solid fa-check-double"></i> All breaks resolved!
+                </span>
+              )}
             </div>
           </div>
 

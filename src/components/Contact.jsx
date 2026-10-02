@@ -12,14 +12,31 @@ export default function Contact({ triggerToast }) {
 
     setTimeout(() => {
       setIsSubmitting(false);
-      triggerToast(`Thank you, ${formData.name || 'there'}! Your message has been sent successfully.`);
+      if (typeof triggerToast === 'function') {
+        triggerToast(`Thank you, ${formData.name || 'there'}! Your message has been sent successfully.`);
+      }
       setFormData({ name: '', email: '', subject: '', message: '' });
     }, 1000);
   };
 
   const copyEmail = () => {
-    navigator.clipboard.writeText(PERSONAL_INFO.email);
-    triggerToast(`Email copied to clipboard: ${PERSONAL_INFO.email}`);
+    if (navigator && navigator.clipboard && typeof navigator.clipboard.writeText === 'function') {
+      navigator.clipboard.writeText(PERSONAL_INFO.email)
+        .then(() => {
+          if (typeof triggerToast === 'function') {
+            triggerToast(`Email copied to clipboard: ${PERSONAL_INFO.email}`);
+          }
+        })
+        .catch(() => {
+          if (typeof triggerToast === 'function') {
+            triggerToast(`Email: ${PERSONAL_INFO.email}`);
+          }
+        });
+    } else {
+      if (typeof triggerToast === 'function') {
+        triggerToast(`Email: ${PERSONAL_INFO.email}`);
+      }
+    }
   };
 
   return (

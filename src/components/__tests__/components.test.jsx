@@ -1,6 +1,9 @@
 import React from 'react';
-import { describe, test, expect } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { describe, test, expect, vi, beforeEach } from 'vitest';
+import { render, screen, fireEvent, act } from '@testing-library/react';
+
+// Components under test
+import Navbar from '../Navbar';
 import Hero from '../Hero';
 import ProfessionalIdentity from '../ProfessionalIdentity';
 import CareerJourney from '../CareerJourney';
@@ -8,80 +11,452 @@ import Skills from '../Skills';
 import FeaturedWork from '../FeaturedWork';
 import CapitalMarketsCaseStudies from '../CapitalMarketsCaseStudies';
 import AiJourney from '../AiJourney';
+import EngineeringFoundation from '../EngineeringFoundation';
+import Certifications from '../Certifications';
+import ResumeCta from '../ResumeCta';
+import Contact from '../Contact';
+import Footer from '../Footer';
+import BackToTop from '../BackToTop';
+import App from '../../App';
 
-describe('Techno-Functional Portfolio Component Suite', () => {
+describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
 
-  // Test 1: Hero
-  test('Hero renders primary techno-functional positioning and truthful credentials', () => {
-    render(<Hero />);
-    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/TECHNO-FUNCTIONAL/i);
-    expect(screen.getAllByText(/Senior Associate Consultant — Infosys/i).length).toBeGreaterThan(0);
-    expect(screen.getByText(/US Investment Mgmt Exposure/i)).toBeInTheDocument();
-    expect(screen.getByText(/Enterprise Experience/i)).toBeInTheDocument();
+  beforeEach(() => {
+    vi.clearAllMocks();
+    vi.useRealTimers();
   });
 
-  // Test 2: Professional Identity
-  test('ProfessionalIdentity renders 3-part intersection and emerging AI pillar', () => {
-    render(<ProfessionalIdentity />);
-    expect(screen.getByText(/Business × Technology ×/i)).toBeInTheDocument();
-    expect(screen.getByText(/TECHNO-FUNCTIONAL SOLUTIONS/i)).toBeInTheDocument();
-    expect(screen.getByText(/EMERGING CAPABILITY/i)).toBeInTheDocument();
+  // =========================================================================
+  // 1. NAVBAR COMPONENT
+  // =========================================================================
+  describe('Navbar Component', () => {
+    test('renders brand logo, avatar, and navigation links', () => {
+      render(<Navbar scrolled={false} activeSection="hero" />);
+      
+      expect(screen.getByText(/Shubham Sharma/i)).toBeInTheDocument();
+      expect(screen.getByText(/Techno-Functional BA/i)).toBeInTheDocument();
+      expect(screen.getByAltText('Shubham Sharma')).toBeInTheDocument();
+      
+      const links = ['Home', 'About', 'Journey', 'Capabilities', 'Case Studies', 'Projects', 'AI Journey', 'Engineering', 'Contact'];
+      links.forEach((linkText) => {
+        expect(screen.getByRole('link', { name: linkText })).toBeInTheDocument();
+      });
+
+      expect(screen.getByRole('link', { name: /Resume/i })).toHaveAttribute('download', 'Shubham_Sharma_Resume.pdf');
+    });
+
+    test('toggles mobile menu and closes when a link is clicked', () => {
+      render(<Navbar scrolled={false} activeSection="hero" />);
+      
+      const toggleBtn = screen.getByRole('button', { name: /navigation menu/i });
+      expect(toggleBtn).toBeInTheDocument();
+
+      // Open mobile menu
+      fireEvent.click(toggleBtn);
+      const navLinksContainer = screen.getByRole('link', { name: 'Home' }).parentElement;
+      expect(navLinksContainer).toHaveClass('active');
+
+      // Click a link to close mobile menu
+      fireEvent.click(screen.getByRole('link', { name: 'Projects' }));
+      expect(navLinksContainer).not.toHaveClass('active');
+    });
+
+    test('applies scrolled class when scrolled prop is true', () => {
+      const { container } = render(<Navbar scrolled={true} activeSection="hero" />);
+      expect(container.querySelector('.navbar')).toHaveClass('scrolled');
+    });
   });
 
-  // Test 3: Career Journey
-  test('CareerJourney renders 5-stage progressive career evolution', () => {
-    render(<CareerJourney />);
-    expect(screen.getByText(/SYSTEMS ENGINEER TRAINEE/i)).toBeInTheDocument();
-    expect(screen.getByText(/SENIOR ASSOCIATE CONSULTANT/i)).toBeInTheDocument();
-    expect(screen.getByText(/The Core Career Narrative:/i)).toBeInTheDocument();
+  // =========================================================================
+  // 2. HERO COMPONENT
+  // =========================================================================
+  describe('Hero Component', () => {
+    test('renders primary headline, supporting quote, and truthful metrics', () => {
+      render(<Hero />);
+      
+      // Headline
+      expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/TECHNO-FUNCTIONAL/i);
+      expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/BUSINESS ANALYST/i);
+
+      // Subheadline tags
+      expect(screen.getByText(/Capital Markets & Asset Management/i)).toBeInTheDocument();
+      expect(screen.getAllByText(/AI & GenAI/i).length).toBeGreaterThan(0);
+      expect(screen.getByText(/Product & Technology/i)).toBeInTheDocument();
+
+      // Credibility metrics
+      expect(screen.getByText(/4\+ Years/i)).toBeInTheDocument();
+      expect(screen.getByText(/Enterprise Experience/i)).toBeInTheDocument();
+      expect(screen.getByText(/US Investment Mgmt Exposure/i)).toBeInTheDocument();
+
+      // CTAs
+      expect(screen.getByRole('link', { name: /View My Work/i })).toHaveAttribute('href', '#projects');
+      expect(screen.getByRole('link', { name: /LinkedIn Profile/i })).toBeInTheDocument();
+      expect(screen.getByRole('link', { name: /GitHub Profile/i })).toBeInTheDocument();
+      expect(screen.getByRole('link', { name: /Download Resume/i })).toBeInTheDocument();
+    });
   });
 
-  // Test 4: Core Capabilities
-  test('Skills component renders 4 distinct capability areas and partitions AI into Current vs Building', () => {
-    render(<Skills />);
-    expect(screen.getByRole('heading', { name: /BUSINESS ANALYSIS/i })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /CAPITAL MARKETS/i })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /TECHNOLOGY/i })).toBeInTheDocument();
-    expect(screen.getByRole('heading', { name: /AI & GENAI/i })).toBeInTheDocument();
-    expect(screen.getByText(/CURRENT CAPABILITIES \(IN PRACTICE\):/i)).toBeInTheDocument();
-    expect(screen.getByText(/BUILDING TOWARD \(ACTIVE ROADMAP\):/i)).toBeInTheDocument();
+  // =========================================================================
+  // 3. PROFESSIONAL IDENTITY COMPONENT
+  // =========================================================================
+  describe('ProfessionalIdentity Component', () => {
+    test('renders 3-part intersection, centerpiece, and emerging AI pillar', () => {
+      render(<ProfessionalIdentity />);
+      
+      // 3 pillars
+      expect(screen.getByRole('heading', { level: 3, name: /BUSINESS ANALYSIS/i })).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 3, name: /CAPITAL MARKETS/i })).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 3, name: /TECHNOLOGY/i })).toBeInTheDocument();
+
+      // Centerpiece
+      expect(screen.getByRole('heading', { name: /TECHNO-FUNCTIONAL SOLUTIONS/i })).toBeInTheDocument();
+      
+      // Emerging 4th pillar
+      expect(screen.getByText(/EMERGING CAPABILITY/i)).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 4, name: /AI & GENAI/i })).toBeInTheDocument();
+
+      // Narrative & competency chips
+      expect(screen.getByText(/Narrative Summary/i)).toBeInTheDocument();
+      expect(screen.getByText(/Core Functional Competencies/i)).toBeInTheDocument();
+      expect(screen.getByText(/Requirements analysis & JAD workshops/i)).toBeInTheDocument();
+    });
   });
 
-  // Test 5: Featured Work & Spec Modal
-  test('FeaturedWork renders project cards and opens deliverable spec modal', () => {
-    render(<FeaturedWork />);
-    expect(screen.getByText(/Institutional Trade Lifecycle & Exception Resolver/i)).toBeInTheDocument();
-    
-    // Open spec modal
-    const inspectBtn = screen.getAllByRole('button', { name: /Inspect Spec Artifact/i })[0];
-    fireEvent.click(inspectBtn);
+  // =========================================================================
+  // 4. CAREER JOURNEY COMPONENT
+  // =========================================================================
+  describe('CareerJourney Component', () => {
+    test('renders 5-stage progressive timeline from Trainee to Senior Associate Consultant', () => {
+      render(<CareerJourney />);
+      
+      // Core narrative quote
+      expect(screen.getByText(/The Core Career Narrative:/i)).toBeInTheDocument();
 
-    expect(screen.getByText(/Specification Context:/i)).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /Close Artifact/i })).toBeInTheDocument();
+      // Stage 1
+      expect(screen.getByRole('heading', { name: /^SYSTEMS ENGINEER TRAINEE$/i })).toBeInTheDocument();
+      expect(screen.getAllByText('2022').length).toBeGreaterThan(0);
+
+      // Stage 2
+      expect(screen.getByRole('heading', { name: /^SYSTEMS ENGINEER$/i })).toBeInTheDocument();
+      expect(screen.getAllByText('2022–2024').length).toBeGreaterThan(0);
+
+      // Stage 3
+      expect(screen.getByRole('heading', { name: /^SENIOR SYSTEMS ENGINEER$/i })).toBeInTheDocument();
+      expect(screen.getAllByText('2024–2025').length).toBeGreaterThan(0);
+
+      // Stage 4
+      expect(screen.getByRole('heading', { name: /^ASSOCIATE CONSULTANT$/i })).toBeInTheDocument();
+      expect(screen.getAllByText('2025–2026').length).toBeGreaterThan(0);
+
+      // Stage 5
+      expect(screen.getByRole('heading', { name: /^SENIOR ASSOCIATE CONSULTANT$/i })).toBeInTheDocument();
+      expect(screen.getAllByText('2026–PRESENT').length).toBeGreaterThan(0);
+    });
   });
 
-  // Test 6: Capital Markets Case Studies & 7-Stage Lifecycle
-  test('CapitalMarketsCaseStudies renders 7 stages and toggles active stage and resolves exception', () => {
-    render(<CapitalMarketsCaseStudies />);
-    expect(screen.getByText(/7-Stage End-to-End Trade Lifecycle Flow:/i)).toBeInTheDocument();
-    
-    // Switch to Settlement stage by clicking the label text
-    const settlementLabel = screen.getByText('Settlement (T+1)');
-    fireEvent.click(settlementLabel);
-    expect(screen.getByText(/Stage 05 of 07/i)).toBeInTheDocument();
+  // =========================================================================
+  // 5. SKILLS / CORE CAPABILITIES COMPONENT
+  // =========================================================================
+  describe('Skills Component', () => {
+    test('renders 4 capability areas and strictly partitions AI into Current vs Building', () => {
+      render(<Skills />);
+      
+      expect(screen.getByRole('heading', { name: /BUSINESS ANALYSIS/i })).toBeInTheDocument();
+      expect(screen.getByRole('heading', { name: /CAPITAL MARKETS/i })).toBeInTheDocument();
+      expect(screen.getByRole('heading', { name: /TECHNOLOGY/i })).toBeInTheDocument();
+      expect(screen.getByRole('heading', { name: /AI & GENAI/i })).toBeInTheDocument();
 
-    // Test Exception Resolver
-    const triageBtns = screen.getAllByRole('button', { name: /Execute Triage/i });
-    fireEvent.click(triageBtns[0]);
-    expect(screen.getByText(/Resolved: 1 \/ 3/i)).toBeInTheDocument();
+      // AI partitioning
+      expect(screen.getByText(/CURRENT CAPABILITIES \(IN PRACTICE\):/i)).toBeInTheDocument();
+      expect(screen.getByText(/BUILDING TOWARD \(ACTIVE ROADMAP\):/i)).toBeInTheDocument();
+
+      // Check specific skills
+      expect(screen.getByText('User Stories')).toBeInTheDocument();
+      expect(screen.getByText('Trade Lifecycle')).toBeInTheDocument();
+      expect(screen.getByText('SQL')).toBeInTheDocument();
+      expect(screen.getByText('Gemini')).toBeInTheDocument();
+      expect(screen.getByText('RAG Pipelines')).toBeInTheDocument();
+    });
   });
 
-  // Test 7: AI Journey
-  test('AiJourney renders 8-project roadmap and evolving architecture', () => {
-    render(<AiJourney />);
-    expect(screen.getByText(/Building Toward Production AI Systems/i)).toBeInTheDocument();
-    expect(screen.getAllByText(/BFSI Research Assistant/i).length).toBeGreaterThan(0);
-    expect(screen.getByText(/AI Architecture — Building Progressively/i)).toBeInTheDocument();
+  // =========================================================================
+  // 6. FEATURED WORK COMPONENT
+  // =========================================================================
+  describe('FeaturedWork Component', () => {
+    test('renders project cards and filters projects by status', () => {
+      render(<FeaturedWork />);
+      
+      expect(screen.getByText(/All Initiatives/i)).toBeInTheDocument();
+      
+      // Filter by Completed
+      const completedFilterBtn = screen.getByRole('button', { name: /Completed \(/i });
+      fireEvent.click(completedFilterBtn);
+      expect(screen.getByText(/Institutional Trade Lifecycle & Exception Resolver/i)).toBeInTheDocument();
+
+      // Filter by In Progress
+      const inProgressFilterBtn = screen.getByRole('button', { name: /In Progress \(/i });
+      fireEvent.click(inProgressFilterBtn);
+      expect(screen.getByText(/BFSI Document Research Assistant/i)).toBeInTheDocument();
+
+      // Filter by Planned
+      const plannedFilterBtn = screen.getByRole('button', { name: /Planned \(/i });
+      fireEvent.click(plannedFilterBtn);
+      expect(screen.getByText(/Banking & FinTech Stateful Support Agent/i)).toBeInTheDocument();
+    });
+
+    test('opens deliverable spec modal, verifies accessibility dialog, and closes via close button and Escape key', () => {
+      render(<FeaturedWork />);
+      
+      // Open modal
+      const inspectBtns = screen.getAllByRole('button', { name: /Inspect Spec Artifact/i });
+      fireEvent.click(inspectBtns[0]);
+
+      // Check modal attributes and content
+      const dialog = screen.getByRole('dialog');
+      expect(dialog).toBeInTheDocument();
+      expect(dialog).toHaveAttribute('aria-modal', 'true');
+      expect(screen.getByText(/Specification Context:/i)).toBeInTheDocument();
+
+      // Close via close button
+      const closeBtn = screen.getByRole('button', { name: /Close Artifact/i });
+      fireEvent.click(closeBtn);
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+
+      // Reopen and close via Escape key
+      fireEvent.click(inspectBtns[0]);
+      expect(screen.getByRole('dialog')).toBeInTheDocument();
+      fireEvent.keyDown(window, { key: 'Escape' });
+      expect(screen.queryByRole('dialog')).not.toBeInTheDocument();
+    });
+  });
+
+  // =========================================================================
+  // 7. CAPITAL MARKETS CASE STUDIES COMPONENT
+  // =========================================================================
+  describe('CapitalMarketsCaseStudies Component', () => {
+    test('renders 7-stage Trade Lifecycle and allows stage inspection', () => {
+      render(<CapitalMarketsCaseStudies />);
+      
+      expect(screen.getByText(/7-Stage End-to-End Trade Lifecycle Flow:/i)).toBeInTheDocument();
+
+      // Default stage is 01
+      expect(screen.getByText(/Stage 01 of 07/i)).toBeInTheDocument();
+
+      // Click Stage 05 Settlement
+      const settlementStep = screen.getByText('Settlement (T+1)');
+      fireEvent.click(settlementStep);
+      expect(screen.getByText(/Stage 05 of 07/i)).toBeInTheDocument();
+      expect(screen.getByText(/Responsible Desk:/i)).toBeInTheDocument();
+    });
+
+    test('switches across all 4 case study tabs', () => {
+      render(<CapitalMarketsCaseStudies />);
+      
+      // Tab 1: As-Is vs To-Be
+      expect(screen.getByText(/The Business Problem/i)).toBeInTheDocument();
+
+      // Tab 2: Requirements & User Stories
+      const reqTabBtn = screen.getByRole('button', { name: /Requirements & User Stories/i });
+      fireEvent.click(reqTabBtn);
+      expect(screen.getByText(/Core Functional Requirements/i)).toBeInTheDocument();
+      expect(screen.getAllByText(/Acceptance Criteria \(Given-When-Then\):/i).length).toBeGreaterThan(0);
+
+      // Tab 3: Data Model & API
+      const dataTabBtn = screen.getByRole('button', { name: /Data Model & API Architecture/i });
+      fireEvent.click(dataTabBtn);
+      expect(screen.getByText(/Key Data Requirements & Schemas/i)).toBeInTheDocument();
+
+      // Tab 4: UAT Scenarios & Business Impact
+      const uatTabBtn = screen.getByRole('button', { name: /UAT Scenarios & Business Impact/i });
+      fireEvent.click(uatTabBtn);
+      expect(screen.getByText(/UAT Scenarios & Validation Criteria/i)).toBeInTheDocument();
+    });
+
+    test('operates exception triage simulator and tracks resolution status', () => {
+      render(<CapitalMarketsCaseStudies />);
+      
+      expect(screen.getByText(/Resolved: 0 \/ 3/i)).toBeInTheDocument();
+
+      // Resolve 1st exception
+      const triageBtns = screen.getAllByRole('button', { name: /Execute Triage/i });
+      fireEvent.click(triageBtns[0]);
+      expect(screen.getByText(/Resolved: 1 \/ 3/i)).toBeInTheDocument();
+
+      // Resolve remaining 2 exceptions
+      const remainingTriageBtns = screen.getAllByRole('button', { name: /Execute Triage/i });
+      fireEvent.click(remainingTriageBtns[0]);
+      fireEvent.click(remainingTriageBtns[1]);
+
+      expect(screen.getByText(/Resolved: 3 \/ 3/i)).toBeInTheDocument();
+      expect(screen.getByText(/All breaks resolved!/i)).toBeInTheDocument();
+    });
+  });
+
+  // =========================================================================
+  // 8. AI JOURNEY COMPONENT
+  // =========================================================================
+  describe('AiJourney Component', () => {
+    test('renders 8-project capability roadmap and progressive architecture', () => {
+      render(<AiJourney />);
+      
+      expect(screen.getByText(/Building Toward Production AI Systems/i)).toBeInTheDocument();
+      expect(screen.getByText(/One capability → one real project\./i)).toBeInTheDocument();
+
+      // Progression nodes
+      const nodes = ['RAG', 'Agents', 'MCP', 'Evals', 'LLMOps', 'Fine-Tuning', 'AI Security', 'Model Routing'];
+      nodes.forEach((n) => {
+        expect(screen.getAllByText(n).length).toBeGreaterThan(0);
+      });
+
+      // Target Architecture
+      expect(screen.getByText(/AI Architecture — Building Progressively/i)).toBeInTheDocument();
+      expect(screen.getByText(/Client Layer/i)).toBeInTheDocument();
+      expect(screen.getByText(/Gateway & Security Layer/i)).toBeInTheDocument();
+      expect(screen.getByText(/Application & Agent Orchestration/i)).toBeInTheDocument();
+    });
+  });
+
+  // =========================================================================
+  // 9. ENGINEERING FOUNDATION COMPONENT
+  // =========================================================================
+  describe('EngineeringFoundation Component', () => {
+    test('renders 4 technical pillars and evidence chips', () => {
+      render(<EngineeringFoundation />);
+      
+      expect(screen.getByRole('heading', { name: /Engineering Foundation/i })).toBeInTheDocument();
+      expect(screen.getByText(/Frontend Architecture & UI/i)).toBeInTheDocument();
+      expect(screen.getByText(/Data Auditing & Schemas/i)).toBeInTheDocument();
+      expect(screen.getByText(/API Contracts & Integration/i)).toBeInTheDocument();
+      expect(screen.getByText(/DevSecOps & Cloud Hygiene/i)).toBeInTheDocument();
+
+      expect(screen.getByText('React.js')).toBeInTheDocument();
+      expect(screen.getByText('SQL (PostgreSQL / Relational)')).toBeInTheDocument();
+    });
+  });
+
+  // =========================================================================
+  // 10. CERTIFICATIONS COMPONENT
+  // =========================================================================
+  describe('Certifications Component', () => {
+    test('renders credentials and honors cards', () => {
+      render(<Certifications />);
+      
+      expect(screen.getByRole('heading', { name: /Certifications & Honors/i })).toBeInTheDocument();
+      expect(screen.getByText(/Infosys Certified Business Consultant/i)).toBeInTheDocument();
+      expect(screen.getByText(/Capital Markets Domain Specialization/i)).toBeInTheDocument();
+      expect(screen.getByText(/Global Agile Developer/i)).toBeInTheDocument();
+    });
+  });
+
+  // =========================================================================
+  // 11. RESUME CTA COMPONENT
+  // =========================================================================
+  describe('ResumeCta Component', () => {
+    test('renders download resume banner and links', () => {
+      render(<ResumeCta />);
+      
+      expect(screen.getByRole('heading', { name: /Want the complete story\?/i })).toBeInTheDocument();
+      expect(screen.getByRole('link', { name: /Download Complete Resume/i })).toHaveAttribute('download', 'Shubham_Sharma_Resume.pdf');
+      expect(screen.getByRole('link', { name: /View LinkedIn Profile/i })).toBeInTheDocument();
+    });
+  });
+
+  // =========================================================================
+  // 12. CONTACT COMPONENT
+  // =========================================================================
+  describe('Contact Component', () => {
+    test('renders contact details and copy email button safely', () => {
+      const mockTriggerToast = vi.fn();
+      render(<Contact triggerToast={mockTriggerToast} />);
+      
+      expect(screen.getByText(/Let's Build Better Solutions/i)).toBeInTheDocument();
+      expect(screen.getByText(/Direct Email/i)).toBeInTheDocument();
+
+      // Click copy button
+      const copyBtn = screen.getByRole('button', { name: /Copy email/i });
+      fireEvent.click(copyBtn);
+      expect(mockTriggerToast).toHaveBeenCalled();
+    });
+
+    test('updates form inputs and submits message with toast feedback', () => {
+      vi.useFakeTimers();
+      const mockTriggerToast = vi.fn();
+      render(<Contact triggerToast={mockTriggerToast} />);
+      
+      const nameInput = screen.getByLabelText(/Full Name/i);
+      const emailInput = screen.getByLabelText(/Email Address/i);
+      const subjectInput = screen.getByLabelText(/Subject \/ Role Opportunity/i);
+      const messageInput = screen.getByLabelText(/Message Details/i);
+
+      fireEvent.change(nameInput, { target: { value: 'Alex Morgan' } });
+      fireEvent.change(emailInput, { target: { value: 'alex@firm.com' } });
+      fireEvent.change(subjectInput, { target: { value: 'Senior BA Opportunity' } });
+      fireEvent.change(messageInput, { target: { value: 'We would love to discuss a role.' } });
+
+      const submitBtn = screen.getByRole('button', { name: /Send Direct Message/i });
+      fireEvent.click(submitBtn);
+
+      // Fast-forward timeout
+      act(() => {
+        vi.advanceTimersByTime(1100);
+      });
+
+      expect(mockTriggerToast).toHaveBeenCalledWith(expect.stringContaining('Alex Morgan'));
+      expect(nameInput.value).toBe('');
+      vi.useRealTimers();
+    });
+  });
+
+  // =========================================================================
+  // 13. FOOTER COMPONENT
+  // =========================================================================
+  describe('Footer Component', () => {
+    test('renders footer logo, copyright, and social links', () => {
+      render(<Footer />);
+      
+      expect(screen.getByText(/Techno-Functional Business Analyst · Capital Markets & Asset Management/i)).toBeInTheDocument();
+      expect(screen.getByRole('link', { name: /LinkedIn/i })).toBeInTheDocument();
+      expect(screen.getByRole('link', { name: /GitHub/i })).toBeInTheDocument();
+    });
+  });
+
+  // =========================================================================
+  // 14. BACK TO TOP COMPONENT
+  // =========================================================================
+  describe('BackToTop Component', () => {
+    test('renders with visible class when scrolled and triggers window.scrollTo on click', () => {
+      const { rerender } = render(<BackToTop scrolled={false} />);
+      const btn = screen.getByRole('button', { name: /Back to top/i });
+      expect(btn).not.toHaveClass('visible');
+
+      rerender(<BackToTop scrolled={true} />);
+      expect(btn).toHaveClass('visible');
+
+      fireEvent.click(btn);
+      expect(window.scrollTo).toHaveBeenCalledWith({ top: 0, behavior: 'smooth' });
+    });
+  });
+
+  // =========================================================================
+  // 15. FULL APP INTEGRATION & SCROLL LISTENER
+  // =========================================================================
+  describe('Full App Integration', () => {
+    test('renders complete application with toast container and scroll handler', () => {
+      const { container } = render(<App />);
+      
+      expect(container.querySelector('.portfolio-app')).toBeInTheDocument();
+      expect(screen.getByRole('navigation')).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/TECHNO-FUNCTIONAL/i);
+
+      // Scroll trigger test
+      act(() => {
+        window.scrollY = 100;
+        fireEvent.scroll(window);
+      });
+
+      // Verify navbar receives scroll update
+      expect(container.querySelector('.navbar')).toHaveClass('scrolled');
+    });
   });
 
 });

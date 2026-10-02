@@ -19,6 +19,7 @@ export default function App() {
   const [activeSection, setActiveSection] = useState('hero');
   const [toastMsg, setToastMsg] = useState('');
   const [showToast, setShowToast] = useState(false);
+  const [toastTimer, setToastTimer] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -60,7 +61,9 @@ export default function App() {
   const triggerToast = (msg) => {
     setToastMsg(msg);
     setShowToast(true);
-    setTimeout(() => setShowToast(false), 4000);
+    if (toastTimer) clearTimeout(toastTimer);
+    const timer = setTimeout(() => setShowToast(false), 4000);
+    setToastTimer(timer);
   };
 
   return (
