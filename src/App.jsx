@@ -1,13 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import Summary from './components/Summary';
-import TradeLifecycle from './components/TradeLifecycle';
 import CaseStudies from './components/CaseStudies';
-import DocExplorer from './components/DocExplorer';
+import TradeLifecycle from './components/TradeLifecycle';
 import Skills from './components/Skills';
 import Experience from './components/Experience';
-import Achievements from './components/Achievements';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import BackToTop from './components/BackToTop';
@@ -26,10 +23,7 @@ export default function App() {
         setScrolled(false);
       }
 
-      const sections = [
-        'hero', 'summary', 'skills', 'experience', 'achievements',
-        'trade-lifecycle', 'case-studies', 'doc-explorer', 'contact'
-      ];
+      const sections = ['hero', 'projects', 'lifecycle', 'skills', 'experience', 'contact'];
       const scrollPos = window.scrollY + 200;
 
       for (let sec of sections) {
@@ -56,17 +50,16 @@ export default function App() {
   };
 
   return (
-    <div>
+    <div className="portfolio-app">
       <Navbar scrolled={scrolled} activeSection={activeSection} />
-      <Hero />
-      <Summary />
-      <Skills />
-      <Experience />
-      <Achievements />
-      <TradeLifecycle />
-      <CaseStudies />
-      <DocExplorer />
-      <Contact triggerToast={triggerToast} />
+      <main>
+        <Hero />
+        <CaseStudies />
+        <TradeLifecycle />
+        <Skills />
+        <Experience />
+        <Contact triggerToast={triggerToast} />
+      </main>
       <Footer />
       <BackToTop scrolled={scrolled} />
 

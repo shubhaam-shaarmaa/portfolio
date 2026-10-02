@@ -1,6 +1,7 @@
 import React from 'react';
 import profileImg from '../assets/shubham_profile.jpg';
 import resumePdf from '../assets/Shubham_Sharma_Resume.pdf';
+import { HERO_DATA } from '../data/portfolioData';
 
 export default function Hero() {
   return (
@@ -9,25 +10,38 @@ export default function Hero() {
         <div className="hero-grid">
           <div>
             <div className="badge-pill">
-              <i className="fa-solid fa-folder-tree text-gold"></i> Retirement & Asset Management BA Specialist
+              <span className="badge-pulse"></span>
+              <i className="fa-solid fa-bolt text-gold"></i> AI-Augmented Business Analyst & Product Owner
             </div>
-            <h1 className="hero-title" style={{ fontFamily: 'Lora, serif', fontWeight: 600 }}>
-              Optimizing Retirement Platforms through <span>Requirements Engineering</span>
+
+            <h1 className="hero-title">
+              Bridging Capital Markets Core Systems with <span>Enterprise AI Workflows</span>
             </h1>
+
             <div className="hero-subtitle">
-              Senior Associate Consultant @ Infosys | Client Partner: Capital Group (USA) | Future Product Owner
+              Senior Associate Consultant @ Infosys &nbsp;|&nbsp; Client Partner: Capital Group ($2.6T AUM)
             </div>
+
             <p className="hero-hook">
-              Translating complex retirement accounts (SIMPLE IRA, SIMPLE IRA Plus), recordkeeping database schemas (RKD), and mutual fund allocations into structured requirements. Aligning business specifications across investment operations, custodian networks, and compliance desks.
+              I translate complex trading schemas, retirement accounts (SIMPLE IRA, RKD), and regulatory rules into testable requirements. I build AI-augmented specification pipelines that cut product delivery cycle times.
             </p>
 
             <div className="hero-actions">
-              <a href="#case-studies" className="btn btn-primary">
-                <i className="fa-solid fa-folder-open"></i> Review Case Studies
+              <a href="#projects" className="btn btn-primary">
+                <i className="fa-solid fa-layer-group"></i> Explore Flagship Work
               </a>
               <a href={resumePdf} download="Shubham_Sharma_Resume.pdf" className="btn btn-gold">
                 <i className="fa-solid fa-file-arrow-down"></i> Download ATS Resume
               </a>
+            </div>
+
+            <div className="hero-metrics-bar">
+              {HERO_DATA.metrics.map((m, idx) => (
+                <div key={idx} className="hero-metric-item">
+                  <div className="hero-metric-value">{m.val}</div>
+                  <div className="hero-metric-label">{m.lbl}</div>
+                </div>
+              ))}
             </div>
 
             <div className="hero-contact-list">
@@ -44,15 +58,17 @@ export default function Hero() {
               </div>
               <div className="contact-item">
                 <i className="fa-brands fa-linkedin"></i>
-                <a href="https://www.linkedin.com/in/shubham-sharma-428bb4167/" target="_blank" rel="noopener noreferrer">LinkedIn Profile</a>
+                <a href="https://www.linkedin.com/in/shubham-sharma-428bb4167/" target="_blank" rel="noopener noreferrer">
+                  LinkedIn Profile
+                </a>
               </div>
             </div>
           </div>
 
-          {/* Hero Profile Photo & Retirement Solutions Metrics Card */}
+          {/* Hero Profile Card */}
           <div className="hero-profile-card">
             <div className="hero-img-wrapper">
-              <img src={profileImg} alt="Shubham Sharma - Senior Associate Consultant" className="hero-profile-img" />
+              <img src={profileImg} alt="Shubham Sharma - Senior Consultant" className="hero-profile-img" />
               <div className="hero-img-overlay"></div>
               <div className="hero-floating-badge">
                 <span className="status-dot"></span> Partner Client: Capital Group ($2.6T AUM)
@@ -60,31 +76,17 @@ export default function Hero() {
             </div>
 
             <div className="hero-card-content">
-              <div className="hero-metrics-grid">
-                <div className="metric-box">
-                  <div className="metric-val">4+ Yrs</div>
-                  <div className="metric-lbl">Retirement Solutions Exp</div>
-                </div>
-                <div className="metric-box">
-                  <div className="metric-val">100%</div>
-                  <div className="metric-lbl">Sprint Delivery Rate</div>
-                </div>
-                <div className="metric-box">
-                  <div className="metric-val">$120K/Yr</div>
-                  <div className="metric-lbl">Operational Savings Mapped</div>
-                </div>
-                <div className="metric-box">
-                  <div className="metric-val">Infosys</div>
-                  <div className="metric-lbl">Spot Award Winner</div>
-                </div>
+              <div className="hero-card-meta">
+                <div className="hero-card-name">Shubham Sharma</div>
+                <div className="hero-card-role">Techno-Functional BA & AI Innovator</div>
               </div>
 
               <div className="hero-tags-wrapper">
-                <span className="hero-mini-tag"><i className="fa-solid fa-check text-gold"></i> SIMPLE IRA & SIMPLE Plus</span>
-                <span className="hero-mini-tag"><i className="fa-solid fa-check text-gold"></i> Recordkeeping DB (RKD)</span>
-                <span className="hero-mini-tag"><i className="fa-solid fa-check text-gold"></i> ICU2 MF Validation</span>
-                <span className="hero-mini-tag"><i className="fa-solid fa-check text-gold"></i> BRD & FSD Specifications</span>
-                <span className="hero-mini-tag"><i className="fa-solid fa-check text-gold"></i> SQL Data Audits</span>
+                <span className="hero-mini-tag"><i className="fa-solid fa-brain text-gold"></i> AI Prompt Engineering</span>
+                <span className="hero-mini-tag"><i className="fa-solid fa-check text-gold"></i> SIMPLE IRA & RKD Core</span>
+                <span className="hero-mini-tag"><i className="fa-solid fa-check text-gold"></i> Trade Lifecycle & DTCC</span>
+                <span className="hero-mini-tag"><i className="fa-solid fa-check text-gold"></i> BRD / FRD / Gherkin</span>
+                <span className="hero-mini-tag"><i className="fa-solid fa-check text-gold"></i> SQL Data Auditing</span>
               </div>
             </div>
           </div>

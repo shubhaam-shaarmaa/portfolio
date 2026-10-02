@@ -11,3 +11,5 @@
 | 2026-10-02 | Protected Deployment Branch (`main` only) | Prevent untested or feature branch code from reaching live environment | Deployments exclusively originate from `main` |
 | 2026-10-02 | Scratchpads as Spec Sheets (`superpowers/specs/`) | Preserve task specs, checklists, and working state in repository | All planning and architectural context stays version-controlled on GitHub |
 | 2026-10-02 | Auto-Accept & Always-Proceed IDE Configuration | Eliminate repetitive manual confirmation prompts | Streamlines autonomous flow while maintaining strict HITL deployment gate |
+| 2026-10-02 | 4-Section Funnel & ASD-STE-100 Language Standard | Overhaul bloated, text-heavy layout for BA+AI recruiter conversion | Prunes 60% of page length, establishes clear narrative funnel, cuts CSS payload by 50% |
+| 2026-10-02 | Interactive Deliverable Modals over Markdown Embeds | Replace clunky DocExplorer raw markdown dump with focused inspection modal | Recruiters can inspect concrete Gherkin/API specs on demand with zero scroll fatigue |
