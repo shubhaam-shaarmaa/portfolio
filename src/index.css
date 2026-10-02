@@ -3118,6 +3118,265 @@ input, textarea, select {
   text-align: center;
 }
 
+/* View Mode Panes & Transitions */
+.view-mode-pane {
+  animation: modeFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes modeFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Executive KPI Grid */
+.executive-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.exec-kpi-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.15rem;
+  transition: var(--transition);
+}
+
+.exec-kpi-card:hover {
+  border-color: rgba(245, 158, 11, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+}
+
+.exec-kpi-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  flex-shrink: 0;
+}
+
+.exec-kpi-icon.bg-gold {
+  background: var(--accent-gold-dim);
+  border: 1px solid var(--accent-gold-border);
+}
+
+.exec-kpi-icon.bg-cyan {
+  background: var(--accent-cyan-dim);
+  border: 1px solid var(--accent-cyan-border);
+}
+
+.exec-kpi-icon.bg-emerald {
+  background: var(--accent-emerald-dim);
+  border: 1px solid var(--accent-emerald-border);
+}
+
+.exec-kpi-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.exec-kpi-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.55rem;
+  font-weight: 800;
+  color: var(--text-main);
+  line-height: 1.2;
+}
+
+.exec-kpi-lbl {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-gold);
+  margin-top: 0.2rem;
+}
+
+.exec-kpi-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin-top: 0.45rem;
+}
+
+/* Strategic Problem & Solution Overview Card */
+.exec-overview-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  margin-bottom: 2rem;
+}
+
+.exec-overview-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.exec-overview-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.exec-badge-alert,
+.exec-badge-success {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0.2rem 0.6rem;
+  border-radius: var(--radius-sm);
+  width: fit-content;
+  margin-bottom: 0.65rem;
+}
+
+.exec-badge-alert {
+  background: var(--accent-gold-dim);
+  color: var(--accent-gold);
+  border: 1px solid var(--accent-gold-border);
+}
+
+.exec-badge-success {
+  background: var(--accent-emerald-dim);
+  color: var(--accent-emerald);
+  border: 1px solid var(--accent-emerald-border);
+}
+
+.exec-col-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+}
+
+.exec-col-text {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+/* Switch Prompt Card */
+.exec-switch-prompt-card {
+  background: linear-gradient(135deg, rgba(14, 23, 38, 0.95) 0%, rgba(30, 41, 59, 0.7) 100%);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  margin-top: 2.25rem;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4);
+}
+
+.prompt-left {
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.prompt-left i {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.prompt-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.prompt-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+  line-height: 1.45;
+}
+
+/* Technical Schema Inspector Card */
+.technical-schema-inspector-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  padding: 1.75rem;
+  margin-top: 2rem;
+}
+
+.schema-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.15rem;
+}
+
+.schema-card-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-top: 0.35rem;
+}
+
+.schema-card-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+.schema-format-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--accent-cyan);
+  background: var(--accent-cyan-dim);
+  border: 1px solid var(--accent-cyan-border);
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+}
+
+@media (max-width: 992px) {
+  .executive-kpi-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .exec-overview-split {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .exec-switch-prompt-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .exec-switch-prompt-card .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 /* 2. Recruiter Form Quick Presets */
 .recruiter-presets-wrapper {
   margin-bottom: 1.25rem;

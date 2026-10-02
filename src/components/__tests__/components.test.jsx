@@ -348,26 +348,37 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
     test('toggles between Executive Summary and Deep Technical Specs perspective views', () => {
       render(<CapitalMarketsCaseStudies />);
       
-      const execBtn = screen.getByRole('button', { name: /Executive Summary/i });
-      const techBtn = screen.getByRole('button', { name: /Deep Technical Specs/i });
+      const execBtn = screen.getByRole('button', { name: /^Executive Summary$/i });
+      const techBtn = screen.getByRole('button', { name: /^Deep Technical Specs$/i });
 
       expect(execBtn).toHaveClass('active');
       expect(techBtn).not.toHaveClass('active');
       expect(screen.getByText(/Showing concise business outcomes/i)).toBeInTheDocument();
+      // Executive summary specific elements
+      expect(screen.getByText('78% Reduction')).toBeInTheDocument();
+      expect(screen.getByText(/7-Stage End-to-End Trade Lifecycle Flow:/i)).toBeInTheDocument();
 
       // Switch to Deep Technical Specs
       fireEvent.click(techBtn);
       expect(techBtn).toHaveClass('active');
       expect(execBtn).not.toHaveClass('active');
       expect(screen.getByText(/Showing full technical specifications/i)).toBeInTheDocument();
+      // Technical specs specific elements
+      expect(screen.getByText(/Institutional Trade Allocation & DTCC CTM Message Spec/i)).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /Requirements & User Stories/i })).toBeInTheDocument();
 
       // Switch back
       fireEvent.click(execBtn);
       expect(execBtn).toHaveClass('active');
+      expect(screen.getByText('78% Reduction')).toBeInTheDocument();
     });
 
-    test('switches across all 4 case study tabs', () => {
+    test('switches across all 4 case study tabs in Deep Technical Specs mode', () => {
       render(<CapitalMarketsCaseStudies />);
+
+      // Switch to Deep Technical Specs mode to access the 4 detailed tabs
+      const techBtn = screen.getByRole('button', { name: /^Deep Technical Specs$/i });
+      fireEvent.click(techBtn);
       
       // Tab 1: As-Is vs To-Be
       expect(screen.getByText(/The Business Problem/i)).toBeInTheDocument();
