@@ -4,6 +4,7 @@ import { TRADE_LIFECYCLE_STAGES, FLAGSHIP_CASE_STUDY, FUTURE_CASE_STUDIES } from
 export default function CapitalMarketsCaseStudies() {
   const [activeStageId, setActiveStageId] = useState('initiation');
   const [activeTab, setActiveTab] = useState('overview'); // 'overview' | 'requirements' | 'data-api' | 'uat'
+  const [viewMode, setViewMode] = useState('executive'); // 'executive' | 'technical'
   const [resolvedExceptions, setResolvedExceptions] = useState([]);
 
   const activeStage = TRADE_LIFECYCLE_STAGES.find(s => s.id === activeStageId) || TRADE_LIFECYCLE_STAGES[0];
@@ -47,6 +48,32 @@ export default function CapitalMarketsCaseStudies() {
           <p className="section-desc max-w-700">
             In-depth techno-functional analysis of institutional securities workflows, middle-office reconciliation, and T+1 settlement operations.
           </p>
+        </div>
+
+        {/* Recruiter Perspective Mode Switcher */}
+        <div className="view-mode-bar">
+          <div className="view-mode-toggle" role="group" aria-label="Perspective View Mode">
+            <button
+              type="button"
+              className={`view-mode-btn ${viewMode === 'executive' ? 'active' : ''}`}
+              onClick={() => setViewMode('executive')}
+            >
+              <i className="fa-solid fa-briefcase text-gold"></i> Executive Summary
+            </button>
+            <button
+              type="button"
+              className={`view-mode-btn ${viewMode === 'technical' ? 'active' : ''}`}
+              onClick={() => setViewMode('technical')}
+            >
+              <i className="fa-solid fa-laptop-code text-cyan"></i> Deep Technical Specs
+            </button>
+          </div>
+          <span className="view-mode-hint">
+            <i className="fa-solid fa-circle-info text-dim"></i>
+            {viewMode === 'executive'
+              ? 'Showing concise business outcomes, 7-stage flow & simulator. Switch to Deep Technical Specs for full Gherkin user stories & schemas.'
+              : 'Showing full technical specifications: As-Is vs To-Be flows, Gherkin acceptance criteria, data models, and UAT matrices.'}
+          </span>
         </div>
 
         {/* Flagship Case Study Header Banner */}

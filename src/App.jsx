@@ -13,6 +13,7 @@ import ResumeCta from './components/ResumeCta';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import BackToTop from './components/BackToTop';
+import RecruiterDock from './components/RecruiterDock';
 
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
@@ -105,6 +106,7 @@ export default function App() {
       </main>
 
       <Footer />
+      <RecruiterDock activeSection={activeSection} />
       <BackToTop scrolled={scrolled} />
 
       <div className={`toast ${showToast ? 'show' : ''}`} role="alert" aria-live="assertive">

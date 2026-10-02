@@ -4,6 +4,8 @@ import { FEATURED_PROJECTS } from '../data/projectsData';
 export default function FeaturedWork() {
   const [activeModalProject, setActiveModalProject] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState('ALL');
+  const [domainFilter, setDomainFilter] = useState('ALL');
+  const [expandedSpecId, setExpandedSpecId] = useState(null);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -18,9 +20,13 @@ export default function FeaturedWork() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [activeModalProject]);
 
-  const filteredProjects = selectedFilter === 'ALL'
-    ? FEATURED_PROJECTS
-    : FEATURED_PROJECTS.filter(p => p.status === selectedFilter);
+  const domainCategories = ['ALL', 'Capital Markets', 'AI & GenAI', 'Business Analysis', 'Asset Management'];
+
+  const filteredProjects = FEATURED_PROJECTS.filter(p => {
+    const statusMatch = selectedFilter === 'ALL' || p.status === selectedFilter;
+    const domainMatch = domainFilter === 'ALL' || p.category.toLowerCase().includes(domainFilter.toLowerCase());
+    return statusMatch && domainMatch;
+  });
 
   return (
     <section id="projects" className="featured-work-section">
@@ -42,7 +48,7 @@ export default function FeaturedWork() {
             className={`filter-btn ${selectedFilter === 'ALL' ? 'active' : ''}`}
             onClick={() => setSelectedFilter('ALL')}
           >
-            All Initiatives ({FEATURED_PROJECTS.length})
+            All Statuses ({FEATURED_PROJECTS.length})
           </button>
           <button
             className={`filter-btn ${selectedFilter === 'COMPLETED' ? 'active' : ''}`}
@@ -65,6 +71,20 @@ export default function FeaturedWork() {
             <span className="status-indicator status-planned"></span>
             Planned ({FEATURED_PROJECTS.filter(p => p.status === 'PLANNED').length})
           </button>
+        </div>
+
+        {/* Domain Category Filter Pills */}
+        <div className="domain-filter-row">
+          {domainCategories.map((dom) => (
+            <button
+              key={dom}
+              type="button"
+              className={`domain-pill ${domainFilter === dom ? 'active' : ''}`}
+              onClick={() => setDomainFilter(dom)}
+            >
+              {dom === 'ALL' ? 'All Focus Areas' : dom}
+            </button>
+          ))}
         </div>
 
         {/* Structured Projects Grid */}
@@ -132,12 +152,23 @@ export default function FeaturedWork() {
                 {/* Card Actions */}
                 <div className="project-card-actions">
                   {proj.specPreview && (
-                    <button
-                      className="btn btn-outline-cyan btn-sm"
-                      onClick={() => setActiveModalProject(proj)}
-                    >
-                      <i className="fa-solid fa-file-lines"></i> Inspect Spec Artifact
-                    </button>
+                    <>
+                      <button
+                        className="btn btn-outline-cyan btn-sm"
+                        onClick={() => setActiveModalProject(proj)}
+                      >
+                        <i className="fa-solid fa-file-lines"></i> Inspect Spec Artifact
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-secondary btn-sm"
+                        onClick={() => setExpandedSpecId(expandedSpecId === proj.id ? null : proj.id)}
+                        aria-expanded={expandedSpecId === proj.id}
+                      >
+                        <i className={`fa-solid ${expandedSpecId === proj.id ? 'fa-chevron-up' : 'fa-code'}`}></i>{' '}
+                        {expandedSpecId === proj.id ? 'Hide Quick Peek' : 'Quick Peek'}
+                      </button>
+                    </>
                   )}
                   {proj.caseStudyId === 'trade-lifecycle' && (
                     <a href="#case-studies" className="btn btn-outline-gold btn-sm">
@@ -156,6 +187,21 @@ export default function FeaturedWork() {
                     </a>
                   )}
                 </div>
+
+                {/* Inline Quick Spec Preview */}
+                {expandedSpecId === proj.id && proj.specPreview && (
+                  <div className="spec-inline-preview">
+                    <div className="inline-preview-header">
+                      <span className="text-xs text-cyan">
+                        <i className="fa-solid fa-file-code"></i> {proj.specPreview.title}
+                      </span>
+                      <span className="text-xs text-dim">({proj.specPreview.type.toUpperCase()})</span>
+                    </div>
+                    <pre>
+                      <code>{proj.specPreview.code}</code>
+                    </pre>
+                  </div>
+                )}
               </div>
             );
           })}

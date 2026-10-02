@@ -39,6 +39,48 @@ export default function Contact({ triggerToast }) {
     }
   };
 
+  const presets = [
+    {
+      id: 'ba-role',
+      icon: 'fa-briefcase text-gold',
+      label: '💼 Senior BA Role',
+      subject: 'Senior Business Analyst Opportunity — Techno-Functional',
+      msg: 'Hi Shubham, I came across your portfolio and would like to connect regarding a Senior Business Analyst / Consulting role with our team. Let\'s arrange a brief introductory discussion.'
+    },
+    {
+      id: 'capital-markets',
+      icon: 'fa-chart-line text-cyan',
+      label: '📈 Capital Markets Project',
+      subject: 'Capital Markets Domain Project / Consulting',
+      msg: 'Hi Shubham, we are looking for a Techno-Functional BA with Capital Markets and Middle-Office Trade Lifecycle experience. Let\'s discuss our upcoming initiative.'
+    },
+    {
+      id: 'ai-genai',
+      icon: 'fa-microchip text-purple',
+      label: '🤖 AI & GenAI Engagement',
+      subject: 'AI & GenAI Solutions Opportunity',
+      msg: 'Hi Shubham, saw your AI Journey roadmap and engineering foundations. Interested in discussing opportunities involving AI-assisted requirements and product delivery.'
+    },
+    {
+      id: 'chat',
+      icon: 'fa-mug-hot text-emerald',
+      label: '☕ Quick Coffee Chat',
+      subject: 'Professional Networking & Introduction',
+      msg: 'Hi Shubham, impressive techno-functional portfolio! I\'d love to connect and keep in touch regarding upcoming initiatives.'
+    }
+  ];
+
+  const handleSelectPreset = (preset) => {
+    setFormData(prev => ({
+      ...prev,
+      subject: preset.subject,
+      message: preset.msg
+    }));
+    if (typeof triggerToast === 'function') {
+      triggerToast(`Template loaded: "${preset.label}". Ready to send!`);
+    }
+  };
+
   return (
     <section id="contact" className="contact-section">
       <div className="container">
@@ -149,6 +191,25 @@ export default function Contact({ triggerToast }) {
               <p className="form-card-subtitle">
                 Discuss opportunities across Business Analysis, Capital Markets solutions, or AI workflows.
               </p>
+
+              {/* 1-Click Recruiter Presets */}
+              <div className="recruiter-presets-wrapper mt-2">
+                <span className="presets-label">
+                  <i className="fa-solid fa-bolt text-gold"></i> 1-Click Recruiter Templates:
+                </span>
+                <div className="presets-chips-row">
+                  {presets.map((preset) => (
+                    <button
+                      key={preset.id}
+                      type="button"
+                      className={`preset-chip ${formData.subject === preset.subject ? 'active' : ''}`}
+                      onClick={() => handleSelectPreset(preset)}
+                    >
+                      {preset.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
 
               <form onSubmit={handleSubmit} className="contact-form">
                 <div className="form-group">

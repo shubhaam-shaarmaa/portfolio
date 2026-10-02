@@ -75,23 +75,24 @@ html {
   line-height: 1.6;
   overflow-x: hidden;
   width: 100%;
-  max-width: 100vw;
+  max-width: 100%;
 }
 
 body {
   background: radial-gradient(circle at 50% 0%, #0d1a33 0%, var(--bg-dark) 60%);
+  background-color: var(--bg-dark);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
   width: 100%;
-  max-width: 100vw;
+  max-width: 100%;
   position: relative;
 }
 
 #root, .app-container {
   overflow-x: hidden;
   width: 100%;
-  max-width: 100vw;
+  max-width: 100%;
 }
 
 a {
@@ -2007,7 +2008,11 @@ input, textarea, select {
 /* Visual Progression Pipeline Strip */
 .ai-progression-pipeline {
   overflow-x: auto;
+  max-width: 100%;
+  min-width: 0;
+  width: 100%;
   padding: 0.5rem 0;
+  -webkit-overflow-scrolling: touch;
 }
 
 .pipeline-track {
@@ -2015,7 +2020,8 @@ input, textarea, select {
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem;
-  min-width: 860px;
+  width: max-content;
+  min-width: min(860px, 100%);
 }
 
 .pipeline-node {
@@ -2556,7 +2562,14 @@ input, textarea, select {
 .contact-grid {
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
-  gap: 3rem;
+  gap: 2.5rem;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.contact-info-column, .contact-form-column {
+  min-width: 0;
+  max-width: 100%;
 }
 
 .contact-image-wrapper {
@@ -2565,6 +2578,7 @@ input, textarea, select {
   border-radius: var(--radius-lg);
   overflow: hidden;
   border: 1px solid var(--border-card);
+  max-width: 100%;
 }
 
 .contact-card-img {
@@ -2595,6 +2609,7 @@ input, textarea, select {
   flex-direction: column;
   gap: 0.85rem;
   margin-top: 1.5rem;
+  min-width: 0;
 }
 
 .contact-item-card {
@@ -2605,6 +2620,15 @@ input, textarea, select {
   display: flex;
   align-items: center;
   gap: 1rem;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.contact-item-card:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: var(--bg-card-hover);
 }
 
 .contact-item-icon {
@@ -2619,7 +2643,9 @@ input, textarea, select {
 }
 
 .contact-item-info {
-  flex-grow: 1;
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .contact-lbl {
@@ -2628,6 +2654,7 @@ input, textarea, select {
   text-transform: uppercase;
   color: var(--text-dim);
   font-weight: 700;
+  letter-spacing: 0.05em;
 }
 
 .contact-val {
@@ -2635,6 +2662,9 @@ input, textarea, select {
   font-weight: 600;
   color: var(--text-main);
   margin-top: 0.15rem;
+  display: block;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 .contact-copy-btn {
@@ -3023,6 +3053,341 @@ input, textarea, select {
 }
 
 /* ==========================================================================
+   INTERACTIVE RECRUITER EXPERIENCES (Dock, View Modes, Presets)
+   ========================================================================== */
+
+/* 1. Executive vs Technical View Switcher */
+.view-mode-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.view-mode-toggle {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(14, 23, 38, 0.95);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-full);
+  padding: 0.35rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+}
+
+.view-mode-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.55rem 1.25rem;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+}
+
+.view-mode-btn:hover {
+  color: var(--text-main);
+}
+
+.view-mode-btn.active {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.2) 0%, rgba(56, 189, 248, 0.2) 100%);
+  color: var(--text-main);
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  box-shadow: 0 2px 10px rgba(245, 158, 11, 0.15);
+}
+
+.view-mode-hint {
+  font-size: 0.76rem;
+  color: var(--text-dim);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  text-align: center;
+}
+
+/* 2. Recruiter Form Quick Presets */
+.recruiter-presets-wrapper {
+  margin-bottom: 1.25rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+}
+
+.presets-label {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--accent-gold);
+  margin-bottom: 0.75rem;
+}
+
+.presets-chips-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.preset-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.45rem 0.85rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition);
+  min-height: 36px;
+}
+
+.preset-chip:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-main);
+  border-color: var(--border-card);
+}
+
+.preset-chip.active {
+  background: var(--accent-cyan-dim);
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.2);
+}
+
+/* 3. Floating Recruiter Exploration Dock */
+.recruiter-dock {
+  position: fixed;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 900;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: rgba(8, 12, 20, 0.94);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-card);
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-full);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.65), 0 0 20px rgba(56, 189, 248, 0.12);
+  transition: var(--transition);
+  max-width: 95vw;
+}
+
+.dock-progress-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding-right: 0.75rem;
+  border-right: 1px solid var(--border-subtle);
+  flex-shrink: 0;
+}
+
+.dock-progress-ring {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: conic-gradient(var(--accent-cyan) var(--dock-pct, 0%), rgba(255, 255, 255, 0.1) 0%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.dock-progress-ring::after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #080c14;
+}
+
+.dock-progress-text {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--text-main);
+  white-space: nowrap;
+}
+
+.dock-progress-text span {
+  color: var(--accent-cyan);
+}
+
+.dock-nav-pills {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.dock-pill {
+  padding: 0.25rem 0.6rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.dock-pill:hover, .dock-pill.active {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.dock-pill.active {
+  color: var(--accent-gold);
+  background: var(--accent-gold-dim);
+}
+
+.dock-toggle-btn {
+  font-size: 0.8rem;
+  color: var(--text-dim);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 50%;
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.dock-toggle-btn:hover {
+  color: var(--text-main);
+}
+
+.recruiter-dock.dock-minimized {
+  padding: 0.35rem 0.75rem;
+}
+
+.recruiter-dock.dock-minimized .dock-progress-wrap {
+  border-right: none;
+  padding-right: 0;
+}
+
+/* Inline Quick Spec Preview */
+.spec-inline-preview {
+  background: #05080e;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1rem;
+  margin-top: 1rem;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+.inline-preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  padding-bottom: 0.35rem;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.spec-inline-preview pre code {
+  font-family: 'Space Grotesk', monospace;
+  font-size: 0.78rem;
+  color: #38bdf8;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+
+/* Domain Filter Row */
+.domain-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  margin-top: -1.5rem;
+  margin-bottom: 2rem;
+}
+
+.domain-pill {
+  font-size: 0.76rem;
+  font-weight: 600;
+  padding: 0.3rem 0.85rem;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.domain-pill:hover, .domain-pill.active {
+  color: var(--text-main);
+  border-color: var(--accent-gold);
+  background: var(--accent-gold-dim);
+}
+
+/* Timeline Navigation Pills */
+.timeline-nav-pills {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem;
+  overflow-x: auto;
+  padding: 0.5rem 0 1.75rem;
+  scrollbar-width: none;
+}
+
+.timeline-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.timeline-pill .pill-year {
+  color: var(--accent-gold);
+  font-weight: 700;
+}
+
+.timeline-pill:hover, .timeline-pill.active {
+  background: var(--accent-gold-dim);
+  border-color: var(--accent-gold);
+  color: var(--text-main);
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.2);
+}
+
+.journey-step-card.is-highlighted {
+  border-color: var(--accent-gold);
+  box-shadow: 0 0 25px rgba(245, 158, 11, 0.18);
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
    RESPONSIVE DESIGN (Ultrawide, Laptop, Tablet, Mobile)
    ========================================================================== */
 
@@ -3037,7 +3402,15 @@ input, textarea, select {
   }
 }
 
-/* 2. Tablet Landscape & Small Laptops (max-width: 1024px) */
+/* 2. Laptops & Mid-Sized Screens (max-width: 1120px) */
+@media (max-width: 1120px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+/* 3. Tablet Landscape & Small Laptops (max-width: 1024px) */
 @media (max-width: 1024px) {
   .hero-grid {
     grid-template-columns: 1fr;

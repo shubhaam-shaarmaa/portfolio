@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CAREER_JOURNEY } from '../data/portfolioData';
 
 export default function CareerJourney() {
+  const [selectedStage, setSelectedStage] = useState(null);
+
+  const handleStageClick = (idx) => {
+    setSelectedStage(selectedStage === idx ? null : idx);
+    const el = document.getElementById(`journey-step-${idx}`);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
+
   return (
     <section id="journey" className="journey-section">
       <div className="container">
@@ -14,6 +24,22 @@ export default function CareerJourney() {
           <p className="section-desc max-w-700">
             One continuous professional progression: from engineering foundations to Financial Services domain consulting, techno-functional business analysis, and AI workflows.
           </p>
+        </div>
+
+        {/* Interactive Milestone Quick-Selector */}
+        <div className="timeline-nav-pills">
+          {CAREER_JOURNEY.map((step, idx) => (
+            <button
+              key={idx}
+              type="button"
+              className={`timeline-pill ${selectedStage === idx ? 'active' : ''}`}
+              onClick={() => handleStageClick(idx)}
+              title={`View ${step.role}`}
+            >
+              <span className="pill-year">{step.year}</span>
+              <span className="pill-role">{step.badge}</span>
+            </button>
+          ))}
         </div>
 
         {/* Narrative Banner */}
@@ -29,7 +55,11 @@ export default function CareerJourney() {
         {/* 5-Stage Progressive Timeline */}
         <div className="journey-timeline">
           {CAREER_JOURNEY.map((step, idx) => (
-            <div key={idx} className="journey-step-card">
+            <div
+              key={idx}
+              id={`journey-step-${idx}`}
+              className={`journey-step-card ${selectedStage === idx ? 'is-highlighted' : ''}`}
+            >
               <div className="journey-step-marker">
                 <span className="marker-number">{step.year}</span>
                 <span className="marker-line"></span>

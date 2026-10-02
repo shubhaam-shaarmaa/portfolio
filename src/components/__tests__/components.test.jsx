@@ -17,6 +17,7 @@ import ResumeCta from '../ResumeCta';
 import Contact from '../Contact';
 import Footer from '../Footer';
 import BackToTop from '../BackToTop';
+import RecruiterDock from '../RecruiterDock';
 import App from '../../App';
 
 describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
@@ -177,6 +178,21 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       expect(screen.getByRole('heading', { name: /^SENIOR ASSOCIATE CONSULTANT$/i })).toBeInTheDocument();
       expect(screen.getAllByText('2026–PRESENT').length).toBeGreaterThan(0);
     });
+
+    test('allows selecting milestone pills and toggles active highlight', () => {
+      const { container } = render(<CareerJourney />);
+      
+      const pills = container.querySelectorAll('.timeline-pill');
+      expect(pills.length).toBe(5);
+
+      // Click second pill (2022–2024 Systems Engineer)
+      fireEvent.click(pills[1]);
+      expect(pills[1]).toHaveClass('active');
+
+      // Click again to toggle off
+      fireEvent.click(pills[1]);
+      expect(pills[1]).not.toHaveClass('active');
+    });
   });
 
   // =========================================================================
@@ -211,7 +227,7 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
     test('renders project cards and filters projects by status', () => {
       render(<FeaturedWork />);
       
-      expect(screen.getByText(/All Initiatives/i)).toBeInTheDocument();
+      expect(screen.getByText(/All Statuses \(/i)).toBeInTheDocument();
       
       // Filter by Completed
       const completedFilterBtn = screen.getByRole('button', { name: /Completed \(/i });
@@ -227,6 +243,38 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       const plannedFilterBtn = screen.getByRole('button', { name: /Planned \(/i });
       fireEvent.click(plannedFilterBtn);
       expect(screen.getByText(/Banking & FinTech Stateful Support Agent/i)).toBeInTheDocument();
+    });
+
+    test('filters projects by domain category pills', () => {
+      render(<FeaturedWork />);
+      
+      // Filter by AI & GenAI
+      const aiPill = screen.getByRole('button', { name: 'AI & GenAI' });
+      fireEvent.click(aiPill);
+      expect(screen.getByText(/BFSI Document Research Assistant/i)).toBeInTheDocument();
+      expect(screen.queryByText(/Institutional Trade Lifecycle & Exception Resolver/i)).not.toBeInTheDocument();
+
+      // Return to All Focus Areas
+      const allPill = screen.getByRole('button', { name: 'All Focus Areas' });
+      fireEvent.click(allPill);
+      expect(screen.getByText(/Institutional Trade Lifecycle & Exception Resolver/i)).toBeInTheDocument();
+    });
+
+    test('toggles inline Quick Peek code preview', () => {
+      render(<FeaturedWork />);
+      
+      const quickPeekBtns = screen.getAllByRole('button', { name: /Quick Peek/i });
+      expect(quickPeekBtns.length).toBeGreaterThan(0);
+
+      // Open quick peek
+      fireEvent.click(quickPeekBtns[0]);
+      expect(screen.getByRole('button', { name: /Hide Quick Peek/i })).toBeInTheDocument();
+      expect(screen.getByText(/\(SQL\)/i)).toBeInTheDocument();
+
+      // Close quick peek
+      const hideBtn = screen.getByRole('button', { name: /Hide Quick Peek/i });
+      fireEvent.click(hideBtn);
+      expect(screen.queryByText(/\(SQL\)/i)).not.toBeInTheDocument();
     });
 
     test('opens deliverable spec modal, verifies accessibility dialog, and closes via close button and Escape key', () => {
@@ -272,6 +320,27 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       fireEvent.click(settlementStep);
       expect(screen.getByText(/Stage 05 of 07/i)).toBeInTheDocument();
       expect(screen.getByText(/Responsible Desk:/i)).toBeInTheDocument();
+    });
+
+    test('toggles between Executive Summary and Deep Technical Specs perspective views', () => {
+      render(<CapitalMarketsCaseStudies />);
+      
+      const execBtn = screen.getByRole('button', { name: /Executive Summary/i });
+      const techBtn = screen.getByRole('button', { name: /Deep Technical Specs/i });
+
+      expect(execBtn).toHaveClass('active');
+      expect(techBtn).not.toHaveClass('active');
+      expect(screen.getByText(/Showing concise business outcomes/i)).toBeInTheDocument();
+
+      // Switch to Deep Technical Specs
+      fireEvent.click(techBtn);
+      expect(techBtn).toHaveClass('active');
+      expect(execBtn).not.toHaveClass('active');
+      expect(screen.getByText(/Showing full technical specifications/i)).toBeInTheDocument();
+
+      // Switch back
+      fireEvent.click(execBtn);
+      expect(execBtn).toHaveClass('active');
     });
 
     test('switches across all 4 case study tabs', () => {
@@ -430,6 +499,26 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       expect(nameInput.value).toBe('');
       vi.useRealTimers();
     });
+
+    test('auto-populates subject and message when recruiter preset chip is selected', () => {
+      render(<Contact />);
+      
+      const baRoleChip = screen.getByRole('button', { name: /Senior BA Role/i });
+      fireEvent.click(baRoleChip);
+
+      const subjectInput = screen.getByLabelText(/Subject \/ Role Opportunity/i);
+      const messageInput = screen.getByLabelText(/Message Details/i);
+
+      expect(subjectInput.value).toBe('Senior Business Analyst Opportunity — Techno-Functional');
+      expect(messageInput.value).toContain('Senior Business Analyst / Consulting role');
+
+      // Click Capital Markets preset
+      const cmChip = screen.getByRole('button', { name: /Capital Markets Project/i });
+      fireEvent.click(cmChip);
+
+      expect(subjectInput.value).toBe('Capital Markets Domain Project / Consulting');
+      expect(messageInput.value).toContain('Middle-Office Trade Lifecycle');
+    });
   });
 
   // =========================================================================
@@ -463,7 +552,42 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
   });
 
   // =========================================================================
-  // 15. FULL APP INTEGRATION & SCROLL LISTENER
+  // 15. RECRUITER DOCK COMPONENT
+  // =========================================================================
+  describe('RecruiterDock Component', () => {
+    test('renders exploration progress dock with percentage and navigates to sections', () => {
+      render(<RecruiterDock activeSection="hero" />);
+      
+      expect(screen.getByRole('region', { name: /Recruiter Exploration Progress Dock/i })).toBeInTheDocument();
+      expect(screen.getByText(/Explored:/i)).toBeInTheDocument();
+      expect(screen.getByText(/11%/i)).toBeInTheDocument();
+
+      // Test section jump button
+      const projectsPill = screen.getByRole('button', { name: /Projects/i });
+      fireEvent.click(projectsPill);
+    });
+
+    test('toggles dock minimization on collapse/expand button click', () => {
+      render(<RecruiterDock activeSection="hero" />);
+      
+      const dock = screen.getByRole('region', { name: /Recruiter Exploration Progress Dock/i });
+      const toggleBtn = screen.getByRole('button', { name: /Minimize exploration dock/i });
+
+      expect(dock).not.toHaveClass('dock-minimized');
+
+      // Click to minimize
+      fireEvent.click(toggleBtn);
+      expect(dock).toHaveClass('dock-minimized');
+      expect(screen.getByRole('button', { name: /Expand exploration dock/i })).toBeInTheDocument();
+
+      // Click to expand again
+      fireEvent.click(screen.getByRole('button', { name: /Expand exploration dock/i }));
+      expect(dock).not.toHaveClass('dock-minimized');
+    });
+  });
+
+  // =========================================================================
+  // 16. FULL APP INTEGRATION & SCROLL LISTENER
   // =========================================================================
   describe('Full App Integration', () => {
     test('renders complete application with toast container and scroll handler', () => {
