@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { CAREER_JOURNEY } from '../data/portfolioData';
 
-export default function CareerJourney() {
+export default function CareerJourney({ isEmbedded = false }) {
   const [selectedStage, setSelectedStage] = useState(null);
 
   const handleStageClick = (idx) => {
@@ -12,19 +12,24 @@ export default function CareerJourney() {
     }
   };
 
+  const ContentWrapper = isEmbedded ? 'div' : 'section';
+  const containerClass = isEmbedded ? 'embedded-journey-wrap' : 'journey-section';
+
   return (
-    <section id="journey" className="journey-section">
-      <div className="container">
-        {/* Section Header */}
-        <div className="section-title-wrapper text-center">
-          <span className="section-subtitle">Progressive Expansion</span>
-          <h2 className="section-title">
-            Career Journey & <span>Evolution</span>
-          </h2>
-          <p className="section-desc max-w-700">
-            One continuous professional progression: from engineering foundations to Financial Services domain consulting, techno-functional business analysis, and AI workflows.
-          </p>
-        </div>
+    <ContentWrapper id={isEmbedded ? undefined : 'journey'} className={containerClass}>
+      <div className={isEmbedded ? '' : 'container'}>
+        {/* Section Header (omitted when embedded in unified #journey) */}
+        {!isEmbedded && (
+          <div className="section-title-wrapper text-center">
+            <span className="section-subtitle">Progressive Expansion</span>
+            <h2 className="section-title">
+              Career Journey & <span>Evolution</span>
+            </h2>
+            <p className="section-desc max-w-700">
+              One continuous professional progression: from engineering foundations to Financial Services domain consulting, techno-functional business analysis, and AI workflows.
+            </p>
+          </div>
+        )}
 
         {/* Interactive Milestone Quick-Selector */}
         <div className="timeline-nav-pills">
@@ -91,6 +96,6 @@ export default function CareerJourney() {
           ))}
         </div>
       </div>
-    </section>
+    </ContentWrapper>
   );
 }

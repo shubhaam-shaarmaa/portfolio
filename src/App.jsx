@@ -1,14 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import ProfessionalIdentity from './components/ProfessionalIdentity';
-import CareerJourney from './components/CareerJourney';
-import Skills from './components/Skills';
-import FeaturedWork from './components/FeaturedWork';
-import CapitalMarketsCaseStudies from './components/CapitalMarketsCaseStudies';
-import AiJourney from './components/AiJourney';
-import EngineeringFoundation from './components/EngineeringFoundation';
-import Certifications from './components/Certifications';
+import AskShubham from './components/AskShubham';
+import SelectedWork from './components/SelectedWork';
+import JourneyAndCapabilities from './components/JourneyAndCapabilities';
 import ResumeCta from './components/ResumeCta';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
@@ -28,15 +23,9 @@ export default function App() {
 
       const sectionIds = [
         'hero',
-        'identity',
+        'ask',
+        'work',
         'journey',
-        'capabilities',
-        'case-studies',
-        'projects',
-        'ai-journey',
-        'engineering',
-        'certifications',
-        'resume',
         'contact'
       ];
 
@@ -74,34 +63,19 @@ export default function App() {
         {/* 01 — Hero */}
         <Hero />
 
-        {/* 02 — Professional Identity (Business × Technology × Capital Markets) */}
-        <ProfessionalIdentity />
+        {/* 02 — Interactive Q&A Console (Ayush Sharma pattern: // ask_shubham.exe) */}
+        <AskShubham />
 
-        {/* 03 — Career Journey (5-Stage Progressive Evolution) */}
-        <CareerJourney />
+        {/* 03 — Selected Work (Case Studies & Technical Initiatives) */}
+        <SelectedWork />
 
-        {/* 04 — Core Capabilities (4-Pillar Matrix: BA, Capital Markets, Tech, AI Current vs Building) */}
-        <Skills />
+        {/* 04 — Journey & Core Capabilities (Progression, Skills, Engineering & AI Architecture) */}
+        <JourneyAndCapabilities />
 
-        {/* 05 — Featured Work (Structured Projects: Status Filter, Contributions, Specs) */}
-        <FeaturedWork />
-
-        {/* 06 — Capital Markets Case Studies (Flagship 7-Stage Trade Lifecycle Analysis & Simulator) */}
-        <CapitalMarketsCaseStudies />
-
-        {/* 07 — AI Journey (8-Project Capability Roadmap + Progressive Architecture) */}
-        <AiJourney />
-
-        {/* 08 — Engineering Foundation (Technical Depth Supporting BA Identity) */}
-        <EngineeringFoundation />
-
-        {/* 09 — Certifications & Achievements (Compact Credentials) */}
-        <Certifications />
-
-        {/* 10 — Resume CTA */}
+        {/* Resume Call-to-Action */}
         <ResumeCta />
 
-        {/* 11 — Contact */}
+        {/* 05 — Contact & Direct Inquiries */}
         <Contact triggerToast={triggerToast} />
       </main>
 

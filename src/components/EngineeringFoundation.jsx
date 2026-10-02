@@ -1,20 +1,25 @@
 import React from 'react';
 import { ENGINEERING_FOUNDATION } from '../data/portfolioData';
 
-export default function EngineeringFoundation() {
+export default function EngineeringFoundation({ isEmbedded = false }) {
+  const ContentWrapper = isEmbedded ? 'div' : 'section';
+  const containerClass = isEmbedded ? 'embedded-eng-wrap' : 'engineering-section';
+
   return (
-    <section id="engineering" className="engineering-section">
-      <div className="container">
-        {/* Section Header */}
-        <div className="section-title-wrapper text-center">
-          <span className="section-subtitle">Technical Depth</span>
-          <h2 className="section-title">
-            Engineering <span>Foundation</span>
-          </h2>
-          <p className="section-desc max-w-700">
-            {ENGINEERING_FOUNDATION.quote}
-          </p>
-        </div>
+    <ContentWrapper id={isEmbedded ? undefined : 'engineering'} className={containerClass}>
+      <div className={isEmbedded ? '' : 'container'}>
+        {/* Section Header (omitted when embedded) */}
+        {!isEmbedded && (
+          <div className="section-title-wrapper text-center">
+            <span className="section-subtitle">Technical Depth</span>
+            <h2 className="section-title">
+              Engineering <span>Foundation</span>
+            </h2>
+            <p className="section-desc max-w-700">
+              {ENGINEERING_FOUNDATION.quote}
+            </p>
+          </div>
+        )}
 
         {/* Supporting Narrative Card */}
         <div className="engineering-narrative-card">
@@ -46,6 +51,6 @@ export default function EngineeringFoundation() {
           ))}
         </div>
       </div>
-    </section>
+    </ContentWrapper>
   );
 }

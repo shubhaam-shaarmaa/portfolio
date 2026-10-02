@@ -1,20 +1,25 @@
 import React from 'react';
 import { CORE_CAPABILITIES } from '../data/portfolioData';
 
-export default function Skills() {
+export default function Skills({ isEmbedded = false }) {
+  const ContentWrapper = isEmbedded ? 'div' : 'section';
+  const containerClass = isEmbedded ? 'embedded-skills-wrap' : 'capabilities-section';
+
   return (
-    <section id="capabilities" className="capabilities-section">
-      <div className="container">
-        {/* Section Header */}
-        <div className="section-title-wrapper text-center">
-          <span className="section-subtitle">Competency Matrix</span>
-          <h2 className="section-title">
-            Core <span>Capabilities</span>
-          </h2>
-          <p className="section-desc max-w-700">
-            A balanced techno-functional matrix: business analysis rigor, deep Capital Markets domain context, hands-on software engineering, and active AI enablement.
-          </p>
-        </div>
+    <ContentWrapper id={isEmbedded ? undefined : 'capabilities'} className={containerClass}>
+      <div className={isEmbedded ? '' : 'container'}>
+        {/* Section Header (omitted when embedded) */}
+        {!isEmbedded && (
+          <div className="section-title-wrapper text-center">
+            <span className="section-subtitle">Competency Matrix</span>
+            <h2 className="section-title">
+              Core <span>Capabilities</span>
+            </h2>
+            <p className="section-desc max-w-700">
+              A balanced techno-functional matrix: business analysis rigor, deep Capital Markets domain context, hands-on software engineering, and active AI enablement.
+            </p>
+          </div>
+        )}
 
         {/* 4 Major Capability Areas Grid */}
         <div className="capabilities-grid">
@@ -81,6 +86,6 @@ export default function Skills() {
           })}
         </div>
       </div>
-    </section>
+    </ContentWrapper>
   );
 }

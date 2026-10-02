@@ -1,20 +1,25 @@
 import React from 'react';
 import { CERTIFICATIONS_DATA } from '../data/portfolioData';
 
-export default function Certifications() {
+export default function Certifications({ isEmbedded = false }) {
+  const ContentWrapper = isEmbedded ? 'div' : 'section';
+  const containerClass = isEmbedded ? 'embedded-certs-wrap' : 'certifications-section';
+
   return (
-    <section id="certifications" className="certifications-section">
-      <div className="container">
-        {/* Section Header */}
-        <div className="section-title-wrapper text-center">
-          <span className="section-subtitle">Credentials & Recognition</span>
-          <h2 className="section-title">
-            Certifications & <span>Honors</span>
-          </h2>
-          <p className="section-desc max-w-700">
-            Professional credentials in business consulting, Capital Markets, agile engineering, and continuous internal client recognitions.
-          </p>
-        </div>
+    <ContentWrapper id={isEmbedded ? undefined : 'certifications'} className={containerClass}>
+      <div className={isEmbedded ? '' : 'container'}>
+        {/* Section Header (omitted when embedded) */}
+        {!isEmbedded && (
+          <div className="section-title-wrapper text-center">
+            <span className="section-subtitle">Credentials & Recognition</span>
+            <h2 className="section-title">
+              Certifications & <span>Honors</span>
+            </h2>
+            <p className="section-desc max-w-700">
+              Professional credentials in business consulting, Capital Markets, agile engineering, and continuous internal client recognitions.
+            </p>
+          </div>
+        )}
 
         {/* Compact Certifications Grid */}
         <div className="certifications-compact-grid">
@@ -36,6 +41,6 @@ export default function Certifications() {
           ))}
         </div>
       </div>
-    </section>
+    </ContentWrapper>
   );
 }

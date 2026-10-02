@@ -1,20 +1,25 @@
 import React from 'react';
 import { AI_JOURNEY_HEADER, AI_ROADMAP_PROJECTS, AI_ARCHITECTURE_SPEC } from '../data/aiRoadmapData';
 
-export default function AiJourney() {
+export default function AiJourney({ isEmbedded = false }) {
+  const ContentWrapper = isEmbedded ? 'div' : 'section';
+  const containerClass = isEmbedded ? 'embedded-ai-wrap' : 'ai-journey-section';
+
   return (
-    <section id="ai-journey" className="ai-journey-section">
-      <div className="container">
-        {/* Section Header */}
-        <div className="section-title-wrapper text-center">
-          <span className="section-subtitle">Capability Evolution</span>
-          <h2 className="section-title">
-            AI Journey & <span>Roadmap</span>
-          </h2>
-          <p className="section-desc max-w-700">
-            {AI_JOURNEY_HEADER.subtitle} {AI_JOURNEY_HEADER.description}
-          </p>
-        </div>
+    <ContentWrapper id={isEmbedded ? undefined : 'ai-journey'} className={containerClass}>
+      <div className={isEmbedded ? '' : 'container'}>
+        {/* Section Header (omitted when embedded) */}
+        {!isEmbedded && (
+          <div className="section-title-wrapper text-center">
+            <span className="section-subtitle">Capability Evolution</span>
+            <h2 className="section-title">
+              AI Journey & <span>Roadmap</span>
+            </h2>
+            <p className="section-desc max-w-700">
+              {AI_JOURNEY_HEADER.subtitle} {AI_JOURNEY_HEADER.description}
+            </p>
+          </div>
+        )}
 
         {/* Roadmap Title Banner */}
         <div className="ai-roadmap-header-banner">
@@ -128,6 +133,6 @@ export default function AiJourney() {
           </div>
         </div>
       </div>
-    </section>
+    </ContentWrapper>
   );
 }

@@ -17,13 +17,9 @@ export default function Navbar({ scrolled, activeSection }) {
 
   const navLinks = [
     { href: '#hero', label: 'Home', id: 'hero' },
-    { href: '#identity', label: 'About', id: 'identity' },
+    { href: '#ask', label: 'Ask', id: 'ask' },
+    { href: '#work', label: 'Work', id: 'work' },
     { href: '#journey', label: 'Journey', id: 'journey' },
-    { href: '#capabilities', label: 'Capabilities', id: 'capabilities' },
-    { href: '#case-studies', label: 'Case Studies', id: 'case-studies' },
-    { href: '#projects', label: 'Projects', id: 'projects' },
-    { href: '#ai-journey', label: 'AI Journey', id: 'ai-journey' },
-    { href: '#engineering', label: 'Engineering', id: 'engineering' },
     { href: '#contact', label: 'Contact', id: 'contact' },
   ];
 

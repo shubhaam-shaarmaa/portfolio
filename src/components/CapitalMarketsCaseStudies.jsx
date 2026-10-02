@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TRADE_LIFECYCLE_STAGES, FLAGSHIP_CASE_STUDY, FUTURE_CASE_STUDIES } from '../data/capitalMarketsData';
 
-export default function CapitalMarketsCaseStudies() {
+export default function CapitalMarketsCaseStudies({ isEmbedded = false }) {
   const [activeStageId, setActiveStageId] = useState('initiation');
   const [activeTab, setActiveTab] = useState('overview'); // 'overview' | 'requirements' | 'data-api' | 'uat'
   const [viewMode, setViewMode] = useState('executive'); // 'executive' | 'technical'
@@ -36,19 +36,24 @@ export default function CapitalMarketsCaseStudies() {
     }
   };
 
+  const ContentWrapper = isEmbedded ? 'div' : 'section';
+  const containerClass = isEmbedded ? 'embedded-case-study' : 'case-studies-section';
+
   return (
-    <section id="case-studies" className="case-studies-section">
-      <div className="container">
-        {/* Section Header */}
-        <div className="section-title-wrapper text-center">
-          <span className="section-subtitle">Domain Deep Dive</span>
-          <h2 className="section-title">
-            Capital Markets <span>Case Studies</span>
-          </h2>
-          <p className="section-desc max-w-700">
-            In-depth techno-functional analysis of institutional securities workflows, middle-office reconciliation, and T+1 settlement operations.
-          </p>
-        </div>
+    <ContentWrapper id={isEmbedded ? undefined : 'case-studies'} className={containerClass}>
+      <div className={isEmbedded ? '' : 'container'}>
+        {/* Section Header (omitted when embedded inside unified #work) */}
+        {!isEmbedded && (
+          <div className="section-title-wrapper text-center">
+            <span className="section-subtitle">Domain Deep Dive</span>
+            <h2 className="section-title">
+              Capital Markets <span>Case Studies</span>
+            </h2>
+            <p className="section-desc max-w-700">
+              In-depth techno-functional analysis of institutional securities workflows, middle-office reconciliation, and T+1 settlement operations.
+            </p>
+          </div>
+        )}
 
         {/* Recruiter Perspective Mode Switcher */}
         <div className="view-mode-bar">
@@ -421,6 +426,6 @@ export default function CapitalMarketsCaseStudies() {
           </div>
         </div>
       </div>
-    </section>
+    </ContentWrapper>
   );
 }

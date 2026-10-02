@@ -18,6 +18,9 @@ import Contact from '../Contact';
 import Footer from '../Footer';
 import BackToTop from '../BackToTop';
 import RecruiterDock from '../RecruiterDock';
+import AskShubham from '../AskShubham';
+import SelectedWork from '../SelectedWork';
+import JourneyAndCapabilities from '../JourneyAndCapabilities';
 import App from '../../App';
 
 describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
@@ -38,7 +41,7 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       expect(screen.getByText(/Techno-Functional BA/i)).toBeInTheDocument();
       expect(screen.getByAltText('Shubham Sharma')).toBeInTheDocument();
       
-      const links = ['Home', 'About', 'Journey', 'Capabilities', 'Case Studies', 'Projects', 'AI Journey', 'Engineering', 'Contact'];
+      const links = ['Home', 'Ask', 'Work', 'Journey', 'Contact'];
       links.forEach((linkText) => {
         expect(screen.getByRole('link', { name: linkText })).toBeInTheDocument();
       });
@@ -60,7 +63,7 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       expect(navLinksContainer).toHaveClass('active');
 
       // Click a link to close mobile menu
-      fireEvent.click(screen.getByRole('link', { name: 'Projects' }));
+      fireEvent.click(screen.getByRole('link', { name: 'Work' }));
       expect(navLinksContainer).not.toHaveClass('active');
       expect(toggleBtn).toHaveAttribute('aria-expanded', 'false');
     });
@@ -557,11 +560,11 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       
       expect(screen.getByRole('region', { name: /Recruiter Exploration Progress Dock/i })).toBeInTheDocument();
       expect(screen.getByText(/Explored:/i)).toBeInTheDocument();
-      expect(screen.getByText(/11%/i)).toBeInTheDocument();
+      expect(screen.getByText(/20%/i)).toBeInTheDocument();
 
       // Test section jump button
-      const projectsPill = screen.getByRole('button', { name: /Projects/i });
-      fireEvent.click(projectsPill);
+      const workPill = screen.getByRole('button', { name: /Work/i });
+      fireEvent.click(workPill);
     });
 
     test('toggles dock minimization on collapse/expand button click', () => {
@@ -584,7 +587,120 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
   });
 
   // =========================================================================
-  // 16. FULL APP INTEGRATION & SCROLL LISTENER
+  // 16. ASK SHUBHAM COMPONENT (Ayush Sharma Inspired Interactive Console)
+  // =========================================================================
+  describe('AskShubham Component', () => {
+    test('renders terminal header, prompt headline, and initial question chips', () => {
+      render(<AskShubham />);
+
+      expect(screen.getByText('// ask_shubham.exe')).toBeInTheDocument();
+      expect(screen.getByText(/Skip the bio\./i)).toBeInTheDocument();
+      expect(screen.getByText(/Just ask\./i)).toBeInTheDocument();
+      expect(screen.getByText(/Short answers only\./i)).toBeInTheDocument();
+
+      // Verify question chips
+      expect(screen.getByRole('button', { name: /What roles are you currently open to\?/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /Capital Markets & Middle-Office experience\?/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /engineering background help you as a BA\?/i })).toBeInTheDocument();
+    });
+
+    test('interactively asks a question, displays typing state, and shows concise answer with action link', () => {
+      vi.useFakeTimers();
+      render(<AskShubham />);
+
+      const roleChip = screen.getByRole('button', { name: /What roles are you currently open to\?/i });
+      fireEvent.click(roleChip);
+
+      // Question is now posted into thread
+      expect(screen.getByText(/What roles are you currently open to\?/i)).toBeInTheDocument();
+
+      // Advance timers to complete simulated typing
+      act(() => {
+        vi.advanceTimersByTime(500);
+      });
+
+      // Bot answer rendered
+      expect(screen.getByText(/Senior Business Analyst, Techno-Functional Consultant/i)).toBeInTheDocument();
+      expect(screen.getByRole('link', { name: /Connect regarding opportunities/i })).toHaveAttribute('href', '#contact');
+
+      vi.useRealTimers();
+    });
+
+    test('displays all answers at once when show all button is clicked and allows restart', () => {
+      render(<AskShubham />);
+
+      const showAllBtn = screen.getByRole('button', { name: /show all answers at once/i });
+      fireEvent.click(showAllBtn);
+
+      expect(screen.getByText(/Here is the complete direct briefing:/i)).toBeInTheDocument();
+      expect(screen.getByText(/All questions answered!/i)).toBeInTheDocument();
+
+      // Restart conversation
+      const restartBtn = screen.getByRole('button', { name: /restart/i });
+      fireEvent.click(restartBtn);
+
+      expect(screen.getByRole('button', { name: /What roles are you currently open to\?/i })).toBeInTheDocument();
+    });
+  });
+
+  // =========================================================================
+  // 17. SELECTED WORK COMPONENT
+  // =========================================================================
+  describe('SelectedWork Component', () => {
+    test('renders flagship trade lifecycle case study by default and toggles to all initiatives', () => {
+      render(<SelectedWork />);
+
+      expect(screen.getByText('// selected_work/')).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 2, name: /Case Studies & Systems Architecture/i })).toBeInTheDocument();
+
+      // Default tab: Flagship Case Study
+      expect(screen.getByText(/7-Stage End-to-End Trade Lifecycle Flow:/i)).toBeInTheDocument();
+
+      // Toggle to All Technical Initiatives
+      const initiativesTab = screen.getByRole('tab', { name: /All Technical Initiatives/i });
+      fireEvent.click(initiativesTab);
+
+      // Shows Featured Work initiatives
+      expect(screen.getByText(/Institutional Trade Lifecycle & Exception Resolver/i)).toBeInTheDocument();
+      expect(screen.getByText(/BFSI Document Research Assistant/i)).toBeInTheDocument();
+    });
+  });
+
+  // =========================================================================
+  // 18. JOURNEY AND CAPABILITIES COMPONENT
+  // =========================================================================
+  describe('JourneyAndCapabilities Component', () => {
+    test('renders multi-view segmented tabs and toggles between views', () => {
+      render(<JourneyAndCapabilities />);
+
+      expect(screen.getByText('// evolution_and_depth/')).toBeInTheDocument();
+      expect(screen.getByRole('heading', { level: 2, name: /Journey & Core Capabilities/i })).toBeInTheDocument();
+
+      // Tab 1: Career Progression
+      expect(screen.getByRole('heading', { name: /^SYSTEMS ENGINEER TRAINEE$/i })).toBeInTheDocument();
+
+      // Tab 2: Core Capabilities & Skills
+      const skillsTab = screen.getByRole('tab', { name: /Core Capabilities & Skills/i });
+      fireEvent.click(skillsTab);
+      expect(screen.getByText('User Stories')).toBeInTheDocument();
+      expect(screen.getByText(/CURRENT CAPABILITIES \(IN PRACTICE\):/i)).toBeInTheDocument();
+
+      // Tab 3: Engineering & AI Architecture
+      const engAiTab = screen.getByRole('tab', { name: /Engineering & AI Architecture/i });
+      fireEvent.click(engAiTab);
+      expect(screen.getByText(/Frontend Architecture & UI/i)).toBeInTheDocument();
+      expect(screen.getByText(/Building Toward Production AI Systems/i)).toBeInTheDocument();
+
+      // Tab 4: Positioning & Certifications
+      const credTab = screen.getByRole('tab', { name: /Positioning & Certifications/i });
+      fireEvent.click(credTab);
+      expect(screen.getByRole('heading', { name: /TECHNO-FUNCTIONAL SOLUTIONS/i })).toBeInTheDocument();
+      expect(screen.getByText(/Infosys Certified Business Consultant/i)).toBeInTheDocument();
+    });
+  });
+
+  // =========================================================================
+  // 19. FULL APP INTEGRATION & SCROLL LISTENER
   // =========================================================================
   describe('Full App Integration', () => {
     test('renders complete application with toast container and scroll handler', () => {

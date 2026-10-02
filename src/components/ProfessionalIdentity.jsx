@@ -1,20 +1,25 @@
 import React from 'react';
 import { PROFESSIONAL_IDENTITY, ABOUT_NARRATIVE } from '../data/portfolioData';
 
-export default function ProfessionalIdentity() {
+export default function ProfessionalIdentity({ isEmbedded = false }) {
+  const ContentWrapper = isEmbedded ? 'div' : 'section';
+  const containerClass = isEmbedded ? 'embedded-identity-wrap' : 'identity-section';
+
   return (
-    <section id="identity" className="identity-section">
-      <div className="container">
-        {/* Section Header */}
-        <div className="section-title-wrapper text-center">
-          <span className="section-subtitle">Professional Positioning</span>
-          <h2 className="section-title">
-            Business × Technology × <span>Capital Markets</span>
-          </h2>
-          <p className="section-desc max-w-700">
-            {PROFESSIONAL_IDENTITY.subtitle}. My value comes from connecting these areas rather than being defined by only one.
-          </p>
-        </div>
+    <ContentWrapper id={isEmbedded ? undefined : 'identity'} className={containerClass}>
+      <div className={isEmbedded ? '' : 'container'}>
+        {/* Section Header (omitted when embedded) */}
+        {!isEmbedded && (
+          <div className="section-title-wrapper text-center">
+            <span className="section-subtitle">Professional Positioning</span>
+            <h2 className="section-title">
+              Business × Technology × <span>Capital Markets</span>
+            </h2>
+            <p className="section-desc max-w-700">
+              {PROFESSIONAL_IDENTITY.subtitle}. My value comes from connecting these areas rather than being defined by only one.
+            </p>
+          </div>
+        )}
 
         {/* 3-Part Intersection Diagram */}
         <div className="intersection-container">
@@ -100,6 +105,6 @@ export default function ProfessionalIdentity() {
           </div>
         </div>
       </div>
-    </section>
+    </ContentWrapper>
   );
 }

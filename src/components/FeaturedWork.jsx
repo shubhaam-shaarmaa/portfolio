@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FEATURED_PROJECTS } from '../data/projectsData';
 
-export default function FeaturedWork() {
+export default function FeaturedWork({ isEmbedded = false }) {
   const [activeModalProject, setActiveModalProject] = useState(null);
   const [selectedFilter, setSelectedFilter] = useState('ALL');
   const [domainFilter, setDomainFilter] = useState('ALL');
@@ -28,19 +28,24 @@ export default function FeaturedWork() {
     return statusMatch && domainMatch;
   });
 
+  const ContentWrapper = isEmbedded ? 'div' : 'section';
+  const containerClass = isEmbedded ? 'embedded-projects-wrap' : 'featured-work-section';
+
   return (
-    <section id="projects" className="featured-work-section">
-      <div className="container">
-        {/* Section Header */}
-        <div className="section-title-wrapper text-center">
-          <span className="section-subtitle">Execution & Deliverables</span>
-          <h2 className="section-title">
-            Featured <span>Work & Systems</span>
-          </h2>
-          <p className="section-desc max-w-700">
-            Real enterprise case studies and structured technical projects spanning Business Analysis, Capital Markets workflows, and AI enablement.
-          </p>
-        </div>
+    <ContentWrapper id={isEmbedded ? undefined : 'projects'} className={containerClass}>
+      <div className={isEmbedded ? '' : 'container'}>
+        {/* Section Header (omitted when embedded inside unified #work) */}
+        {!isEmbedded && (
+          <div className="section-title-wrapper text-center">
+            <span className="section-subtitle">Execution & Deliverables</span>
+            <h2 className="section-title">
+              Featured <span>Work & Systems</span>
+            </h2>
+            <p className="section-desc max-w-700">
+              Real enterprise case studies and structured technical projects spanning Business Analysis, Capital Markets workflows, and AI enablement.
+            </p>
+          </div>
+        )}
 
         {/* Filter Bar with Status System */}
         <div className="project-status-filter-bar">
@@ -276,6 +281,6 @@ export default function FeaturedWork() {
           </div>
         )}
       </div>
-    </section>
+    </ContentWrapper>
   );
 }

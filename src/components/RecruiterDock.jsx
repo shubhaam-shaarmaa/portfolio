@@ -6,13 +6,9 @@ export default function RecruiterDock({ activeSection }) {
 
   const sections = [
     { id: 'hero', label: 'Home', icon: 'fa-house' },
-    { id: 'identity', label: 'About', icon: 'fa-user' },
+    { id: 'ask', label: 'Ask', icon: 'fa-terminal' },
+    { id: 'work', label: 'Work', icon: 'fa-briefcase' },
     { id: 'journey', label: 'Journey', icon: 'fa-route' },
-    { id: 'capabilities', label: 'Capabilities', icon: 'fa-layer-group' },
-    { id: 'case-studies', label: 'Case Studies', icon: 'fa-chart-line' },
-    { id: 'projects', label: 'Projects', icon: 'fa-folder-open' },
-    { id: 'ai-journey', label: 'AI Roadmap', icon: 'fa-microchip' },
-    { id: 'engineering', label: 'Engineering', icon: 'fa-code' },
     { id: 'contact', label: 'Contact', icon: 'fa-envelope' }
   ];
 
