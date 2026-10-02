@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import CaseStudies from './components/CaseStudies';
-import TradeLifecycle from './components/TradeLifecycle';
+import ProfessionalIdentity from './components/ProfessionalIdentity';
+import CareerJourney from './components/CareerJourney';
 import Skills from './components/Skills';
-import Experience from './components/Experience';
+import FeaturedWork from './components/FeaturedWork';
+import CapitalMarketsCaseStudies from './components/CapitalMarketsCaseStudies';
+import AiJourney from './components/AiJourney';
+import EngineeringFoundation from './components/EngineeringFoundation';
+import Certifications from './components/Certifications';
+import ResumeCta from './components/ResumeCta';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import BackToTop from './components/BackToTop';
@@ -17,16 +22,25 @@ export default function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setScrolled(true);
-      } else {
-        setScrolled(false);
-      }
+      setScrolled(window.scrollY > 50);
 
-      const sections = ['hero', 'projects', 'lifecycle', 'skills', 'experience', 'contact'];
-      const scrollPos = window.scrollY + 200;
+      const sectionIds = [
+        'hero',
+        'identity',
+        'journey',
+        'capabilities',
+        'case-studies',
+        'projects',
+        'ai-journey',
+        'engineering',
+        'certifications',
+        'resume',
+        'contact'
+      ];
 
-      for (let sec of sections) {
+      const scrollPos = window.scrollY + 250;
+
+      for (let sec of sectionIds) {
         const el = document.getElementById(sec);
         if (el) {
           const top = el.offsetTop;
@@ -53,17 +67,44 @@ export default function App() {
     <div className="portfolio-app">
       <Navbar scrolled={scrolled} activeSection={activeSection} />
       <main>
+        {/* 01 — Hero */}
         <Hero />
-        <CaseStudies />
-        <TradeLifecycle />
+
+        {/* 02 — Professional Identity (Business × Technology × Capital Markets) */}
+        <ProfessionalIdentity />
+
+        {/* 03 — Career Journey (5-Stage Progressive Evolution) */}
+        <CareerJourney />
+
+        {/* 04 — Core Capabilities (4-Pillar Matrix: BA, Capital Markets, Tech, AI Current vs Building) */}
         <Skills />
-        <Experience />
+
+        {/* 05 — Featured Work (Structured Projects: Status Filter, Contributions, Specs) */}
+        <FeaturedWork />
+
+        {/* 06 — Capital Markets Case Studies (Flagship 7-Stage Trade Lifecycle Analysis & Simulator) */}
+        <CapitalMarketsCaseStudies />
+
+        {/* 07 — AI Journey (8-Project Capability Roadmap + Progressive Architecture) */}
+        <AiJourney />
+
+        {/* 08 — Engineering Foundation (Technical Depth Supporting BA Identity) */}
+        <EngineeringFoundation />
+
+        {/* 09 — Certifications & Achievements (Compact Credentials) */}
+        <Certifications />
+
+        {/* 10 — Resume CTA */}
+        <ResumeCta />
+
+        {/* 11 — Contact */}
         <Contact triggerToast={triggerToast} />
       </main>
+
       <Footer />
       <BackToTop scrolled={scrolled} />
 
-      <div className={`toast ${showToast ? 'show' : ''}`}>
+      <div className={`toast ${showToast ? 'show' : ''}`} role="alert" aria-live="assertive">
         <i className="fa-solid fa-circle-check"></i> {toastMsg}
       </div>
     </div>

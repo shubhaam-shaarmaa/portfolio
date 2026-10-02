@@ -2,78 +2,86 @@ import React from 'react';
 import { describe, test, expect } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import Hero from '../Hero';
-import CaseStudies from '../CaseStudies';
-import DocExplorer from '../DocExplorer';
-import TradeLifecycle from '../TradeLifecycle';
+import ProfessionalIdentity from '../ProfessionalIdentity';
+import CareerJourney from '../CareerJourney';
+import Skills from '../Skills';
+import FeaturedWork from '../FeaturedWork';
+import CapitalMarketsCaseStudies from '../CapitalMarketsCaseStudies';
+import AiJourney from '../AiJourney';
 
-describe('Portfolio Component Suite', () => {
+describe('Techno-Functional Portfolio Component Suite', () => {
 
   // Test 1: Hero
-  test('Hero renders candidate role title and key recruiter metrics', () => {
+  test('Hero renders primary techno-functional positioning and truthful credentials', () => {
     render(<Hero />);
-    const roleBadge = screen.getByText(/Retirement & Asset Management/i);
-    expect(roleBadge).toBeInTheDocument();
-    
-    // Check metric
-    const savingsMetric = screen.getByText(/\$120K\/Yr/i);
-    expect(savingsMetric).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/TECHNO-FUNCTIONAL/i);
+    expect(screen.getAllByText(/Senior Associate Consultant — Infosys/i).length).toBeGreaterThan(0);
+    expect(screen.getByText(/US Investment Mgmt Exposure/i)).toBeInTheDocument();
+    expect(screen.getByText(/Enterprise Experience/i)).toBeInTheDocument();
   });
 
-  // Test 2: CaseStudies (Enterprise Project Explorer)
-  test('CaseStudies explorer renders dashboard metrics and updates active tab', () => {
-    render(<CaseStudies />);
-    // Check metric totals
-    expect(screen.getByText('10')).toBeInTheDocument();
-    
-    // Check if the search box exists
-    const searchInput = screen.getByPlaceholderText(/Search project repositories/i);
-    expect(searchInput).toBeInTheDocument();
-
-    // Click API specification accordion and verify it expands
-    const apiAccordionBtn = screen.getByText(/API Integration specifications/i);
-    fireEvent.click(apiAccordionBtn);
-    expect(screen.getByText(/POST \/api\/v1\/enrollment\/validate/i)).toBeInTheDocument();
+  // Test 2: Professional Identity
+  test('ProfessionalIdentity renders 3-part intersection and emerging AI pillar', () => {
+    render(<ProfessionalIdentity />);
+    expect(screen.getByText(/Business × Technology ×/i)).toBeInTheDocument();
+    expect(screen.getByText(/TECHNO-FUNCTIONAL SOLUTIONS/i)).toBeInTheDocument();
+    expect(screen.getByText(/EMERGING CAPABILITY/i)).toBeInTheDocument();
   });
 
-  // Test 3: DocExplorer (Business Analysis Framework)
-  test('DocExplorer switcher updates selected document', () => {
-    render(<DocExplorer />);
-    
-    // Check if the Discovery step exists by default
-    expect(screen.getByText(/Stage 1: Discovery/i)).toBeInTheDocument();
-
-    // Click step 2 button and check if description updates
-    const step2Btn = screen.getByRole('button', { name: /Step 2: Requirement Gathering/i });
-    fireEvent.click(step2Btn);
-    expect(screen.getByText(/Stage 2: Requirement Gathering/i)).toBeInTheDocument();
-
-    // Switch to Deliverables tab
-    const deliverablesTabBtn = screen.getByRole('button', { name: /2\. Enterprise Deliverables/i });
-    fireEvent.click(deliverablesTabBtn);
-
-    // Verify BRD deliverable label is rendered
-    expect(screen.getByRole('heading', { name: /Business Requirements \(BRD\)/i })).toBeInTheDocument();
+  // Test 3: Career Journey
+  test('CareerJourney renders 5-stage progressive career evolution', () => {
+    render(<CareerJourney />);
+    expect(screen.getByText(/SYSTEMS ENGINEER TRAINEE/i)).toBeInTheDocument();
+    expect(screen.getByText(/SENIOR ASSOCIATE CONSULTANT/i)).toBeInTheDocument();
+    expect(screen.getByText(/The Core Career Narrative:/i)).toBeInTheDocument();
   });
 
-  // Test 4: TradeLifecycle (Operations Console)
-  test('TradeLifecycle stepper node updates description and resolves exceptions', () => {
-    render(<TradeLifecycle />);
+  // Test 4: Core Capabilities
+  test('Skills component renders 4 distinct capability areas and partitions AI into Current vs Building', () => {
+    render(<Skills />);
+    expect(screen.getByRole('heading', { name: /BUSINESS ANALYSIS/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /CAPITAL MARKETS/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /TECHNOLOGY/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /AI & GENAI/i })).toBeInTheDocument();
+    expect(screen.getByText(/CURRENT CAPABILITIES \(IN PRACTICE\):/i)).toBeInTheDocument();
+    expect(screen.getByText(/BUILDING TOWARD \(ACTIVE ROADMAP\):/i)).toBeInTheDocument();
+  });
+
+  // Test 5: Featured Work & Spec Modal
+  test('FeaturedWork renders project cards and opens deliverable spec modal', () => {
+    render(<FeaturedWork />);
+    expect(screen.getByText(/Institutional Trade Lifecycle & Exception Resolver/i)).toBeInTheDocument();
     
-    // Check default active stage (Portfolio Rebalancing)
-    expect(screen.getByRole('heading', { name: /01\. Portfolio Rebalancing/i })).toBeInTheDocument();
+    // Open spec modal
+    const inspectBtn = screen.getAllByRole('button', { name: /Inspect Spec Artifact/i })[0];
+    fireEvent.click(inspectBtn);
 
-    // Verify initial exception count badge exists
-    const exceptionsButton = screen.getByRole('button', { name: /Exceptions Desk/i });
-    expect(exceptionsButton).toBeInTheDocument();
+    expect(screen.getByText(/Specification Context:/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Close Artifact/i })).toBeInTheDocument();
+  });
 
-    // Click Exceptions tab
-    fireEvent.click(exceptionsButton);
-    expect(screen.getByText(/Operations Exception Reconciliation Hub/i)).toBeInTheDocument();
+  // Test 6: Capital Markets Case Studies & 7-Stage Lifecycle
+  test('CapitalMarketsCaseStudies renders 7 stages and toggles active stage and resolves exception', () => {
+    render(<CapitalMarketsCaseStudies />);
+    expect(screen.getByText(/7-Stage End-to-End Trade Lifecycle Flow:/i)).toBeInTheDocument();
+    
+    // Switch to Settlement stage by clicking the label text
+    const settlementLabel = screen.getByText('Settlement (T+1)');
+    fireEvent.click(settlementLabel);
+    expect(screen.getByText(/Stage 05 of 07/i)).toBeInTheDocument();
 
-    // Resolve an exception and verify status text
-    const resolveButtons = screen.getAllByRole('button', { name: /Trigger Resolution/i });
-    fireEvent.click(resolveButtons[0]);
-    expect(screen.getByText(/Audit match complete/i)).toBeInTheDocument();
+    // Test Exception Resolver
+    const triageBtns = screen.getAllByRole('button', { name: /Execute Triage/i });
+    fireEvent.click(triageBtns[0]);
+    expect(screen.getByText(/Resolved: 1 \/ 3/i)).toBeInTheDocument();
+  });
+
+  // Test 7: AI Journey
+  test('AiJourney renders 8-project roadmap and evolving architecture', () => {
+    render(<AiJourney />);
+    expect(screen.getByText(/Building Toward Production AI Systems/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/BFSI Research Assistant/i).length).toBeGreaterThan(0);
+    expect(screen.getByText(/AI Architecture — Building Progressively/i)).toBeInTheDocument();
   });
 
 });
