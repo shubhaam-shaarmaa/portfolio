@@ -9,3 +9,5 @@
 | 2026-10-02 | GitHub Actions for Deployment | Automated workflow triggered on `main` branch pushes | Consistent, reproducible builds without manual deployment steps |
 | 2026-10-02 | Autonomous Dev with HITL Guardrails | High autonomy for development & testing, strict Human-In-The-Loop gate for deployment | Agent can code and test freely; deployments require explicit user instruction |
 | 2026-10-02 | Protected Deployment Branch (`main` only) | Prevent untested or feature branch code from reaching live environment | Deployments exclusively originate from `main` |
+| 2026-10-02 | Scratchpads as Spec Sheets (`superpowers/specs/`) | Preserve task specs, checklists, and working state in repository | All planning and architectural context stays version-controlled on GitHub |
+| 2026-10-02 | Auto-Accept & Always-Proceed IDE Configuration | Eliminate repetitive manual confirmation prompts | Streamlines autonomous flow while maintaining strict HITL deployment gate |

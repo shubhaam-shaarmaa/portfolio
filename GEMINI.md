@@ -6,10 +6,10 @@
 
 ---
 
-## 1. Development Lifecycle (Spec-First Protocol)
+## 1. Development Lifecycle (Spec-First & Scratchpad-as-Specsheet Protocol)
 Whenever any feature development, refactor, or non-trivial change is requested:
 1. **Ask Clarifying Questions:** Engage the user to clarify ambiguity, UX choices, or functional scope before touching code.
-2. **Draft Spec Sheet:** Create a concise specification document in `superpowers/specs/<feature_name>.spec.md` following `superpowers/specs/template_spec.md`.
+2. **Scratchpad as Spec Sheet:** Use `superpowers/specs/<feature_name>.spec.md` as both the live development scratchpad and the persistent specification sheet. This ensures all planning, execution checklists, and architectural notes stay committed on GitHub.
 3. **Autonomous Execution:** Implement changes, styles, and logic autonomously without asking for routine approval.
 4. **Local Verification:** Always execute `npm run build` to confirm zero compilation errors before declaring completion.
 5. **Log Decisions & Learnings:** Update `decisions/decisions.md` and `learnings/learnings.md`.
