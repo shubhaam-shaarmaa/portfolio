@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import contactImg from '../assets/shubham_contact.jpg';
 
 export default function Contact({ triggerToast }) {
   const [contactForm, setContactForm] = useState({ name: '', email: '', subject: '', message: '' });
@@ -30,7 +31,7 @@ export default function Contact({ triggerToast }) {
           {/* Contact Info Card */}
           <div className="contact-info-card" style={{ overflow: 'hidden' }}>
             <div className="contact-image-wrapper" style={{ margin: '-2.2rem -2.2rem 1rem -2.2rem', overflow: 'hidden', borderBottom: '1px solid var(--border-light)' }}>
-              <img src="/shubham_contact.jpg" alt="Shubham Sharma - Senior Consultant" style={{ width: 'calc(100% + 4.4rem)', height: '240px', objectFit: 'cover', objectPosition: 'center 20%' }} />
+              <img src={contactImg} alt="Shubham Sharma - Senior Consultant" style={{ width: 'calc(100% + 4.4rem)', height: '240px', objectFit: 'cover', objectPosition: 'center 20%' }} />
             </div>
             <div className="info-card-item">
               <div className="info-icon"><i className="fa-solid fa-envelope"></i></div>

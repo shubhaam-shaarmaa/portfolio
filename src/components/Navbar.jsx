@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import avatarImg from '../assets/shubham_avatar.jpg';
+import resumePdf from '../assets/Shubham_Sharma_Resume.pdf';
 
 export default function Navbar({ scrolled, activeSection }) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
@@ -7,7 +9,7 @@ export default function Navbar({ scrolled, activeSection }) {
     <nav className={`navbar ${scrolled ? 'scrolled' : ''}`}>
       <div className="container nav-container">
         <a href="#hero" className="logo">
-          <img src="/shubham_avatar.jpg" alt="Shubham Sharma" className="nav-avatar-img" />
+          <img src={avatarImg} alt="Shubham Sharma" className="nav-avatar-img" />
           <div className="logo-text">Shubham Sharma<span>.</span></div>
         </a>
 
@@ -19,7 +21,7 @@ export default function Navbar({ scrolled, activeSection }) {
           <a href="#case-studies" className={`nav-link ${activeSection === 'case-studies' ? 'active' : ''}`} onClick={() => setMobileNavOpen(false)}>Case Studies</a>
           <a href="#doc-explorer" className={`nav-link ${activeSection === 'doc-explorer' ? 'active' : ''}`} onClick={() => setMobileNavOpen(false)}>BA Framework</a>
           <a href="#contact" className={`nav-link ${activeSection === 'contact' ? 'active' : ''}`} onClick={() => setMobileNavOpen(false)}>Contact</a>
-          <a href="Shubham_Sharma_Resume.pdf" download="Shubham_Sharma_Resume.pdf" className="btn btn-gold nav-cta">
+          <a href={resumePdf} download="Shubham_Sharma_Resume.pdf" className="btn btn-gold nav-cta">
             <i className="fa-solid fa-download"></i> Resume
           </a>
         </div>

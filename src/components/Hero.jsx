@@ -1,4 +1,6 @@
 import React from 'react';
+import profileImg from '../assets/shubham_profile.jpg';
+import resumePdf from '../assets/Shubham_Sharma_Resume.pdf';
 
 export default function Hero() {
   return (
@@ -23,7 +25,7 @@ export default function Hero() {
               <a href="#case-studies" className="btn btn-primary">
                 <i className="fa-solid fa-folder-open"></i> Review Case Studies
               </a>
-              <a href="Shubham_Sharma_Resume.pdf" download="Shubham_Sharma_Resume.pdf" className="btn btn-gold">
+              <a href={resumePdf} download="Shubham_Sharma_Resume.pdf" className="btn btn-gold">
                 <i className="fa-solid fa-file-arrow-down"></i> Download ATS Resume
               </a>
             </div>
@@ -50,7 +52,7 @@ export default function Hero() {
           {/* Hero Profile Photo & Retirement Solutions Metrics Card */}
           <div className="hero-profile-card">
             <div className="hero-img-wrapper">
-              <img src="/shubham_profile.jpg" alt="Shubham Sharma - Senior Associate Consultant" className="hero-profile-img" />
+              <img src={profileImg} alt="Shubham Sharma - Senior Associate Consultant" className="hero-profile-img" />
               <div className="hero-img-overlay"></div>
               <div className="hero-floating-badge">
                 <span className="status-dot"></span> Partner Client: Capital Group ($2.6T AUM)
