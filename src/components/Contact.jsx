@@ -6,17 +6,56 @@ export default function Contact({ triggerToast }) {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      setIsSubmitting(false);
+    const targetEmail = PERSONAL_INFO.email;
+    const mailtoFallback = `mailto:${targetEmail}?subject=${encodeURIComponent(
+      formData.subject || 'Portfolio Inquiry'
+    )}&body=${encodeURIComponent(
+      `Name: ${formData.name}\nEmail: ${formData.email}\n\nMessage:\n${formData.message}`
+    )}`;
+
+    try {
+      const response = await fetch(`https://formsubmit.co/ajax/${targetEmail}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          _subject: `[Portfolio Inquiry] ${formData.subject}`,
+          message: formData.message,
+          _replyto: formData.email,
+          _template: 'table',
+          _captcha: 'false'
+        })
+      });
+
+      if (response && response.ok) {
+        if (typeof triggerToast === 'function') {
+          triggerToast(`Thank you, ${formData.name || 'there'}! Your message has been sent directly to ${targetEmail}.`);
+        }
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      } else {
+        window.location.href = mailtoFallback;
+        if (typeof triggerToast === 'function') {
+          triggerToast(`Opening email client to deliver message to ${targetEmail}...`);
+        }
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      }
+    } catch {
+      window.location.href = mailtoFallback;
       if (typeof triggerToast === 'function') {
-        triggerToast(`Thank you, ${formData.name || 'there'}! Your message has been sent successfully.`);
+        triggerToast(`Opening email client to deliver message to ${targetEmail}...`);
       }
       setFormData({ name: '', email: '', subject: '', message: '' });
-    }, 1000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const copyEmail = () => {
@@ -279,6 +318,21 @@ export default function Contact({ triggerToast }) {
                     </>
                   )}
                 </button>
+
+                <div className="form-delivery-guarantee mt-2 text-center">
+                  <span className="text-xs text-dim">
+                    <i className="fa-solid fa-shield-halved text-emerald"></i> Delivered directly to <strong>{PERSONAL_INFO.email}</strong>
+                  </span>
+                </div>
+
+                <div className="form-secondary-action mt-1 text-center">
+                  <a
+                    href={`mailto:${PERSONAL_INFO.email}?subject=${encodeURIComponent(formData.subject || 'Opportunity Inquiry')}&body=${encodeURIComponent(formData.message || 'Hi Shubham,')}`}
+                    className="direct-mailto-link text-xs text-cyan"
+                  >
+                    <i className="fa-solid fa-arrow-up-right-from-square"></i> Prefer your email app? Open in Outlook / Gmail
+                  </a>
+                </div>
               </form>
             </div>
           </div>

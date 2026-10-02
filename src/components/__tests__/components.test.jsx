@@ -472,8 +472,7 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       expect(mockTriggerToast).toHaveBeenCalled();
     });
 
-    test('updates form inputs and submits message with toast feedback', () => {
-      vi.useFakeTimers();
+    test('updates form inputs and submits message directly to shub.tech10@gmail.com with toast feedback', async () => {
       const mockTriggerToast = vi.fn();
       render(<Contact triggerToast={mockTriggerToast} />);
       
@@ -488,16 +487,14 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       fireEvent.change(messageInput, { target: { value: 'We would love to discuss a role.' } });
 
       const submitBtn = screen.getByRole('button', { name: /Send Direct Message/i });
-      fireEvent.click(submitBtn);
-
-      // Fast-forward timeout
-      act(() => {
-        vi.advanceTimersByTime(1100);
+      
+      await act(async () => {
+        fireEvent.click(submitBtn);
       });
 
       expect(mockTriggerToast).toHaveBeenCalledWith(expect.stringContaining('Alex Morgan'));
+      expect(mockTriggerToast).toHaveBeenCalledWith(expect.stringContaining('shub.tech10@gmail.com'));
       expect(nameInput.value).toBe('');
-      vi.useRealTimers();
     });
 
     test('auto-populates subject and message when recruiter preset chip is selected', () => {
