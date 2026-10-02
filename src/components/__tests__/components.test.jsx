@@ -50,14 +50,39 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       
       const toggleBtn = screen.getByRole('button', { name: /navigation menu/i });
       expect(toggleBtn).toBeInTheDocument();
+      expect(toggleBtn).toHaveAttribute('aria-expanded', 'false');
 
       // Open mobile menu
       fireEvent.click(toggleBtn);
+      expect(toggleBtn).toHaveAttribute('aria-expanded', 'true');
       const navLinksContainer = screen.getByRole('link', { name: 'Home' }).parentElement;
       expect(navLinksContainer).toHaveClass('active');
 
       // Click a link to close mobile menu
       fireEvent.click(screen.getByRole('link', { name: 'Projects' }));
+      expect(navLinksContainer).not.toHaveClass('active');
+      expect(toggleBtn).toHaveAttribute('aria-expanded', 'false');
+    });
+
+    test('closes mobile menu on backdrop click or escape key', () => {
+      const { container } = render(<Navbar scrolled={false} activeSection="hero" />);
+      const toggleBtn = screen.getByRole('button', { name: /navigation menu/i });
+      const navLinksContainer = screen.getByRole('link', { name: 'Home' }).parentElement;
+
+      // Open menu and verify backdrop appears
+      fireEvent.click(toggleBtn);
+      expect(navLinksContainer).toHaveClass('active');
+      const backdrop = container.querySelector('.nav-backdrop');
+      expect(backdrop).toBeInTheDocument();
+
+      // Click backdrop to dismiss
+      fireEvent.click(backdrop);
+      expect(navLinksContainer).not.toHaveClass('active');
+
+      // Re-open and dismiss with Escape key
+      fireEvent.click(toggleBtn);
+      expect(navLinksContainer).toHaveClass('active');
+      fireEvent.keyDown(window, { key: 'Escape' });
       expect(navLinksContainer).not.toHaveClass('active');
     });
 
