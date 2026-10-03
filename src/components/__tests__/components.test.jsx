@@ -766,4 +766,39 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
     });
   });
 
+  // =========================================================================
+  // 12. FOOTER COMPONENT & CENTERING VERIFICATION
+  // =========================================================================
+  describe('Footer Navigation & Centered Copyright Tier', () => {
+    test('renders centered copyright text with current year and professional title', () => {
+      render(<Footer onSelectSheet={vi.fn()} />);
+
+      const currentYear = new Date().getFullYear();
+      const copyrightRegex = new RegExp(`© ${currentYear} Shubham Sharma\\. All rights reserved\\.\\s+\\|\\s+Techno-Functional Business Analyst · Capital Markets & Asset Management`, 'i');
+      expect(screen.getByText(copyrightRegex)).toBeInTheDocument();
+    });
+
+    test('verifies "System Online // Zero Fabrication" pill is completely removed', () => {
+      const { container } = render(<Footer onSelectSheet={vi.fn()} />);
+
+      expect(screen.queryByText(/System Online/i)).not.toBeInTheDocument();
+      expect(screen.queryByText(/Zero Fabrication/i)).not.toBeInTheDocument();
+      expect(container.querySelector('.footer-meta-pill')).toBeNull();
+    });
+
+    test('invokes onSelectSheet with target anchor when navigation links are clicked', () => {
+      const mockSelectSheet = vi.fn();
+      render(<Footer onSelectSheet={mockSelectSheet} />);
+
+      const initiativesLink = screen.getByRole('link', { name: /Technical Initiatives \(6\)/i });
+      fireEvent.click(initiativesLink);
+      expect(mockSelectSheet).toHaveBeenCalledWith('initiatives', 'projects');
+
+      const tradeLink = screen.getByRole('link', { name: /Trade Lifecycle & T\+1 Spec/i });
+      fireEvent.click(tradeLink);
+      expect(mockSelectSheet).toHaveBeenCalledWith('trade', 'work');
+    });
+  });
+
 });
+

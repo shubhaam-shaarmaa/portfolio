@@ -155,14 +155,11 @@ export default function Footer({ onSelectSheet }) {
           </div>
         </div>
 
-        {/* Bottom Tier: Divider, Copyright & Verification Badge */}
+        {/* Bottom Tier: Divider & Centered Copyright */}
         <div className="footer-bottom-row">
           <p className="footer-copy">
             &copy; {new Date().getFullYear()} Shubham Sharma. All rights reserved. &nbsp;|&nbsp; Techno-Functional Business Analyst · Capital Markets & Asset Management
           </p>
-          <div className="footer-meta-pill">
-            <span className="dot-pulse"></span> System Online // Zero Fabrication
-          </div>
         </div>
       </div>
     </footer>

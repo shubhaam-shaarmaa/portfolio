@@ -2595,25 +2595,17 @@ a.footer-contact-item:hover {
   padding-top: 1.75rem;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
 }
 
 .footer-copy {
   font-size: 0.78rem;
   color: var(--text-dim);
-  line-height: 1.5;
-}
-
-.footer-meta-pill {
-  font-family: 'Space Grotesk', monospace, sans-serif;
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-weight: 600;
+  line-height: 1.6;
+  text-align: center;
+  margin: 0 auto;
 }
 
 /* Back to Top */
@@ -4035,9 +4027,9 @@ a.footer-contact-item:hover {
   }
 
   .footer-bottom-row {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.85rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
   }
 }
 
