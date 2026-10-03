@@ -2,10 +2,14 @@ import React from 'react';
 import resumePdf from '../assets/Shubham_Sharma_Resume.pdf';
 import { PERSONAL_INFO } from '../data/portfolioData';
 
-export default function ResumeCta() {
+export default function ResumeCta({ isEmbedded = false }) {
+  const ContentWrapper = isEmbedded ? 'div' : 'section';
+  const containerClass = isEmbedded ? 'embedded-resume-cta-wrap' : 'resume-cta-section';
+  const innerClass = isEmbedded ? '' : 'container';
+
   return (
-    <section id="resume" className="resume-cta-section">
-      <div className="container">
+    <ContentWrapper id={isEmbedded ? undefined : 'resume'} className={containerClass}>
+      <div className={innerClass}>
         <div className="resume-cta-box">
           <div className="resume-cta-content">
             <span className="resume-cta-badge">
@@ -38,6 +42,6 @@ export default function ResumeCta() {
           </div>
         </div>
       </div>
-    </section>
+    </ContentWrapper>
   );
 }

@@ -5438,25 +5438,15 @@ input, textarea, select {
   animation: pulse-glow 2s infinite;
 }
 
-.ribbon-studio-btn {
-  background: rgba(245, 158, 11, 0.1);
-  border: 1px solid rgba(245, 158, 11, 0.35);
-  color: var(--accent-gold);
-  font-family: 'Space Grotesk', sans-serif;
+.ribbon-mode-badge {
+  font-family: 'Space Grotesk', monospace, sans-serif;
   font-size: 0.72rem;
   font-weight: 700;
-  padding: 0.25rem 0.65rem;
-  border-radius: var(--radius-full);
-  cursor: pointer;
+  letter-spacing: 0.05em;
+  color: var(--text-dim);
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  transition: var(--transition);
-}
-
-.ribbon-studio-btn:hover {
-  background: rgba(245, 158, 11, 0.2);
-  border-color: var(--accent-gold);
+  gap: 0.4rem;
 }
 
 /* Command Deck Section */
@@ -6154,6 +6144,20 @@ input, textarea, select {
 }
 
 @media (max-width: 768px) {
+  .ai-system-top-ribbon {
+    padding: 0.4rem 0;
+  }
+
+  .ribbon-flex {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+  }
+
+  .ribbon-left {
+    gap: 0.5rem;
+  }
+
   .metrics-box-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -6161,10 +6165,19 @@ input, textarea, select {
   .canvas-chrome-bar {
     flex-direction: column;
     align-items: flex-start;
+    gap: 0.65rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .chrome-left {
+    width: 100%;
+    justify-content: space-between;
   }
 
   .chrome-center-tabs {
     width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
   }
 
   .command-chips-grid {
@@ -6174,15 +6187,65 @@ input, textarea, select {
   .canvas-body-viewport {
     padding: 1.5rem 1rem 2rem;
   }
+
+  .canvas-bottom-strip {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.65rem;
+    padding: 0.75rem 1rem;
+  }
+
+  .canvas-strip-actions {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.2rem;
+  }
 }
 
 @media (max-width: 480px) {
+  .command-bar-top {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.65rem;
+  }
+
+  .command-bar-title {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+  }
+
+  .command-search-wrap {
+    width: 100%;
+    min-width: 100%;
+  }
+
+  .deck-system-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.35rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .deck-hero-card {
+    padding: 1.25rem 0.85rem;
+  }
+
   .command-chips-grid {
     grid-template-columns: 1fr;
   }
 
   .metrics-box-grid {
     grid-template-columns: 1fr;
+  }
+
+  .canvas-body-viewport {
+    padding: 1.25rem 0.65rem 1.75rem;
+  }
+
+  .pane-title {
+    font-size: 1.35rem;
   }
 }
 

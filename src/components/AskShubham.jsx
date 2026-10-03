@@ -39,7 +39,7 @@ export const ASK_ITEMS = [
   }
 ];
 
-export default function AskShubham() {
+export default function AskShubham({ isEmbedded = false }) {
   const [thread, setThread] = useState([
     {
       type: 'bot',
@@ -126,9 +126,13 @@ export default function AskShubham() {
     setAskedIds(new Set());
   };
 
+  const ContentWrapper = isEmbedded ? 'div' : 'section';
+  const containerClass = isEmbedded ? 'embedded-ask-wrap' : 'ask-section';
+  const innerClass = isEmbedded ? '' : 'container';
+
   return (
-    <section id="ask" className="ask-section">
-      <div className="container">
+    <ContentWrapper id={isEmbedded ? undefined : 'ask'} className={containerClass}>
+      <div className={innerClass}>
         <div className="ask-container-card">
           {/* Header Bar */}
           <div className="ask-header">
@@ -235,6 +239,6 @@ export default function AskShubham() {
           </div>
         </div>
       </div>
-    </section>
+    </ContentWrapper>
   );
 }

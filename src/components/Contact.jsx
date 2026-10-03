@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import contactImg from '../assets/shubham_contact.jpg';
 import { PERSONAL_INFO } from '../data/portfolioData';
 
-export default function Contact({ triggerToast }) {
+export default function Contact({ triggerToast, isEmbedded = false }) {
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -120,19 +120,25 @@ export default function Contact({ triggerToast }) {
     }
   };
 
+  const ContentWrapper = isEmbedded ? 'div' : 'section';
+  const containerClass = isEmbedded ? 'embedded-contact-wrap' : 'contact-section';
+  const innerClass = isEmbedded ? '' : 'container';
+
   return (
-    <section id="contact" className="contact-section">
-      <div className="container">
+    <ContentWrapper id={isEmbedded ? undefined : 'contact'} className={containerClass}>
+      <div className={innerClass}>
         {/* Section Header */}
-        <div className="section-title-wrapper text-center">
-          <span className="section-subtitle">Connect & Collaborate</span>
-          <h2 className="section-title">
-            Let's Build <span>Better Solutions</span>
-          </h2>
-          <p className="section-desc max-w-700">
-            Let's build better solutions at the intersection of business, technology and AI. Open to Senior Business Analyst, Techno-Functional Consultant, and Capital Markets opportunities.
-          </p>
-        </div>
+        {!isEmbedded && (
+          <div className="section-title-wrapper text-center">
+            <span className="section-subtitle">Connect & Collaborate</span>
+            <h2 className="section-title">
+              Let's Build <span>Better Solutions</span>
+            </h2>
+            <p className="section-desc max-w-700">
+              Let's build better solutions at the intersection of business, technology and AI. Open to Senior Business Analyst, Techno-Functional Consultant, and Capital Markets opportunities.
+            </p>
+          </div>
+        )}
 
         <div className="contact-grid">
           {/* Left Column: Contact Cards & Photo */}
@@ -338,6 +344,6 @@ export default function Contact({ triggerToast }) {
           </div>
         </div>
       </div>
-    </section>
+    </ContentWrapper>
   );
 }

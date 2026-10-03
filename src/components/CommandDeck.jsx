@@ -181,6 +181,7 @@ export default function CommandDeck({ activeSheet, onSelectSheet }) {
                   type="button"
                   className="clear-search-btn"
                   onClick={() => setSearchTerm('')}
+                  aria-label="Clear search"
                 >
                   <i className="fa-solid fa-xmark"></i>
                 </button>

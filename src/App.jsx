@@ -5,7 +5,6 @@ import DynamicCanvasSheet, { CANVAS_SHEETS } from './components/DynamicCanvasShe
 import Footer from './components/Footer';
 import BackToTop from './components/BackToTop';
 import RecruiterDock from './components/RecruiterDock';
-import UIConceptShowcase from './components/UIConceptShowcase';
 
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
@@ -15,24 +14,9 @@ export default function App() {
   const [showToast, setShowToast] = useState(false);
   const [toastTimer, setToastTimer] = useState(null);
 
-  // Studio Mode (accessible via #studio or floating toggle)
-  const [showStudio, setShowStudio] = useState(false);
-
   useEffect(() => {
     const handleHash = () => {
       const hash = window.location.hash.toLowerCase();
-
-      if (hash === '#studio') {
-        setShowStudio(true);
-        return;
-      }
-
-      if (hash.startsWith('#option-')) {
-        setShowStudio(true);
-        return;
-      }
-
-      setShowStudio(false);
 
       if (hash === '#work' || hash === '#case-studies' || hash === '#trade') {
         setActiveSheet('trade');
@@ -98,7 +82,6 @@ export default function App() {
 
   const handleSelectSheet = (sheetId) => {
     setActiveSheet(sheetId);
-    setShowStudio(false);
 
     // Sync section highlight
     if (sheetId === 'trade' || sheetId === 'initiatives') {
@@ -133,15 +116,9 @@ export default function App() {
           </div>
 
           <div className="ribbon-right">
-            <button
-              type="button"
-              className="ribbon-studio-btn"
-              onClick={() => setShowStudio(!showStudio)}
-              title="Compare all 5 UI design prototypes"
-            >
-              <i className="fa-solid fa-wand-magic-sparkles text-gold"></i>
-              {showStudio ? ' Exit Concept Studio' : ' Compare All 5 UI Concepts'}
-            </button>
+            <span className="ribbon-mode-badge">
+              <i className="fa-solid fa-code-commit text-gold"></i> PROD_VERIFIED // SECURE STATIC SPA
+            </span>
           </div>
         </div>
       </div>
@@ -149,30 +126,19 @@ export default function App() {
       <Navbar scrolled={scrolled} activeSection={activeSection} />
 
       <main>
-        {showStudio ? (
-          <UIConceptShowcase
-            activeConceptId="canvas"
-            onSelectConcept={() => {}}
-            onCloseStudio={() => setShowStudio(false)}
-            onFinalizeSelection={(c) => triggerToast(`Building Option ${c.num}: ${c.name}!`)}
-          />
-        ) : (
-          <>
-            {/* 01 — Anchor Shim & Command Deck (Hero + System Prompt + Command Chips) */}
-            <span id="hero" className="anchor-shim"></span>
-            <CommandDeck
-              activeSheet={activeSheet}
-              onSelectSheet={handleSelectSheet}
-            />
+        {/* 01 — Anchor Shim & Command Deck (Hero + System Prompt + Command Chips) */}
+        <span id="hero" className="anchor-shim"></span>
+        <CommandDeck
+          activeSheet={activeSheet}
+          onSelectSheet={handleSelectSheet}
+        />
 
-            {/* 02 — Dynamic Glowing Canvas Sheet (Projects Selected Deliverable) */}
-            <DynamicCanvasSheet
-              activeSheet={activeSheet}
-              onSelectSheet={handleSelectSheet}
-              triggerToast={triggerToast}
-            />
-          </>
-        )}
+        {/* 02 — Dynamic Glowing Canvas Sheet (Projects Selected Deliverable) */}
+        <DynamicCanvasSheet
+          activeSheet={activeSheet}
+          onSelectSheet={handleSelectSheet}
+          triggerToast={triggerToast}
+        />
       </main>
 
       <Footer />
