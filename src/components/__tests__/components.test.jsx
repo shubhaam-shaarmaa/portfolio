@@ -3,7 +3,6 @@ import { describe, test, expect, vi, beforeEach } from 'vitest';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 
 // Components under test
-import Navbar from '../Navbar';
 import CommandDeck, { COMMANDS } from '../CommandDeck';
 import DynamicCanvasSheet, { CANVAS_SHEETS } from '../DynamicCanvasSheet';
 import ProfessionalIdentity from '../ProfessionalIdentity';
@@ -30,58 +29,45 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
   });
 
   // =========================================================================
-  // 1. NAVBAR COMPONENT
+  // 1. COMMAND DECK ARCHITECTURE & SYSTEM TERMINAL
   // =========================================================================
-  describe('Navbar Component', () => {
-    test('renders brand logo, avatar, and navigation links', () => {
-      render(<Navbar scrolled={false} activeSection="hero" />);
+  describe('CommandDeck System Terminal & Quick Profile', () => {
+    test('renders system prompt, active status indicator, and zero fabrication badge', () => {
+      render(<CommandDeck activeSheet="trade" onSelectSheet={vi.fn()} />);
       
-      expect(screen.getByText(/Shubham Sharma/i)).toBeInTheDocument();
-      expect(screen.getByText(/Techno-Functional BA/i)).toBeInTheDocument();
+      expect(screen.getByText(/\[shubham@portfolio ~\]\$/i)).toBeInTheDocument();
+      expect(screen.getByText(/SYS_ACTIVE \/\/ T\+1 DTCC VERIFIED/i)).toBeInTheDocument();
+      expect(screen.getByText(/ZERO FABRICATION · VERIFIED DATA/i)).toBeInTheDocument();
+    });
+
+    test('renders brand identity, active online badge, and company role', () => {
+      render(<CommandDeck activeSheet="trade" onSelectSheet={vi.fn()} />);
+      
       expect(screen.getByAltText('Shubham Sharma')).toBeInTheDocument();
-      
-      const links = ['Home', 'Ask', 'Work', 'Journey', 'Contact'];
-      links.forEach(link => {
-        expect(screen.getByRole('link', { name: new RegExp(`^${link}$`, 'i') })).toBeInTheDocument();
-      });
-
-      expect(screen.getByRole('link', { name: /Resume/i })).toHaveAttribute('href', expect.stringContaining('.pdf'));
+      expect(screen.getByTitle(/Actively Open for Opportunities/i)).toBeInTheDocument();
+      expect(screen.getByText(/Infosys Senior Associate Consultant/i)).toBeInTheDocument();
+      expect(screen.getByText(/Himachal Pradesh, India/i)).toBeInTheDocument();
     });
 
-    test('toggles mobile menu and closes when a link is clicked', () => {
-      render(<Navbar scrolled={false} activeSection="hero" />);
-      const toggleBtn = screen.getByRole('button', { name: /Open navigation menu/i });
+    test('renders full contact and social direct action buttons with secure attributes', () => {
+      render(<CommandDeck activeSheet="trade" onSelectSheet={vi.fn()} />);
       
-      // Open
-      fireEvent.click(toggleBtn);
-      expect(screen.getByRole('button', { name: /Close navigation menu/i })).toBeInTheDocument();
+      const resumeLink = screen.getByRole('link', { name: /Download Resume/i });
+      expect(resumeLink).toHaveAttribute('download', 'Shubham_Sharma_Resume.pdf');
       
-      // Click a link -> should close
-      const workLink = screen.getByRole('link', { name: /^Work$/i });
-      fireEvent.click(workLink);
-      expect(screen.getByRole('button', { name: /Open navigation menu/i })).toBeInTheDocument();
+      const linkedinLink = screen.getByRole('link', { name: /LinkedIn Profile/i });
+      expect(linkedinLink).toHaveAttribute('target', '_blank');
+      expect(linkedinLink).toHaveAttribute('rel', 'noopener noreferrer');
+      
+      const githubLink = screen.getByRole('link', { name: /GitHub Profile/i });
+      expect(githubLink).toHaveAttribute('target', '_blank');
+      expect(githubLink).toHaveAttribute('rel', 'noopener noreferrer');
     });
 
-    test('closes mobile menu on backdrop click or escape key', () => {
-      const { container } = render(<Navbar scrolled={false} activeSection="hero" />);
-      const toggleBtn = screen.getByRole('button', { name: /Open navigation menu/i });
-      
-      // Open and click backdrop
-      fireEvent.click(toggleBtn);
-      const backdrop = container.querySelector('.nav-backdrop');
-      expect(backdrop).toBeInTheDocument();
-      fireEvent.click(backdrop);
-      expect(screen.getByRole('button', { name: /Open navigation menu/i })).toBeInTheDocument();
-
-      // Open and press Escape
-      fireEvent.click(toggleBtn);
-      fireEvent.keyDown(window, { key: 'Escape' });
-      expect(screen.getByRole('button', { name: /Open navigation menu/i })).toBeInTheDocument();
-    });
-
-    test('applies scrolled class when scrolled prop is true', () => {
-      const { container } = render(<Navbar scrolled={true} activeSection="work" />);
-      expect(container.querySelector('.navbar')).toHaveClass('scrolled');
+    test('highlights the active command chip matching activeSheet prop', () => {
+      render(<CommandDeck activeSheet="initiatives" onSelectSheet={vi.fn()} />);
+      const initiativesChip = screen.getByRole('tab', { name: /\/\/ initiatives/i });
+      expect(initiativesChip).toHaveClass('active');
     });
   });
 
@@ -659,22 +645,23 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
   // 18. FULL APP INTEGRATION & OPTION 5 LIVE FLOW
   // =========================================================================
   describe('Full App Integration', () => {
-    test('renders complete application with toast container and scroll handler', () => {
+    test('renders complete application with command deck, dynamic canvas, and scroll handler', () => {
       const { container } = render(<App />);
       
       expect(container.querySelector('.portfolio-app')).toBeInTheDocument();
-      expect(screen.getByRole('navigation')).toBeInTheDocument();
+      expect(container.querySelector('.command-deck-section')).toBeInTheDocument();
+      expect(container.querySelector('.dynamic-canvas-section')).toBeInTheDocument();
       expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/Shubham Sharma/i);
       expect(screen.getByRole('heading', { level: 2, name: /Techno-Functional/i })).toBeInTheDocument();
 
       // Scroll trigger test
       act(() => {
-        window.scrollY = 100;
+        window.scrollY = 600;
         fireEvent.scroll(window);
       });
 
-      // Verify navbar receives scroll update
-      expect(container.querySelector('.navbar')).toHaveClass('scrolled');
+      // Verify back-to-top receives scroll update
+      expect(container.querySelector('.back-to-top')).toHaveClass('visible');
     });
 
     test('navigates through dynamic canvas sheets via command deck chips and center tabs', () => {

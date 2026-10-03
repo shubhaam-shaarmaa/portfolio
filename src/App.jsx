@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from './components/Navbar';
 import CommandDeck from './components/CommandDeck';
 import DynamicCanvasSheet, { CANVAS_SHEETS } from './components/DynamicCanvasSheet';
 import Footer from './components/Footer';
@@ -103,8 +102,6 @@ export default function App() {
 
   return (
     <div className="portfolio-app ai-native-theme">
-      <Navbar scrolled={scrolled} activeSection={activeSection} />
-
       <main>
         {/* 01 — Anchor Shim & Command Deck (Hero + System Prompt + Command Chips) */}
         <span id="hero" className="anchor-shim"></span>
