@@ -527,9 +527,6 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
 
       fireEvent.click(hintBtn);
       expect(handleSelect).toHaveBeenCalledWith('initiatives');
-
-      const askPill = screen.getByRole('button', { name: /^Ask$/i });
-      fireEvent.click(askPill);
     });
 
     test('opens and interacts with application exploration guide checklist modal', () => {

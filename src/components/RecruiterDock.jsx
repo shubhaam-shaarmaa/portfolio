@@ -118,20 +118,7 @@ export default function RecruiterDock({
     setShowGuide(false);
   };
 
-  const scrollToSection = (secId) => {
-    const el = document.getElementById(secId);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
 
-  const sections = [
-    { id: 'hero', label: 'Home' },
-    { id: 'ask', label: 'Ask' },
-    { id: 'work', label: 'Work' },
-    { id: 'journey', label: 'Journey' },
-    { id: 'contact', label: 'Contact' }
-  ];
 
   return (
     <>
@@ -282,25 +269,7 @@ export default function RecruiterDock({
           </div>
         )}
 
-        {/* Section Navigation Pills */}
-        {!isMinimized && (
-          <div className="dock-nav-pills">
-            {sections.map((sec) => {
-              const isActive = activeSection === sec.id;
-              return (
-                <button
-                  key={sec.id}
-                  type="button"
-                  className={`dock-pill ${isActive ? 'active' : ''}`}
-                  onClick={() => scrollToSection(sec.id)}
-                  title={`Jump to ${sec.label}`}
-                >
-                  {sec.label}
-                </button>
-              );
-            })}
-          </div>
-        )}
+
 
         {/* Minimize / Expand Toggle */}
         <button

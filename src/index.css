@@ -3395,36 +3395,6 @@ a.footer-contact-item:hover {
   white-space: nowrap;
 }
 
-.dock-nav-pills {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  overflow-x: auto;
-  scrollbar-width: none;
-}
-
-.dock-pill {
-  padding: 0.25rem 0.6rem;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--text-muted);
-  border-radius: var(--radius-full);
-  cursor: pointer;
-  transition: var(--transition);
-  white-space: nowrap;
-  flex-shrink: 0;
-}
-
-.dock-pill:hover, .dock-pill.active {
-  color: var(--text-main);
-  background: rgba(255, 255, 255, 0.08);
-}
-
-.dock-pill.active {
-  color: var(--accent-gold);
-  background: var(--accent-gold-dim);
-}
-
 .dock-toggle-btn {
   font-size: 0.8rem;
   color: var(--text-dim);
@@ -3742,9 +3712,6 @@ a.footer-contact-item:hover {
 }
 
 @media (max-width: 640px) {
-  .dock-nav-pills {
-    display: none;
-  }
   .recruiter-dock {
     bottom: 0.75rem;
     padding: 0.35rem 0.75rem;
