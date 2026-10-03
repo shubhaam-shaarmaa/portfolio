@@ -126,7 +126,7 @@ export default function CapitalMarketsCaseStudies({ isEmbedded = false }) {
 
               <div className="exec-kpi-card">
                 <div className="exec-kpi-icon bg-emerald">
-                  <i className="fa-solid fa-shield-check text-emerald"></i>
+                  <i className="fa-solid fa-shield-halved text-emerald"></i>
                 </div>
                 <div className="exec-kpi-info">
                   <span className="exec-kpi-val">99.9% Compliance</span>
@@ -205,7 +205,7 @@ export default function CapitalMarketsCaseStudies({ isEmbedded = false }) {
 
                   <div className="stage-col">
                     <span className="col-heading">
-                      <i className="fa-solid fa-shield-check text-emerald"></i> Mandatory Checkpoints
+                      <i className="fa-solid fa-shield-halved text-emerald"></i> Mandatory Checkpoints
                     </span>
                     <ul className="stage-list">
                       {activeStage.checks.map((chk, cIdx) => (
