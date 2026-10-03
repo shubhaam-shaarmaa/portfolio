@@ -131,6 +131,17 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       fireEvent.click(clearBtn);
       expect(screen.getAllByRole('tab').length).toBe(COMMANDS.length);
     });
+
+    test('renders workstation terminal window header, active file tag, ready pill, and canvas version', () => {
+      const { rerender } = render(<CommandDeck activeSheet="trade" onSelectSheet={vi.fn()} />);
+
+      expect(screen.getByText(/canvas\/trade_lifecycle_spec\.json/i)).toBeInTheDocument();
+      expect(screen.getByText(/READY/i)).toBeInTheDocument();
+      expect(screen.getByText(/CANVAS v3\.0 \/\/ AI-NATIVE/i)).toBeInTheDocument();
+
+      rerender(<CommandDeck activeSheet="ai" onSelectSheet={vi.fn()} />);
+      expect(screen.getByText(/canvas\/ai_architecture_roadmap\.json/i)).toBeInTheDocument();
+    });
   });
 
   // =========================================================================
@@ -585,40 +596,32 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
   // 17. DYNAMIC CANVAS SHEET COMPONENT (OPTION 5 WORKSPACE)
   // =========================================================================
   describe('DynamicCanvasSheet Component', () => {
-    test('renders window chrome bar, file tag, and center tabs 01 through 07', () => {
+    test('renders deliverable viewport header and bottom navigation rail', () => {
       render(<DynamicCanvasSheet activeSheet="trade" onSelectSheet={vi.fn()} triggerToast={vi.fn()} />);
 
-      // Chrome bar
-      expect(screen.getByText(/canvas\/trade_lifecycle_spec\.json/i)).toBeInTheDocument();
-      expect(screen.getByText(/READY/i)).toBeInTheDocument();
-      expect(screen.getByText(/CANVAS v3\.0/i)).toBeInTheDocument();
-
-      // Center tabs (01 to 07)
-      expect(screen.getByRole('tab', { name: /01.*Trade Spec/i })).toBeInTheDocument();
-      expect(screen.getByRole('tab', { name: /02.*Initiatives/i })).toBeInTheDocument();
-      expect(screen.getByRole('tab', { name: /03.*Career & Skills/i })).toBeInTheDocument();
-      expect(screen.getByRole('tab', { name: /04.*AI Systems/i })).toBeInTheDocument();
-      expect(screen.getByRole('tab', { name: /05.*Credentials/i })).toBeInTheDocument();
-      expect(screen.getByRole('tab', { name: /06.*Ask Terminal/i })).toBeInTheDocument();
-      expect(screen.getByRole('tab', { name: /07.*Contact/i })).toBeInTheDocument();
+      // Intro header in viewport
+      expect(screen.getByText(/\/\/ flagship_case_study\.spec/i)).toBeInTheDocument();
+      expect(screen.getByRole('heading', { name: /Institutional Trade Lifecycle/i })).toBeInTheDocument();
 
       // Bottom rail
       expect(screen.getByText(/ACTIVE DELIVERABLE:/i)).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /Next:.*Initiatives/i })).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: /Prev:.*Contact/i })).toBeInTheDocument();
     });
 
-    test('switches active sheet when center tab or bottom navigation button is clicked', () => {
+    test('switches active sheet when bottom navigation prev/next buttons are clicked', () => {
       const mockSelect = vi.fn();
       render(<DynamicCanvasSheet activeSheet="trade" onSelectSheet={mockSelect} triggerToast={vi.fn()} />);
-
-      // Click tab 02 Initiatives
-      const initiativesTab = screen.getByRole('tab', { name: /02.*Initiatives/i });
-      fireEvent.click(initiativesTab);
-      expect(mockSelect).toHaveBeenCalledWith('initiatives');
 
       // Click bottom rail next button
       const nextBtn = screen.getByRole('button', { name: /Next:.*Initiatives/i });
       fireEvent.click(nextBtn);
       expect(mockSelect).toHaveBeenCalledWith('initiatives');
+
+      // Click bottom rail prev button
+      const prevBtn = screen.getByRole('button', { name: /Prev:.*Contact/i });
+      fireEvent.click(prevBtn);
+      expect(mockSelect).toHaveBeenCalledWith('contact');
     });
 
     test('projects designated deliverable components when different sheets are active', () => {

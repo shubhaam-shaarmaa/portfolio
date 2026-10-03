@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 import avatarImg from '../assets/shubham_avatar.jpg';
 import resumePdf from '../assets/Shubham_Sharma_Resume.pdf';
+import { CANVAS_SHEETS } from './DynamicCanvasSheet';
 
 export const COMMANDS = [
   { id: 'trade', cmd: '// trade_lifecycle', label: 'Trade Lifecycle & T+1 Spec', icon: 'fa-bolt-lightning', sheet: 'trade', badge: 'Flagship' },
@@ -15,6 +16,7 @@ export const COMMANDS = [
 
 export default function CommandDeck({ activeSheet, onSelectSheet }) {
   const [searchTerm, setSearchTerm] = useState('');
+  const currentSheet = CANVAS_SHEETS.find(s => s.id === activeSheet) || CANVAS_SHEETS[0];
 
   const filteredCommands = COMMANDS.filter(c =>
     c.cmd.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -155,31 +157,42 @@ export default function CommandDeck({ activeSheet, onSelectSheet }) {
         <div className="deck-command-bar">
           <div className="command-bar-top">
             <div className="command-bar-title">
-              <i className="fa-solid fa-terminal text-cyan"></i>
-              <span>Interactive Command Deck:</span>
-              <span className="text-dim text-xs">Select any command chip to project live artifacts onto the Dynamic Canvas</span>
+              <div className="window-dot-group">
+                <span className="window-dot red"></span>
+                <span className="window-dot yellow"></span>
+                <span className="window-dot green"></span>
+              </div>
+              <span className="canvas-file-tag">
+                <i className="fa-solid fa-file-code text-cyan"></i> // canvas/{currentSheet.fileTag}
+              </span>
+              <span className="canvas-status-pill">
+                <span className="dot-pulse"></span> READY
+              </span>
             </div>
 
-            <div className="command-search-wrap">
-              <i className="fa-solid fa-magnifying-glass search-icon"></i>
-              <input
-                type="text"
-                className="command-search-input"
-                placeholder="Filter commands (e.g. trade, ai, sql)..."
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                aria-label="Filter command deck"
-              />
-              {searchTerm && (
-                <button
-                  type="button"
-                  className="clear-search-btn"
-                  onClick={() => setSearchTerm('')}
-                  aria-label="Clear search"
-                >
-                  <i className="fa-solid fa-xmark"></i>
-                </button>
-              )}
+            <div className="command-bar-right-controls">
+              <div className="command-search-wrap">
+                <i className="fa-solid fa-magnifying-glass search-icon"></i>
+                <input
+                  type="text"
+                  className="command-search-input"
+                  placeholder="Filter commands (e.g. trade, ai, sql)..."
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  aria-label="Filter command deck"
+                />
+                {searchTerm && (
+                  <button
+                    type="button"
+                    className="clear-search-btn"
+                    onClick={() => setSearchTerm('')}
+                    aria-label="Clear search"
+                  >
+                    <i className="fa-solid fa-xmark"></i>
+                  </button>
+                )}
+              </div>
+              <span className="canvas-version-tag">CANVAS v3.0 // AI-NATIVE</span>
             </div>
           </div>
 

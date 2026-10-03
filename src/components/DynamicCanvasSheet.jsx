@@ -38,48 +38,6 @@ export default function DynamicCanvasSheet({
       <div className="container">
         {/* Glow Frame Wrapper */}
         <div className="dynamic-canvas-frame">
-          {/* Top Canvas Bar (IDE / Terminal Window Chrome) */}
-          <div className="canvas-chrome-bar">
-            <div className="chrome-left">
-              <div className="window-dot-group">
-                <span className="window-dot red"></span>
-                <span className="window-dot yellow"></span>
-                <span className="window-dot green"></span>
-              </div>
-              <span className="canvas-file-tag">
-                <i className="fa-solid fa-file-code text-cyan"></i> // canvas/{currentSheet.fileTag}
-              </span>
-              <span className="canvas-status-pill">
-                <span className="dot-pulse"></span> READY
-              </span>
-            </div>
-
-            {/* Quick Sheet Navigation Buttons */}
-            <div className="chrome-center-tabs" role="tablist" aria-label="Canvas Sheets">
-              {CANVAS_SHEETS.map((s) => {
-                const isActive = activeSheet === s.id;
-                return (
-                  <button
-                    key={s.id}
-                    type="button"
-                    role="tab"
-                    aria-selected={isActive}
-                    className={`chrome-tab-btn ${isActive ? 'active' : ''}`}
-                    onClick={() => onSelectSheet(s.id)}
-                  >
-                    <span className="tab-num">{s.num}</span>
-                    <i className={`fa-solid ${s.icon} tab-icon`}></i>
-                    <span className="tab-text">{s.short}</span>
-                  </button>
-                );
-              })}
-            </div>
-
-            <div className="chrome-right">
-              <span className="canvas-version-tag">CANVAS v3.0 // AI-NATIVE</span>
-            </div>
-          </div>
-
           {/* Active Canvas Body */}
           <div className="canvas-body-viewport">
             {/* Sheet 1: Flagship Trade Lifecycle & T+1 Settlement */}
