@@ -119,7 +119,11 @@ export default function App() {
       </main>
 
       <Footer />
-      <RecruiterDock activeSection={activeSection} />
+      <RecruiterDock
+        activeSection={activeSection}
+        activeSheet={activeSheet}
+        onSelectSheet={handleSelectSheet}
+      />
       <BackToTop scrolled={scrolled} />
 
       <div className={`toast ${showToast ? 'show' : ''}`} role="alert" aria-live="assertive">

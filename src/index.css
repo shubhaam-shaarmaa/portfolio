@@ -3499,25 +3499,38 @@ a.footer-contact-item:hover {
   z-index: 900;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.65rem;
   background: rgba(8, 12, 20, 0.94);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid var(--border-card);
-  padding: 0.45rem 1rem;
+  padding: 0.45rem 0.95rem;
   border-radius: var(--radius-full);
   box-shadow: 0 12px 35px rgba(0, 0, 0, 0.65), 0 0 20px rgba(56, 189, 248, 0.12);
   transition: var(--transition);
   max-width: 95vw;
 }
 
+.recruiter-dock.dock-completed {
+  border-color: rgba(16, 185, 129, 0.4);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.65), 0 0 20px rgba(16, 185, 129, 0.15);
+}
+
 .dock-progress-wrap {
   display: flex;
   align-items: center;
   gap: 0.55rem;
-  padding-right: 0.75rem;
+  padding-right: 0.65rem;
   border-right: 1px solid var(--border-subtle);
   flex-shrink: 0;
+  cursor: pointer;
+  user-select: none;
+  border-radius: var(--radius-full);
+  transition: var(--transition);
+}
+
+.dock-progress-wrap:hover {
+  opacity: 0.9;
 }
 
 .dock-progress-ring {
@@ -3532,12 +3545,23 @@ a.footer-contact-item:hover {
   flex-shrink: 0;
 }
 
+.recruiter-dock.dock-completed .dock-progress-ring {
+  background: conic-gradient(#10b981 var(--dock-pct, 100%), rgba(255, 255, 255, 0.1) 0%);
+}
+
 .dock-progress-ring::after {
   content: '';
   width: 16px;
   height: 16px;
   border-radius: 50%;
   background: #080c14;
+}
+
+.dock-done-check {
+  position: absolute;
+  font-size: 0.65rem;
+  color: #10b981;
+  z-index: 2;
 }
 
 .dock-progress-text {
@@ -3550,6 +3574,105 @@ a.footer-contact-item:hover {
 
 .dock-progress-text span {
   color: var(--accent-cyan);
+}
+
+.recruiter-dock.dock-completed .dock-progress-text span {
+  color: #10b981;
+}
+
+.dock-guide-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(56, 189, 248, 0.12);
+  color: var(--accent-cyan);
+  font-size: 0.65rem;
+  transition: var(--transition);
+}
+
+.dock-progress-wrap:hover .dock-guide-chip {
+  background: rgba(56, 189, 248, 0.25);
+  color: #fff;
+  transform: scale(1.08);
+}
+
+/* Dynamic Guidance Hint Button */
+.dock-hint-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.15), rgba(56, 189, 248, 0.12));
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  border-radius: var(--radius-full);
+  padding: 0.25rem 0.65rem;
+  color: var(--text-main);
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: var(--transition);
+  white-space: nowrap;
+  animation: dockHintGlow 3s ease-in-out infinite alternate;
+}
+
+.dock-hint-action-btn:hover {
+  background: linear-gradient(135deg, rgba(245, 158, 11, 0.28), rgba(56, 189, 248, 0.22));
+  border-color: var(--accent-gold);
+  transform: translateY(-1px);
+  box-shadow: 0 0 12px rgba(245, 158, 11, 0.3);
+}
+
+.hint-pulse-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-gold);
+  box-shadow: 0 0 6px var(--accent-gold);
+  animation: pulseDot 1.5s infinite;
+}
+
+.hint-bulb {
+  font-size: 0.72rem;
+}
+
+.hint-text-prefix {
+  color: var(--accent-gold);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.65rem;
+  letter-spacing: 0.5px;
+}
+
+.hint-target-name {
+  color: var(--text-main);
+  font-weight: 600;
+}
+
+.hint-chevron {
+  font-size: 0.65rem;
+  color: var(--accent-cyan);
+  transition: transform 0.2s ease;
+}
+
+.dock-hint-action-btn:hover .hint-chevron {
+  transform: translateX(2px);
+}
+
+/* 100% Celebration Pill */
+.dock-celebration-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(16, 185, 129, 0.15);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  border-radius: var(--radius-full);
+  padding: 0.25rem 0.65rem;
+  color: #34d399;
+  font-size: 0.72rem;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .dock-nav-pills {
@@ -3606,6 +3729,306 @@ a.footer-contact-item:hover {
 .recruiter-dock.dock-minimized .dock-progress-wrap {
   border-right: none;
   padding-right: 0;
+}
+
+/* Exploration Guide Popover Modal */
+.dock-guide-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  background: rgba(3, 7, 18, 0.82);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  animation: fadeInModal 0.2s ease-out;
+}
+
+.dock-guide-modal {
+  background: #090e17;
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 30px rgba(56, 189, 248, 0.15);
+  max-width: 600px;
+  width: 100%;
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.dock-guide-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.4rem;
+}
+
+.guide-header-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.guide-close-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.guide-close-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--text-main);
+  transform: rotate(90deg);
+}
+
+.guide-subtitle {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin-bottom: 0.85rem;
+}
+
+.guide-subtitle strong {
+  color: var(--text-main);
+}
+
+.guide-progress-bar-track {
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  margin-bottom: 0.4rem;
+}
+
+.guide-progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-gold));
+  border-radius: var(--radius-full);
+  transition: width 0.4s ease;
+}
+
+.guide-progress-status-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.78rem;
+  margin-bottom: 1rem;
+}
+
+.guide-items-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  overflow-y: auto;
+  max-height: 48vh;
+  padding-right: 0.35rem;
+  margin-bottom: 0.75rem;
+  scrollbar-width: thin;
+}
+
+.guide-item-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 0.7rem 0.85rem;
+  text-align: left;
+  cursor: pointer;
+  transition: var(--transition);
+  width: 100%;
+}
+
+.guide-item-card:hover {
+  background: rgba(56, 189, 248, 0.05);
+  border-color: rgba(56, 189, 248, 0.3);
+  transform: translateY(-1px);
+}
+
+.guide-item-card.visited {
+  border-left: 3px solid #10b981;
+}
+
+.guide-item-card.unvisited {
+  border-left: 3px solid var(--accent-gold);
+}
+
+.guide-item-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.guide-status-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.82rem;
+  flex-shrink: 0;
+}
+
+.guide-status-icon.icon-done {
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.guide-status-icon.icon-pending {
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--accent-gold);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.guide-item-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.guide-item-name-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-wrap: wrap;
+}
+
+.guide-item-num {
+  font-family: monospace;
+  font-size: 0.7rem;
+  color: var(--accent-cyan);
+  font-weight: 700;
+}
+
+.guide-item-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.guide-badge-done {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  background: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.25);
+}
+
+.guide-badge-pending {
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  background: rgba(245, 158, 11, 0.12);
+  color: var(--accent-gold);
+  border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.guide-item-hint {
+  font-size: 0.73rem;
+  color: var(--text-dim);
+  margin: 0;
+  line-height: 1.3;
+}
+
+.guide-item-action {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.guide-action-text {
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--accent-cyan);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+.guide-footer-note {
+  margin-top: 0.5rem;
+}
+
+.guide-complete-banner {
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  border-radius: var(--radius-md);
+  padding: 0.65rem 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.78rem;
+  color: var(--text-main);
+}
+
+.guide-hint-banner {
+  background: rgba(56, 189, 248, 0.08);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  border-radius: var(--radius-md);
+  padding: 0.65rem 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  font-size: 0.78rem;
+  color: var(--text-main);
+}
+
+@keyframes dockHintGlow {
+  0% { box-shadow: 0 0 0 rgba(245, 158, 11, 0); }
+  100% { box-shadow: 0 0 10px rgba(245, 158, 11, 0.25); }
+}
+
+@keyframes pulseDot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.7); }
+}
+
+@keyframes fadeInModal {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (max-width: 640px) {
+  .dock-nav-pills {
+    display: none;
+  }
+  .recruiter-dock {
+    bottom: 0.75rem;
+    padding: 0.35rem 0.75rem;
+  }
 }
 
 /* Inline Quick Spec Preview */

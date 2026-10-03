@@ -524,14 +524,47 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
   // 15. RECRUITER DOCK COMPONENT
   // =========================================================================
   describe('RecruiterDock Component', () => {
-    test('renders exploration progress dock with percentage and navigates to sections', () => {
-      render(<RecruiterDock activeSection="work" />);
+    test('renders true subsection exploration progress and dynamic guidance hints', () => {
+      const handleSelect = vi.fn();
+      render(<RecruiterDock activeSection="work" activeSheet="trade" onSelectSheet={handleSelect} />);
 
       expect(screen.getByRole('region', { name: /Recruiter Exploration Progress Dock/i })).toBeInTheDocument();
-      expect(screen.getByTitle('40% Explored')).toBeInTheDocument();
+      expect(screen.getByTitle('14% Explored')).toBeInTheDocument();
+      expect(screen.getByText(/14%/i)).toBeInTheDocument();
+      expect(screen.getByText(/\(1\/7\)/i)).toBeInTheDocument();
+
+      // Guided hint button for next unvisited subsection (02 Initiatives)
+      const hintBtn = screen.getByRole('button', { name: /Hint: Explore Initiatives/i });
+      expect(hintBtn).toBeInTheDocument();
+
+      fireEvent.click(hintBtn);
+      expect(handleSelect).toHaveBeenCalledWith('initiatives');
 
       const askPill = screen.getByRole('button', { name: /^Ask$/i });
       fireEvent.click(askPill);
+    });
+
+    test('opens and interacts with application exploration guide checklist modal', () => {
+      const handleSelect = vi.fn();
+      render(<RecruiterDock activeSection="hero" activeSheet="trade" onSelectSheet={handleSelect} />);
+
+      // Click progress wrap to open guide modal
+      const progressWrap = screen.getByTitle(/Click to open Exploration Guide/i);
+      fireEvent.click(progressWrap);
+
+      const modal = screen.getByRole('dialog', { name: /Application Exploration Guide/i });
+      expect(modal).toBeInTheDocument();
+      expect(screen.getByText(/To achieve/i)).toBeInTheDocument();
+      expect(screen.getByText(/1 of 7 Subsections Explored/i)).toBeInTheDocument();
+
+      // Click an unvisited item card to navigate
+      const careerCard = screen.getByRole('button', { name: /Career Journey/i });
+      expect(careerCard).toBeInTheDocument();
+      fireEvent.click(careerCard);
+      expect(handleSelect).toHaveBeenCalledWith('career');
+
+      // Modal closes after selection
+      expect(screen.queryByRole('dialog', { name: /Application Exploration Guide/i })).not.toBeInTheDocument();
     });
 
     test('toggles dock minimization on collapse/expand button click', () => {
