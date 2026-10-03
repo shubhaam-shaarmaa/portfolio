@@ -132,15 +132,14 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       expect(screen.getAllByRole('tab').length).toBe(COMMANDS.length);
     });
 
-    test('renders workstation terminal window header, active file tag, ready pill, and canvas version', () => {
+    test('renders workstation terminal window header, active file tag, and ready pill', () => {
       const { rerender } = render(<CommandDeck activeSheet="trade" onSelectSheet={vi.fn()} />);
 
-      expect(screen.getByText(/canvas\/trade_lifecycle_spec\.json/i)).toBeInTheDocument();
+      expect(screen.getByText(/\/\/\s*trade_lifecycle_spec\.json/i)).toBeInTheDocument();
       expect(screen.getByText(/READY/i)).toBeInTheDocument();
-      expect(screen.getByText(/CANVAS v3\.0 \/\/ AI-NATIVE/i)).toBeInTheDocument();
 
       rerender(<CommandDeck activeSheet="ai" onSelectSheet={vi.fn()} />);
-      expect(screen.getByText(/canvas\/ai_architecture_roadmap\.json/i)).toBeInTheDocument();
+      expect(screen.getByText(/\/\/\s*ai_architecture_roadmap\.json/i)).toBeInTheDocument();
     });
   });
 
@@ -678,7 +677,7 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       fireEvent.click(initiativesChip);
 
       // Canvas updates with technical initiatives
-      expect(screen.getByText(/canvas\/technical_initiatives\.json/i)).toBeInTheDocument();
+      expect(screen.getByText(/\/\/\s*technical_initiatives\.json/i)).toBeInTheDocument();
       expect(screen.getByRole('heading', { name: /Technical Initiatives/i })).toBeInTheDocument();
 
       // Switch to terminal sheet via command chip
@@ -686,7 +685,7 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       fireEvent.click(terminalChip);
 
       // Verify Ask Shubham interactive terminal is projected in canvas
-      expect(screen.getByText(/canvas\/ask_shubham_cli\.sh/i)).toBeInTheDocument();
+      expect(screen.getByText(/\/\/\s*ask_shubham_cli\.sh/i)).toBeInTheDocument();
     });
 
     test('syncs active sheet and section when window hash changes', () => {
@@ -697,21 +696,21 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
         window.location.hash = '#initiatives';
         window.dispatchEvent(new Event('hashchange'));
       });
-      expect(screen.getByText(/canvas\/technical_initiatives\.json/i)).toBeInTheDocument();
+      expect(screen.getByText(/\/\/\s*technical_initiatives\.json/i)).toBeInTheDocument();
 
       // Hash to #journey
       act(() => {
         window.location.hash = '#journey';
         window.dispatchEvent(new Event('hashchange'));
       });
-      expect(screen.getByText(/canvas\/career_and_capabilities\.json/i)).toBeInTheDocument();
+      expect(screen.getByText(/\/\/\s*career_and_capabilities\.json/i)).toBeInTheDocument();
 
       // Hash to #contact
       act(() => {
         window.location.hash = '#contact';
         window.dispatchEvent(new Event('hashchange'));
       });
-      expect(screen.getByText(/canvas\/direct_contact_form\.json/i)).toBeInTheDocument();
+      expect(screen.getByText(/\/\/\s*direct_contact_form\.json/i)).toBeInTheDocument();
     });
   });
 

@@ -163,36 +163,33 @@ export default function CommandDeck({ activeSheet, onSelectSheet }) {
                 <span className="window-dot green"></span>
               </div>
               <span className="canvas-file-tag">
-                <i className="fa-solid fa-file-code text-cyan"></i> // canvas/{currentSheet.fileTag}
+                <i className="fa-solid fa-file-code text-cyan"></i> // {currentSheet.fileTag}
               </span>
               <span className="canvas-status-pill">
                 <span className="dot-pulse"></span> READY
               </span>
             </div>
 
-            <div className="command-bar-right-controls">
-              <div className="command-search-wrap">
-                <i className="fa-solid fa-magnifying-glass search-icon"></i>
-                <input
-                  type="text"
-                  className="command-search-input"
-                  placeholder="Filter commands (e.g. trade, ai, sql)..."
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  aria-label="Filter command deck"
-                />
-                {searchTerm && (
-                  <button
-                    type="button"
-                    className="clear-search-btn"
-                    onClick={() => setSearchTerm('')}
-                    aria-label="Clear search"
-                  >
-                    <i className="fa-solid fa-xmark"></i>
-                  </button>
-                )}
-              </div>
-              <span className="canvas-version-tag">CANVAS v3.0 // AI-NATIVE</span>
+            <div className="command-search-wrap">
+              <i className="fa-solid fa-magnifying-glass search-icon"></i>
+              <input
+                type="text"
+                className="command-search-input"
+                placeholder="Filter commands (e.g. trade, ai, sql)..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                aria-label="Filter command deck"
+              />
+              {searchTerm && (
+                <button
+                  type="button"
+                  className="clear-search-btn"
+                  onClick={() => setSearchTerm('')}
+                  aria-label="Clear search"
+                >
+                  <i className="fa-solid fa-xmark"></i>
+                </button>
+              )}
             </div>
           </div>
 
