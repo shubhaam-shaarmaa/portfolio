@@ -2556,6 +2556,9 @@ input, textarea, select {
   align-items: center;
   gap: 0.5rem;
   transition: var(--transition);
+  max-width: 100%;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
 
 a.footer-contact-item:hover {
@@ -5204,7 +5207,9 @@ a.footer-contact-item:hover {
   .metrics-box-grid {
     grid-template-columns: repeat(4, 1fr);
   }
+}
 
+@media (min-width: 769px) and (max-width: 1024px) {
   .footer-top-grid {
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
@@ -5212,6 +5217,11 @@ a.footer-contact-item:hover {
 }
 
 @media (max-width: 768px) {
+  .footer-top-grid {
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
+  }
+
   .deck-system-bar {
     flex-direction: column;
     align-items: flex-start;
@@ -5432,6 +5442,37 @@ a.footer-contact-item:hover {
     padding: 3rem 0 9.5rem;
   }
 
+  .footer-top-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .footer-brand-col,
+  .footer-nav-col {
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .footer-status-pill {
+    max-width: 100%;
+    white-space: normal;
+    font-size: 0.68rem;
+    line-height: 1.35;
+  }
+
+  .footer-contact-links {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .footer-contact-item {
+    font-size: 0.78rem;
+    word-break: break-all;
+    overflow-wrap: anywhere;
+    max-width: 100%;
+  }
+
   .footer-copy {
     font-size: 0.74rem;
     line-height: 1.5;
@@ -5490,6 +5531,16 @@ a.footer-contact-item:hover {
 }
 
 @media (max-width: 360px) {
+  .footer-top-grid {
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
+  }
+
+  .footer-copy {
+    font-size: 0.7rem;
+    line-height: 1.45;
+  }
+
   .command-chips-grid {
     grid-template-columns: 1fr;
   }
