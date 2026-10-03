@@ -21,6 +21,7 @@ import RecruiterDock from '../RecruiterDock';
 import AskShubham from '../AskShubham';
 import SelectedWork from '../SelectedWork';
 import JourneyAndCapabilities from '../JourneyAndCapabilities';
+import UIConceptShowcase from '../UIConceptShowcase';
 import App from '../../App';
 
 describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
@@ -784,6 +785,62 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
 
       // Verify navbar receives scroll update
       expect(container.querySelector('.navbar')).toHaveClass('scrolled');
+    });
+
+    test('toggles Concise UI Studio and switches between 5 UI options', () => {
+      render(<App />);
+
+      expect(screen.getByText(/5 Concise UI Concepts/i)).toBeInTheDocument();
+
+      // Click Option 01 Bento
+      const bentoPill = screen.getByRole('button', { name: /01 Bento/i });
+      fireEvent.click(bentoPill);
+
+      expect(screen.getByText(/Select Your/i)).toBeInTheDocument();
+      expect(screen.getByRole('heading', { name: /Bento Grid Command Dashboard/i })).toBeInTheDocument();
+
+      // Click Option 02 FinTech Workstation
+      const workstationTab = screen.getByRole('tab', { name: /FinTech Workstation/i });
+      fireEvent.click(workstationTab);
+
+      expect(screen.getByRole('heading', { name: /FinTech Workstation \/ OS Multi-Pane/i })).toBeInTheDocument();
+
+      // Return to live layout
+      const returnBtn = screen.getByRole('button', { name: /View Current Live Layout/i });
+      fireEvent.click(returnBtn);
+
+      expect(screen.getByRole('navigation')).toBeInTheDocument();
+    });
+  });
+
+  // =========================================================================
+  // 20. UI CONCEPT SHOWCASE COMPONENT
+  // =========================================================================
+  describe('UIConceptShowcase Component', () => {
+    test('renders 5 concept tabs and switches between options', () => {
+      const mockSelect = vi.fn();
+      const mockFinalize = vi.fn();
+      render(
+        <UIConceptShowcase
+          activeConceptId="bento"
+          onSelectConcept={mockSelect}
+          onCloseStudio={vi.fn()}
+          onFinalizeSelection={mockFinalize}
+        />
+      );
+
+      expect(screen.getByRole('heading', { name: /Select Your/i })).toBeInTheDocument();
+      expect(screen.getByRole('heading', { name: /Bento Grid Command Dashboard/i })).toBeInTheDocument();
+
+      // Click Option 03 Split-Pane
+      const splitTab = screen.getByRole('tab', { name: /Split-Pane Storyboard/i });
+      fireEvent.click(splitTab);
+      expect(mockSelect).toHaveBeenCalledWith('split');
+
+      // Click Finalize
+      const finalizeBtn = screen.getAllByRole('button', { name: /Finalize Option/i });
+      fireEvent.click(finalizeBtn[0]);
+      expect(mockFinalize).toHaveBeenCalled();
     });
   });
 
