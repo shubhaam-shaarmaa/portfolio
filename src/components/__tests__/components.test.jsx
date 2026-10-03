@@ -622,7 +622,7 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       expect(screen.getByText(/ACTIVE DELIVERABLE:/i)).toBeInTheDocument();
     });
 
-    test('switches active sheet when center tab or bottom jump button is clicked', () => {
+    test('switches active sheet when center tab or bottom navigation button is clicked', () => {
       const mockSelect = vi.fn();
       render(<DynamicCanvasSheet activeSheet="trade" onSelectSheet={mockSelect} triggerToast={vi.fn()} />);
 
@@ -631,10 +631,10 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       fireEvent.click(initiativesTab);
       expect(mockSelect).toHaveBeenCalledWith('initiatives');
 
-      // Click bottom rail jump button 03 Career
-      const careerJump = screen.getByRole('button', { name: /03\..*Career/i });
-      fireEvent.click(careerJump);
-      expect(mockSelect).toHaveBeenCalledWith('career');
+      // Click bottom rail next button
+      const nextBtn = screen.getByRole('button', { name: /Next:.*Initiatives/i });
+      fireEvent.click(nextBtn);
+      expect(mockSelect).toHaveBeenCalledWith('initiatives');
     });
 
     test('projects designated deliverable components when different sheets are active', () => {

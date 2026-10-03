@@ -81,17 +81,19 @@ export default function CapitalMarketsCaseStudies({ isEmbedded = false }) {
           </span>
         </div>
 
-        {/* Flagship Case Study Header Banner */}
-        <div className="flagship-hero-banner">
-          <div className="flagship-hero-top">
-            <span className="badge-portfolio-case">
-              <i className="fa-solid fa-folder-closed text-gold"></i> {FLAGSHIP_CASE_STUDY.label}
-            </span>
-            <span className="flagship-domain-tag">{FLAGSHIP_CASE_STUDY.domain}</span>
+        {/* Flagship Case Study Header Banner (only when standalone) */}
+        {!isEmbedded && (
+          <div className="flagship-hero-banner">
+            <div className="flagship-hero-top">
+              <span className="badge-portfolio-case">
+                <i className="fa-solid fa-folder-closed text-gold"></i> {FLAGSHIP_CASE_STUDY.label}
+              </span>
+              <span className="flagship-domain-tag">{FLAGSHIP_CASE_STUDY.domain}</span>
+            </div>
+            <h3 className="flagship-hero-title">{FLAGSHIP_CASE_STUDY.title}</h3>
+            <p className="flagship-hero-subtitle">{FLAGSHIP_CASE_STUDY.subtitle}</p>
           </div>
-          <h3 className="flagship-hero-title">{FLAGSHIP_CASE_STUDY.title}</h3>
-          <p className="flagship-hero-subtitle">{FLAGSHIP_CASE_STUDY.subtitle}</p>
-        </div>
+        )}
 
         {/* =================================================================
             PERSPECTIVE VIEW 1: EXECUTIVE SUMMARY MODE

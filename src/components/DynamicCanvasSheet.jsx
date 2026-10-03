@@ -29,6 +29,9 @@ export default function DynamicCanvasSheet({
   triggerToast
 }) {
   const currentSheet = CANVAS_SHEETS.find((s) => s.id === activeSheet) || CANVAS_SHEETS[0];
+  const currentIndex = CANVAS_SHEETS.findIndex((s) => s.id === (currentSheet ? currentSheet.id : 'trade'));
+  const prevSheet = CANVAS_SHEETS[(currentIndex - 1 + CANVAS_SHEETS.length) % CANVAS_SHEETS.length];
+  const nextSheet = CANVAS_SHEETS[(currentIndex + 1) % CANVAS_SHEETS.length];
 
   return (
     <section id="canvas-workspace" className="dynamic-canvas-section">
@@ -193,7 +196,7 @@ export default function DynamicCanvasSheet({
               </div>
             )}
 
-            {/* Sheet 7: Direct Contact & Resume Engine */}
+            {/* Sheet 7: Direct Contact Engine */}
             {activeSheet === 'contact' && (
               <div className="canvas-pane-wrapper fade-in" id="contact">
                 <div className="canvas-pane-intro">
@@ -202,34 +205,37 @@ export default function DynamicCanvasSheet({
                     Direct Contact & <span>Role Opportunities</span>
                   </h3>
                   <p className="pane-desc">
-                    Send a direct message directly forwarded to shub.tech10@gmail.com with zero intermediaries or download the complete resume.
+                    Send a direct message forwarded to shub.tech10@gmail.com with zero intermediaries.
                   </p>
                 </div>
                 <Contact triggerToast={triggerToast} isEmbedded={true} />
-                <div className="mt-4">
-                  <ResumeCta isEmbedded={true} />
-                </div>
               </div>
             )}
           </div>
 
-          {/* Canvas Bottom Navigation Rail */}
+          {/* Canvas Bottom Navigation Rail (Clean Streamlined Paging) */}
           <div className="canvas-bottom-strip">
             <span className="canvas-strip-left">
               <i className="fa-solid fa-code-fork text-gold"></i> ACTIVE DELIVERABLE: <strong>{currentSheet.title}</strong>
             </span>
 
             <div className="canvas-strip-actions">
-              {CANVAS_SHEETS.map((s) => (
-                <button
-                  key={s.id}
-                  type="button"
-                  className={`strip-jump-btn ${activeSheet === s.id ? 'active' : ''}`}
-                  onClick={() => onSelectSheet(s.id)}
-                >
-                  {s.num}. {s.short}
-                </button>
-              ))}
+              <button
+                type="button"
+                className="strip-nav-btn"
+                onClick={() => onSelectSheet(prevSheet.id)}
+                title={`Navigate to previous deliverable: ${prevSheet.title}`}
+              >
+                <i className="fa-solid fa-arrow-left"></i> Prev: {prevSheet.short}
+              </button>
+              <button
+                type="button"
+                className="strip-nav-btn strip-nav-primary"
+                onClick={() => onSelectSheet(nextSheet.id)}
+                title={`Navigate to next deliverable: ${nextSheet.title}`}
+              >
+                Next: {nextSheet.short} <i className="fa-solid fa-arrow-right"></i>
+              </button>
             </div>
           </div>
         </div>

@@ -21,16 +21,18 @@ export default function AiJourney({ isEmbedded = false }) {
           </div>
         )}
 
-        {/* Roadmap Title Banner */}
-        <div className="ai-roadmap-header-banner">
-          <div className="roadmap-icon-box">
-            <i className="fa-solid fa-microchip text-purple"></i>
+        {/* Roadmap Title Banner (only when standalone) */}
+        {!isEmbedded && (
+          <div className="ai-roadmap-header-banner">
+            <div className="roadmap-icon-box">
+              <i className="fa-solid fa-microchip text-purple"></i>
+            </div>
+            <div>
+              <h3 className="roadmap-main-title">{AI_JOURNEY_HEADER.roadmapTitle}</h3>
+              <span className="roadmap-main-subtitle">{AI_JOURNEY_HEADER.roadmapSubtitle}</span>
+            </div>
           </div>
-          <div>
-            <h3 className="roadmap-main-title">{AI_JOURNEY_HEADER.roadmapTitle}</h3>
-            <span className="roadmap-main-subtitle">{AI_JOURNEY_HEADER.roadmapSubtitle}</span>
-          </div>
-        </div>
+        )}
 
         {/* Visual Progression Pipeline: RAG -> AGENTS -> MCP -> EVALS -> LLMOPS -> FINE-TUNING -> SECURITY -> MODEL ROUTING */}
         <div className="ai-progression-pipeline mt-3">

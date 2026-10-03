@@ -103,26 +103,6 @@ export default function App() {
 
   return (
     <div className="portfolio-app ai-native-theme">
-      {/* Top AI-Native System Bar */}
-      <div className="ai-system-top-ribbon">
-        <div className="container ribbon-flex">
-          <div className="ribbon-left">
-            <span className="ribbon-terminal-tag">
-              <i className="fa-solid fa-microchip text-cyan"></i> AI-NATIVE DYNAMIC WORKSPACE v3.0
-            </span>
-            <span className="ribbon-status">
-              <span className="live-dot"></span> T+1 DTCC VERIFIED · PRODUCTION ARTIFACTS
-            </span>
-          </div>
-
-          <div className="ribbon-right">
-            <span className="ribbon-mode-badge">
-              <i className="fa-solid fa-code-commit text-gold"></i> PROD_VERIFIED // SECURE STATIC SPA
-            </span>
-          </div>
-        </div>
-      </div>
-
       <Navbar scrolled={scrolled} activeSection={activeSection} />
 
       <main>
