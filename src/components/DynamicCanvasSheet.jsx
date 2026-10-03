@@ -11,7 +11,6 @@ import EngineeringFoundation from './EngineeringFoundation';
 import Certifications from './Certifications';
 import AskShubham from './AskShubham';
 import Contact from './Contact';
-import ResumeCta from './ResumeCta';
 
 export const CANVAS_SHEETS = [
   { id: 'trade', num: '01', title: 'Trade Lifecycle & T+1 Spec', short: 'Trade Spec', icon: 'fa-bolt-lightning', fileTag: 'trade_lifecycle_spec.json', accent: 'gold' },

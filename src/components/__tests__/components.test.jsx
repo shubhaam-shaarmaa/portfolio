@@ -13,7 +13,6 @@ import CapitalMarketsCaseStudies from '../CapitalMarketsCaseStudies';
 import AiJourney from '../AiJourney';
 import EngineeringFoundation from '../EngineeringFoundation';
 import Certifications from '../Certifications';
-import ResumeCta from '../ResumeCta';
 import Contact from '../Contact';
 import Footer from '../Footer';
 import BackToTop from '../BackToTop';
@@ -420,18 +419,7 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
     });
   });
 
-  // =========================================================================
-  // 11. RESUME CTA COMPONENT
-  // =========================================================================
-  describe('ResumeCta Component', () => {
-    test('renders download resume banner and links', () => {
-      render(<ResumeCta />);
 
-      expect(screen.getByText(/Want the complete story\?/i)).toBeInTheDocument();
-      expect(screen.getByRole('link', { name: /Download Complete Resume/i })).toHaveAttribute('href', expect.stringContaining('.pdf'));
-      expect(screen.getByRole('link', { name: /View LinkedIn Profile/i })).toBeInTheDocument();
-    });
-  });
 
   // =========================================================================
   // 12. CONTACT COMPONENT
@@ -565,6 +553,20 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
 
       // Modal closes after selection
       expect(screen.queryByRole('dialog', { name: /Application Exploration Guide/i })).not.toBeInTheDocument();
+    });
+
+    test('transitions to 100% celebration state when all 7 subsections are visited', () => {
+      const { rerender } = render(<RecruiterDock activeSection="hero" activeSheet="trade" />);
+      
+      // Progressively visit all 7 subsections
+      const remainingSheets = ['initiatives', 'career', 'ai', 'credentials', 'terminal', 'contact'];
+      remainingSheets.forEach((sheet) => {
+        rerender(<RecruiterDock activeSection="work" activeSheet={sheet} />);
+      });
+
+      expect(screen.getByTitle('100% Explored')).toBeInTheDocument();
+      expect(screen.getByText(/\(7\/7\)/i)).toBeInTheDocument();
+      expect(screen.getByText(/100% Complete/i)).toBeInTheDocument();
     });
 
     test('toggles dock minimization on collapse/expand button click', () => {
