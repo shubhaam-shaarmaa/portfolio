@@ -267,6 +267,19 @@ input, textarea, select {
   transform: translateY(-2px);
 }
 
+.btn-outline-purple {
+  background: transparent;
+  color: var(--accent-purple);
+  border: 1px solid rgba(168, 85, 247, 0.45);
+}
+
+.btn-outline-purple:hover {
+  background: rgba(168, 85, 247, 0.15);
+  border-color: var(--accent-purple);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(168, 85, 247, 0.25);
+}
+
 .btn-disabled {
   opacity: 0.5;
   cursor: not-allowed;
@@ -4541,7 +4554,7 @@ input, textarea, select {
   background: rgba(14, 23, 38, 0.75);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md) var(--radius-md) 0 0;
-  padding: 0.5rem 1rem;
+  padding: 0.65rem 1.25rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -4556,30 +4569,18 @@ input, textarea, select {
   font-weight: 700;
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-}
-
-.sys-status-indicator {
-  color: var(--accent-emerald);
-  font-weight: 600;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-}
-
-.status-blink-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--accent-emerald);
-  box-shadow: 0 0 10px var(--accent-emerald);
+  gap: 0.45rem;
+  letter-spacing: 0.03em;
 }
 
 .system-badge-mono {
-  color: var(--text-dim);
-  font-size: 0.72rem;
+  color: var(--accent-gold);
+  font-size: 0.76rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
 }
 
 /* Hero Identity Card */
@@ -4588,7 +4589,7 @@ input, textarea, select {
   border-left: 1px solid var(--border-card);
   border-right: 1px solid var(--border-card);
   border-bottom: 1px solid var(--border-card);
-  padding: 2rem;
+  padding: 2.25rem 2rem;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
   position: relative;
   backdrop-filter: blur(12px);
@@ -4596,8 +4597,8 @@ input, textarea, select {
 
 .deck-hero-grid {
   display: grid;
-  grid-template-columns: 200px 1fr 280px;
-  gap: 2rem;
+  grid-template-columns: 180px 1fr 310px;
+  gap: 1.75rem;
   align-items: center;
 }
 
@@ -4683,24 +4684,9 @@ input, textarea, select {
 }
 
 /* Center Identity Column */
-.deck-super-tag {
-  display: inline-block;
-  font-family: 'Space Grotesk', monospace, sans-serif;
-  font-size: 0.74rem;
-  font-weight: 700;
-  color: var(--accent-cyan);
-  background: var(--accent-cyan-dim);
-  border: 1px solid var(--accent-cyan-border);
-  padding: 0.2rem 0.65rem;
-  border-radius: var(--radius-full);
-  margin-bottom: 0.5rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
 .deck-name-title {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(2rem, 3.5vw, 2.75rem);
+  font-size: clamp(2rem, 3.2vw, 2.6rem);
   font-weight: 800;
   color: var(--text-main);
   line-height: 1.1;
@@ -4713,38 +4699,44 @@ input, textarea, select {
 
 .deck-role-title {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   font-weight: 700;
   color: var(--accent-gold);
   letter-spacing: 0.02em;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.25rem;
 }
 
 .deck-role-sub {
-  font-size: 0.88rem;
+  font-size: 0.86rem;
   color: var(--text-muted);
-  margin-bottom: 0.85rem;
+  margin-bottom: 0.75rem;
   font-weight: 500;
 }
 
 .deck-bio-hook {
-  font-size: 0.92rem;
-  line-height: 1.55;
+  font-size: 0.9rem;
+  line-height: 1.5;
   color: var(--text-main);
-  margin-bottom: 1.25rem;
-  max-width: 620px;
+  margin-bottom: 1.15rem;
+  max-width: 580px;
 }
 
 .deck-cta-row {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
   flex-wrap: wrap;
 }
 
 .btn-deck-cta {
-  font-size: 0.8rem;
-  padding: 0.45rem 0.95rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.42rem 0.85rem;
+  min-height: 38px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  white-space: nowrap;
 }
 
 /* Right Metrics Column */
@@ -4758,10 +4750,12 @@ input, textarea, select {
   background: rgba(255, 255, 255, 0.025);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-sm);
-  padding: 0.75rem 0.85rem;
+  padding: 0.65rem 0.8rem;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   transition: var(--transition);
+  min-width: 0;
 }
 
 .metric-cell:hover {
@@ -4779,7 +4773,7 @@ input, textarea, select {
   font-size: 1.15rem;
   font-weight: 800;
   color: var(--text-main);
-  line-height: 1.2;
+  line-height: 1.15;
 }
 
 .cell-gold .metric-cell-val { color: var(--accent-gold); }
@@ -4788,21 +4782,20 @@ input, textarea, select {
 .cell-purple .metric-cell-val { color: var(--accent-purple); }
 
 .metric-cell-lbl {
-  font-size: 0.72rem;
+  font-size: 0.68rem;
   color: var(--text-dim);
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
-  margin-top: 0.15rem;
+  letter-spacing: 0.04em;
+  margin-top: 0.2rem;
+  line-height: 1.2;
 }
 
 .metric-cell-sub {
-  font-size: 0.68rem;
+  font-size: 0.66rem;
   color: var(--text-muted);
   margin-top: 0.15rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  line-height: 1.25;
 }
 
 /* Command Bar */

@@ -28,16 +28,13 @@ export default function CommandDeck({ activeSheet, onSelectSheet }) {
         <div className="deck-system-bar">
           <div className="system-bar-left">
             <span className="sys-prompt-label">
-              <i className="fa-solid fa-terminal text-cyan"></i> [shubham@portfolio ~]$
-            </span>
-            <span className="sys-status-indicator">
-              <span className="status-blink-dot"></span> SYS_ACTIVE // T+1 DTCC VERIFIED
+              <i className="fa-solid fa-terminal text-cyan"></i> [shubham@portfolio ~]
             </span>
           </div>
 
           <div className="system-bar-right">
             <span className="system-badge-mono">
-              <i className="fa-solid fa-shield-check text-emerald"></i> ZERO FABRICATION · VERIFIED DATA
+              <i className="fa-solid fa-layer-group text-gold"></i> Domain Consulting × Modern Software Engineering × AI
             </span>
           </div>
         </div>
@@ -70,9 +67,6 @@ export default function CommandDeck({ activeSheet, onSelectSheet }) {
 
             {/* Center: Identity, Headlines, Credibility Hook */}
             <div className="deck-identity-col">
-              <div className="deck-super-tag">
-                <span>Domain Consulting × Modern Software Engineering × AI</span>
-              </div>
               <h1 className="deck-name-title">
                 {PERSONAL_INFO.name}
                 <span className="deck-dot">.</span>
@@ -85,7 +79,7 @@ export default function CommandDeck({ activeSheet, onSelectSheet }) {
               </p>
 
               <p className="deck-bio-hook">
-                {PERSONAL_INFO.heroHook} Bridging the vocabulary gap between business executives, operations desks, and engineering squads.
+                Bridging business strategy, Capital Markets domain operations, and engineering squads to translate complex requirements into practical digital solutions.
               </p>
 
               {/* Action Buttons */}
@@ -99,13 +93,20 @@ export default function CommandDeck({ activeSheet, onSelectSheet }) {
                   <i className="fa-solid fa-download"></i> Download Resume
                 </a>
                 <a
+                  href={`mailto:${PERSONAL_INFO.email}`}
+                  className="btn btn-outline-gold btn-deck-cta"
+                  id="deck-email"
+                >
+                  <i className="fa-solid fa-envelope"></i> shub.tech10@gmail.com
+                </a>
+                <a
                   href={PERSONAL_INFO.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn btn-outline-cyan btn-deck-cta"
                   id="deck-linkedin"
                 >
-                  <i className="fa-brands fa-linkedin-in"></i> LinkedIn Profile
+                  <i className="fa-brands fa-linkedin-in"></i> LinkedIn
                 </a>
                 <a
                   href={PERSONAL_INFO.github}
@@ -114,14 +115,7 @@ export default function CommandDeck({ activeSheet, onSelectSheet }) {
                   className="btn btn-outline-purple btn-deck-cta"
                   id="deck-github"
                 >
-                  <i className="fa-brands fa-github"></i> GitHub Profile
-                </a>
-                <a
-                  href={`mailto:${PERSONAL_INFO.email}`}
-                  className="btn btn-outline-gold btn-deck-cta"
-                  id="deck-email"
-                >
-                  <i className="fa-solid fa-envelope"></i> shub.tech10@gmail.com
+                  <i className="fa-brands fa-github"></i> GitHub
                 </a>
               </div>
             </div>

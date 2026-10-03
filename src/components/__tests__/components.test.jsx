@@ -32,12 +32,11 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
   // 1. COMMAND DECK ARCHITECTURE & SYSTEM TERMINAL
   // =========================================================================
   describe('CommandDeck System Terminal & Quick Profile', () => {
-    test('renders system prompt, active status indicator, and zero fabrication badge', () => {
+    test('renders system prompt and domain consulting specialization badge', () => {
       render(<CommandDeck activeSheet="trade" onSelectSheet={vi.fn()} />);
       
-      expect(screen.getByText(/\[shubham@portfolio ~\]\$/i)).toBeInTheDocument();
-      expect(screen.getByText(/SYS_ACTIVE \/\/ T\+1 DTCC VERIFIED/i)).toBeInTheDocument();
-      expect(screen.getByText(/ZERO FABRICATION · VERIFIED DATA/i)).toBeInTheDocument();
+      expect(screen.getByText(/\[shubham@portfolio ~\]/i)).toBeInTheDocument();
+      expect(screen.getByText(/Domain Consulting × Modern Software Engineering × AI/i)).toBeInTheDocument();
     });
 
     test('renders brand identity, active online badge, and company role', () => {
@@ -55,11 +54,11 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       const resumeLink = screen.getByRole('link', { name: /Download Resume/i });
       expect(resumeLink).toHaveAttribute('download', 'Shubham_Sharma_Resume.pdf');
       
-      const linkedinLink = screen.getByRole('link', { name: /LinkedIn Profile/i });
+      const linkedinLink = screen.getByRole('link', { name: /LinkedIn/i });
       expect(linkedinLink).toHaveAttribute('target', '_blank');
       expect(linkedinLink).toHaveAttribute('rel', 'noopener noreferrer');
       
-      const githubLink = screen.getByRole('link', { name: /GitHub Profile/i });
+      const githubLink = screen.getByRole('link', { name: /GitHub/i });
       expect(githubLink).toHaveAttribute('target', '_blank');
       expect(githubLink).toHaveAttribute('rel', 'noopener noreferrer');
     });
@@ -75,13 +74,12 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
   // 2. COMMAND DECK COMPONENT (OPTION 5 HERO ARCHITECTURE)
   // =========================================================================
   describe('CommandDeck Component', () => {
-    test('renders system terminal bar, verified badge, and online indicator', () => {
+    test('renders system terminal bar and online presence indicator', () => {
       render(<CommandDeck activeSheet="trade" onSelectSheet={vi.fn()} />);
 
       // System prompt & status
-      expect(screen.getByText(/\[shubham@portfolio ~\]\$/i)).toBeInTheDocument();
-      expect(screen.getByText(/SYS_ACTIVE \/\/ T\+1 DTCC VERIFIED/i)).toBeInTheDocument();
-      expect(screen.getByText(/ZERO FABRICATION · VERIFIED DATA/i)).toBeInTheDocument();
+      expect(screen.getByText(/\[shubham@portfolio ~\]/i)).toBeInTheDocument();
+      expect(screen.getByText(/Domain Consulting × Modern Software Engineering × AI/i)).toBeInTheDocument();
 
       // Avatar & presence
       expect(screen.getByAltText(/Shubham Sharma/i)).toBeInTheDocument();
@@ -98,8 +96,8 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
 
       // CTAs
       expect(screen.getByRole('link', { name: /Download Resume/i })).toHaveAttribute('href', expect.stringContaining('.pdf'));
-      expect(screen.getByRole('link', { name: /LinkedIn Profile/i })).toBeInTheDocument();
-      expect(screen.getByRole('link', { name: /GitHub Profile/i })).toBeInTheDocument();
+      expect(screen.getByRole('link', { name: /LinkedIn/i })).toBeInTheDocument();
+      expect(screen.getByRole('link', { name: /GitHub/i })).toBeInTheDocument();
       expect(screen.getByRole('link', { name: /shub\.tech10@gmail\.com/i })).toBeInTheDocument();
 
       // 4 Metrics
