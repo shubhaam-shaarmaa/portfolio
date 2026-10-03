@@ -4064,11 +4064,6 @@ a.footer-contact-item:hover {
     padding: 3.5rem 0 8.5rem;
   }
 
-  .footer-top-grid {
-    grid-template-columns: 1fr;
-    gap: 2.25rem;
-  }
-
   .footer-bottom-row {
     justify-content: center;
     align-items: center;
@@ -5209,7 +5204,7 @@ a.footer-contact-item:hover {
   }
 }
 
-@media (min-width: 769px) and (max-width: 1024px) {
+@media (min-width: 481px) and (max-width: 1024px) {
   .footer-top-grid {
     grid-template-columns: 1fr 1fr;
     gap: 2rem;
@@ -5217,126 +5212,6 @@ a.footer-contact-item:hover {
 }
 
 @media (max-width: 768px) {
-  .site-footer {
-    text-align: center;
-  }
-
-  .footer-container {
-    align-items: center;
-    text-align: center;
-  }
-
-  .footer-top-grid {
-    grid-template-columns: 1fr;
-    gap: 2.25rem;
-    text-align: center;
-    justify-items: center;
-  }
-
-  .footer-brand-col {
-    align-items: center;
-    text-align: center;
-    width: 100%;
-  }
-
-  .footer-logo {
-    justify-content: center;
-    margin: 0 auto;
-    text-align: center;
-  }
-
-  .footer-logo-text {
-    align-items: center;
-    text-align: center;
-  }
-
-  .footer-logo-name,
-  .footer-tag {
-    text-align: center;
-  }
-
-  .footer-bio-summary {
-    text-align: center;
-    margin: 0 auto;
-    max-width: 420px;
-  }
-
-  .footer-status-pill {
-    margin: 0 auto;
-    justify-content: center;
-    text-align: center;
-  }
-
-  .footer-nav-col {
-    align-items: center;
-    text-align: center;
-    width: 100%;
-  }
-
-  .footer-col-title {
-    justify-content: center;
-    text-align: center;
-    width: 100%;
-  }
-
-  .footer-nav-list {
-    align-items: center;
-    text-align: center;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-  }
-
-  .footer-nav-list li {
-    text-align: center;
-    width: 100%;
-  }
-
-  .footer-nav-list a {
-    text-align: center;
-    display: inline-block;
-  }
-
-  .footer-nav-list a:hover {
-    transform: translateY(-2px);
-  }
-
-  .footer-contact-links {
-    align-items: center;
-    text-align: center;
-    width: 100%;
-  }
-
-  .footer-contact-item {
-    justify-content: center;
-    text-align: center;
-    width: auto;
-    max-width: 100%;
-    margin: 0 auto;
-  }
-
-  .footer-socials {
-    justify-content: center;
-    margin: 0.35rem auto 0;
-  }
-
-  .footer-bottom-row {
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    width: 100%;
-  }
-
-  .footer-copy {
-    text-align: center;
-    margin: 0 auto;
-  }
-
-  .back-to-top {
-    bottom: 4.75rem;
-    right: 1.25rem;
-  }
-
   .deck-system-bar {
     flex-direction: column;
     align-items: flex-start;
