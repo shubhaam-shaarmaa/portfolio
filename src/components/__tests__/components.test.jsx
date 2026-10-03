@@ -487,6 +487,26 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       expect(screen.getByText(/© 2026 Shubham Sharma/i)).toBeInTheDocument();
       expect(screen.getByRole('link', { name: /^LinkedIn$/i })).toBeInTheDocument();
     });
+
+    test('triggers onSelectSheet and redirects when workstation and exploration links are clicked', () => {
+      const mockSelect = vi.fn();
+      render(<Footer onSelectSheet={mockSelect} />);
+
+      // Workstation link
+      const tradeLink = screen.getByRole('link', { name: /Trade Lifecycle & T\+1 Spec/i });
+      fireEvent.click(tradeLink);
+      expect(mockSelect).toHaveBeenCalledWith('trade', 'work');
+
+      // Exploration link
+      const careerLink = screen.getByRole('link', { name: /Career Journey & Infosys Track/i });
+      fireEvent.click(careerLink);
+      expect(mockSelect).toHaveBeenCalledWith('career', 'journey');
+
+      // Logo link
+      const logoLink = screen.getByLabelText(/Shubham Sharma Home/i);
+      fireEvent.click(logoLink);
+      expect(mockSelect).toHaveBeenCalledWith('hero', 'hero');
+    });
   });
 
   // =========================================================================

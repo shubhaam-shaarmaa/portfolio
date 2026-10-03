@@ -41,6 +41,19 @@ export default function App() {
       } else if (hash === '#hero' || hash === '') {
         setActiveSection('hero');
       }
+
+      // Smoothly redirect to target element
+      setTimeout(() => {
+        if (hash === '#hero' || hash === '') {
+          if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' });
+        } else if (hash) {
+          const targetId = hash.replace('#', '');
+          const targetEl = document.getElementById(targetId) || document.getElementById('canvas-workspace');
+          if (targetEl && typeof targetEl.scrollIntoView === 'function') {
+            targetEl.scrollIntoView({ behavior: 'smooth' });
+          }
+        }
+      }, 60);
     };
 
     handleHash();
@@ -79,7 +92,15 @@ export default function App() {
     setToastTimer(timer);
   };
 
-  const handleSelectSheet = (sheetId) => {
+  const handleSelectSheet = (sheetId, targetId) => {
+    if (sheetId === 'hero') {
+      setActiveSection('hero');
+      if (typeof window !== 'undefined') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      return;
+    }
+
     setActiveSheet(sheetId);
 
     // Sync section highlight
@@ -93,11 +114,20 @@ export default function App() {
       setActiveSection('contact');
     }
 
-    // Smoothly scroll down to canvas if currently near top
-    const canvasEl = document.getElementById('canvas-workspace');
-    if (canvasEl && window.scrollY < 200) {
-      canvasEl.scrollIntoView({ behavior: 'smooth' });
-    }
+    // Smoothly redirect and scroll directly to the selected component
+    setTimeout(() => {
+      if (targetId && targetId !== 'canvas-workspace') {
+        const targetEl = document.getElementById(targetId);
+        if (targetEl && typeof targetEl.scrollIntoView === 'function') {
+          targetEl.scrollIntoView({ behavior: 'smooth' });
+          return;
+        }
+      }
+      const canvasEl = document.getElementById('canvas-workspace');
+      if (canvasEl && typeof canvasEl.scrollIntoView === 'function') {
+        canvasEl.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 60);
   };
 
   return (
@@ -118,7 +148,7 @@ export default function App() {
         />
       </main>
 
-      <Footer />
+      <Footer onSelectSheet={handleSelectSheet} />
       <RecruiterDock
         activeSection={activeSection}
         activeSheet={activeSheet}

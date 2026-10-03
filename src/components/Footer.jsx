@@ -1,7 +1,27 @@
 import React from 'react';
 import { PERSONAL_INFO } from '../data/portfolioData';
 
-export default function Footer() {
+export default function Footer({ onSelectSheet }) {
+  const handleNavClick = (e, sheetId, targetId) => {
+    e.preventDefault();
+    if (onSelectSheet) {
+      onSelectSheet(sheetId, targetId);
+    } else {
+      if (sheetId === 'hero') {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        const targetEl = document.getElementById(targetId) || document.getElementById('canvas-workspace');
+        if (targetEl && typeof targetEl.scrollIntoView === 'function') {
+          targetEl.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    }
+
+    if (typeof window !== 'undefined' && window.history && window.history.pushState) {
+      window.history.pushState(null, '', `#${targetId || sheetId}`);
+    }
+  };
+
   return (
     <footer className="site-footer">
       <div className="container footer-container">
@@ -9,7 +29,12 @@ export default function Footer() {
         <div className="footer-top-grid">
           {/* Brand & Value Proposition Column */}
           <div className="footer-brand-col">
-            <a href="#hero" className="footer-logo" aria-label="Shubham Sharma Home">
+            <a
+              href="#hero"
+              className="footer-logo"
+              aria-label="Shubham Sharma Home"
+              onClick={(e) => handleNavClick(e, 'hero', 'hero')}
+            >
               <div className="footer-logo-badge">SS</div>
               <div className="footer-logo-text">
                 <span className="footer-logo-name">
@@ -32,10 +57,26 @@ export default function Footer() {
               <i className="fa-solid fa-layer-group text-cyan"></i> Workstation
             </h5>
             <ul className="footer-nav-list">
-              <li><a href="#hero">Command Deck // Launcher</a></li>
-              <li><a href="#case-studies">Trade Lifecycle & T+1 Spec</a></li>
-              <li><a href="#projects">Technical Initiatives (6)</a></li>
-              <li><a href="#ai-journey">AI Roadmap & Systems</a></li>
+              <li>
+                <a href="#hero" onClick={(e) => handleNavClick(e, 'hero', 'hero')}>
+                  Command Deck // Launcher
+                </a>
+              </li>
+              <li>
+                <a href="#case-studies" onClick={(e) => handleNavClick(e, 'trade', 'work')}>
+                  Trade Lifecycle & T+1 Spec
+                </a>
+              </li>
+              <li>
+                <a href="#projects" onClick={(e) => handleNavClick(e, 'initiatives', 'projects')}>
+                  Technical Initiatives (6)
+                </a>
+              </li>
+              <li>
+                <a href="#ai-journey" onClick={(e) => handleNavClick(e, 'ai', 'ai-journey')}>
+                  AI Roadmap & Systems
+                </a>
+              </li>
             </ul>
           </div>
 
@@ -45,10 +86,26 @@ export default function Footer() {
               <i className="fa-solid fa-compass text-gold"></i> Exploration
             </h5>
             <ul className="footer-nav-list">
-              <li><a href="#journey">Career Journey & Infosys Track</a></li>
-              <li><a href="#capabilities">Core Capabilities & Skills</a></li>
-              <li><a href="#credentials">Positioning & Certifications</a></li>
-              <li><a href="#ask">Ask Shubham CLI Terminal</a></li>
+              <li>
+                <a href="#journey" onClick={(e) => handleNavClick(e, 'career', 'journey')}>
+                  Career Journey & Infosys Track
+                </a>
+              </li>
+              <li>
+                <a href="#capabilities" onClick={(e) => handleNavClick(e, 'career', 'capabilities')}>
+                  Core Capabilities & Skills
+                </a>
+              </li>
+              <li>
+                <a href="#credentials" onClick={(e) => handleNavClick(e, 'credentials', 'credentials')}>
+                  Positioning & Certifications
+                </a>
+              </li>
+              <li>
+                <a href="#ask" onClick={(e) => handleNavClick(e, 'terminal', 'ask')}>
+                  Ask Shubham CLI Terminal
+                </a>
+              </li>
             </ul>
           </div>
 

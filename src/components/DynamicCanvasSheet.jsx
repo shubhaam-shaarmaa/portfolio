@@ -114,6 +114,7 @@ export default function DynamicCanvasSheet({
             {/* Sheet 5: Positioning, Engineering Foundation & Certifications */}
             {activeSheet === 'credentials' && (
               <div className="canvas-pane-wrapper fade-in" id="identity">
+                <span id="credentials" className="anchor-shim"></span>
                 <span id="engineering" className="anchor-shim"></span>
                 <span id="certifications" className="anchor-shim"></span>
                 <div className="canvas-pane-intro">
