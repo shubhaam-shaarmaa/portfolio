@@ -165,9 +165,6 @@ export default function CommandDeck({ activeSheet, onSelectSheet }) {
               <span className="canvas-file-tag">
                 <i className="fa-solid fa-file-code text-cyan"></i> // {currentSheet.fileTag}
               </span>
-              <span className="canvas-status-pill">
-                <span className="dot-pulse"></span> READY
-              </span>
             </div>
 
             <div className="command-search-wrap">

@@ -5056,18 +5056,6 @@ a.footer-contact-item:hover {
   gap: 0.35rem;
 }
 
-.canvas-status-pill {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 0.68rem;
-  font-weight: 700;
-  color: var(--accent-emerald);
-  background: var(--accent-emerald-dim);
-  padding: 0.15rem 0.5rem;
-  border-radius: var(--radius-full);
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
-}
 
 .dot-pulse {
   width: 6px;
@@ -5309,12 +5297,6 @@ a.footer-contact-item:hover {
     text-overflow: ellipsis;
   }
 
-  .canvas-status-pill {
-    flex-shrink: 0;
-    margin-left: auto;
-    font-size: 0.65rem;
-    padding: 0.12rem 0.45rem;
-  }
 
   .command-search-wrap {
     width: 100%;

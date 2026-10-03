@@ -131,11 +131,10 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       expect(screen.getAllByRole('tab').length).toBe(COMMANDS.length);
     });
 
-    test('renders workstation terminal window header, active file tag, and ready pill', () => {
+    test('renders workstation terminal window header and active file tag', () => {
       const { rerender } = render(<CommandDeck activeSheet="trade" onSelectSheet={vi.fn()} />);
 
       expect(screen.getByText(/\/\/\s*trade_lifecycle_spec\.json/i)).toBeInTheDocument();
-      expect(screen.getByText(/READY/i)).toBeInTheDocument();
 
       rerender(<CommandDeck activeSheet="ai" onSelectSheet={vi.fn()} />);
       expect(screen.getByText(/\/\/\s*ai_architecture_roadmap\.json/i)).toBeInTheDocument();
