@@ -19,6 +19,7 @@ import BackToTop from '../BackToTop';
 import RecruiterDock from '../RecruiterDock';
 import AskShubham from '../AskShubham';
 import App from '../../App';
+import { DYNAMIC_EXPERIENCE_LABEL, DYNAMIC_EXPERIENCE_TEXT } from '../../data/portfolioData';
 
 describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
 
@@ -100,7 +101,7 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       expect(screen.getByRole('link', { name: /shub\.tech10@gmail\.com/i })).toBeInTheDocument();
 
       // 4 Metrics
-      expect(screen.getByText(/4\+ Years/i)).toBeInTheDocument();
+      expect(screen.getByText(new RegExp(DYNAMIC_EXPERIENCE_LABEL, 'i'))).toBeInTheDocument();
       expect(screen.getByText(/US Investment/i)).toBeInTheDocument();
       expect(screen.getByText(/78% Reduction/i)).toBeInTheDocument();
       expect(screen.getByText(/99\.9% T\+1/i)).toBeInTheDocument();
@@ -632,7 +633,7 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       const showAllBtn = screen.getByRole('button', { name: /Show All Answers/i });
       fireEvent.click(showAllBtn);
 
-      expect(screen.getByText(/4\+ years at Infosys supporting a US investment management client/i)).toBeInTheDocument();
+      expect(screen.getByText(new RegExp(`${DYNAMIC_EXPERIENCE_TEXT} at Infosys supporting a US investment management client`, 'i'))).toBeInTheDocument();
       expect(screen.getByText(/Promoted 4 consecutive times/i)).toBeInTheDocument();
 
       // Reset

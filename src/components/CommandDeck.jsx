@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PERSONAL_INFO } from '../data/portfolioData';
+import { PERSONAL_INFO, DYNAMIC_EXPERIENCE_LABEL } from '../data/portfolioData';
 import avatarImg from '../assets/shubham_avatar.jpg';
 import resumePdf from '../assets/Shubham_Sharma_Resume.pdf';
 import { CANVAS_SHEETS } from './DynamicCanvasSheet';
@@ -126,7 +126,7 @@ export default function CommandDeck({ activeSheet, onSelectSheet }) {
             <div className="deck-metrics-col">
               <div className="metrics-box-grid">
                 <div className="metric-cell cell-gold">
-                  <span className="metric-cell-val">4+ Years</span>
+                  <span className="metric-cell-val">{DYNAMIC_EXPERIENCE_LABEL}</span>
                   <span className="metric-cell-lbl">Enterprise Experience</span>
                   <span className="metric-cell-sub">Infosys Financial Services</span>
                 </div>

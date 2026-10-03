@@ -4,12 +4,34 @@
  * Strictly compliant with Credibility and AI Guardrails
  */
 
+export const CAREER_START_DATE = '2022-06-30T00:00:00';
+
+/**
+ * Dynamically computes total years of professional experience from the start date (30th June 2022)
+ * to current date, rounded to one digit after decimal (e.g. 4.3).
+ *
+ * @param {string|Date} startDate - Career start date
+ * @returns {string} Experience in years formatted with 1 decimal place (e.g. "4.3")
+ */
+export function getExperienceYears(startDate = CAREER_START_DATE) {
+  const start = new Date(startDate);
+  const now = new Date();
+  const diffInMs = Math.max(0, now.getTime() - start.getTime());
+  const millisecondsPerYear = 1000 * 60 * 60 * 24 * 365.25;
+  const years = diffInMs / millisecondsPerYear;
+  return (Math.round(years * 10) / 10).toFixed(1);
+}
+
+export const DYNAMIC_EXPERIENCE_YEARS = getExperienceYears();
+export const DYNAMIC_EXPERIENCE_LABEL = `${DYNAMIC_EXPERIENCE_YEARS} Years`;
+export const DYNAMIC_EXPERIENCE_TEXT = `${DYNAMIC_EXPERIENCE_YEARS} years`;
+
 export const PERSONAL_INFO = {
   name: "Shubham Sharma",
   headline: "TECHNO-FUNCTIONAL BUSINESS ANALYST",
   secondaryHeadline: "Capital Markets & Asset Management | AI & GenAI | Product & Technology",
   currentRole: "Senior Associate Consultant — Infosys",
-  experienceYears: "4+ years",
+  experienceYears: DYNAMIC_EXPERIENCE_TEXT,
   domain: "Capital Markets · Asset Management · Financial Services · BFSI",
   clientExposure: "US-based investment management client",
   location: "Himachal Pradesh, India",
@@ -23,7 +45,7 @@ export const PERSONAL_INFO = {
   heroSubHook: "Business analysis backed by Capital Markets expertise and hands-on technology experience.",
   
   keyMetrics: [
-    { label: "Enterprise Experience", value: "4+ Years" },
+    { label: "Enterprise Experience", value: DYNAMIC_EXPERIENCE_LABEL },
     { label: "Domain Focus", value: "Capital Markets & BFSI" },
     { label: "Technical Core", value: "Frontend, SQL & APIs" },
     { label: "Emerging Capability", value: "AI & GenAI Workflows" }
@@ -101,7 +123,7 @@ export const PROFESSIONAL_IDENTITY = {
 export const ABOUT_NARRATIVE = {
   lead: "I am a Techno-Functional Business Analyst with Capital Markets and Asset Management experience, backed by a strong frontend engineering foundation and growing expertise in AI & GenAI.",
   body1: "I work at the intersection of business, technology and financial services, translating business requirements into technology solutions while understanding the technical considerations behind implementation.",
-  body2: "Over 4+ years with Infosys, I have progressively expanded from frontend engineering into techno-functional and business-analysis responsibilities while working with a US-based investment management client.",
+  body2: `Over ${DYNAMIC_EXPERIENCE_TEXT} with Infosys, I have progressively expanded from frontend engineering into techno-functional and business-analysis responsibilities while working with a US-based investment management client.`,
   highlights: [
     "Requirements analysis & JAD workshops",
     "User stories & Given-When-Then acceptance criteria",

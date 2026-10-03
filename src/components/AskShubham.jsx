@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { DYNAMIC_EXPERIENCE_TEXT } from '../data/portfolioData';
 
 export const ASK_ITEMS = [
   {
@@ -10,7 +11,7 @@ export const ASK_ITEMS = [
   {
     id: 'capital-markets',
     q: "What's your Capital Markets & Middle-Office experience?",
-    a: '4+ years at Infosys supporting a US investment management client. Hands-on with the 7-stage trade lifecycle, pre-settlement constraint validation, SSI break triage, and T+1 DTCC cut-off windows.',
+    a: `${DYNAMIC_EXPERIENCE_TEXT} at Infosys supporting a US investment management client. Hands-on with the 7-stage trade lifecycle, pre-settlement constraint validation, SSI break triage, and T+1 DTCC cut-off windows.`,
     link: { label: 'Inspect Trade Lifecycle Case Study', href: '#case-studies' }
   },
   {

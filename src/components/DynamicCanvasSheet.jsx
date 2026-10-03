@@ -11,6 +11,7 @@ import EngineeringFoundation from './EngineeringFoundation';
 import Certifications from './Certifications';
 import AskShubham from './AskShubham';
 import Contact from './Contact';
+import { DYNAMIC_EXPERIENCE_TEXT } from '../data/portfolioData';
 
 export const CANVAS_SHEETS = [
   { id: 'trade', num: '01', title: 'Trade Lifecycle & T+1 Spec', short: 'Trade Spec', icon: 'fa-bolt-lightning', fileTag: 'trade_lifecycle_spec.json', accent: 'gold' },
@@ -83,7 +84,7 @@ export default function DynamicCanvasSheet({
                     Career Trajectory & <span>Core Capabilities</span>
                   </h3>
                   <p className="pane-desc">
-                    4+ years Infosys progression from full-stack systems engineering to Financial Services domain consulting, techno-functional analysis, and structured AI enablement.
+                    {DYNAMIC_EXPERIENCE_TEXT} Infosys progression from full-stack systems engineering to Financial Services domain consulting, techno-functional analysis, and structured AI enablement.
                   </p>
                 </div>
                 <div className="canvas-stack-block">

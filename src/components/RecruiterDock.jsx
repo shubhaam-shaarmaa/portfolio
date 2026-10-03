@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { DYNAMIC_EXPERIENCE_TEXT } from '../data/portfolioData';
 
 export const EXPLORATION_ITEMS = [
   {
@@ -26,7 +27,7 @@ export const EXPLORATION_ITEMS = [
     short: 'Career Path',
     label: 'Career Journey & Capabilities',
     icon: 'fa-timeline',
-    hint: 'Explore 4+ years Infosys track & technical foundation'
+    hint: `Explore ${DYNAMIC_EXPERIENCE_TEXT} Infosys track & technical foundation`
   },
   {
     id: 'ai',
