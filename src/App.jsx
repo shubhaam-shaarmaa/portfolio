@@ -1,42 +1,62 @@
 import React, { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import AskShubham from './components/AskShubham';
-import SelectedWork from './components/SelectedWork';
-import JourneyAndCapabilities from './components/JourneyAndCapabilities';
-import ResumeCta from './components/ResumeCta';
-import Contact from './components/Contact';
+import CommandDeck from './components/CommandDeck';
+import DynamicCanvasSheet, { CANVAS_SHEETS } from './components/DynamicCanvasSheet';
 import Footer from './components/Footer';
 import BackToTop from './components/BackToTop';
 import RecruiterDock from './components/RecruiterDock';
-import UIConceptShowcase, { CONCEPTS_DATA } from './components/UIConceptShowcase';
+import UIConceptShowcase from './components/UIConceptShowcase';
 
 export default function App() {
   const [scrolled, setScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
+  const [activeSheet, setActiveSheet] = useState('trade');
   const [toastMsg, setToastMsg] = useState('');
   const [showToast, setShowToast] = useState(false);
   const [toastTimer, setToastTimer] = useState(null);
 
-  // Concise UI Studio Preview State (Default to false unless hash starts with #studio or #option-)
-  const [showStudio, setShowStudio] = useState(
-    typeof window !== 'undefined' && (window.location.hash === '#studio' || window.location.hash.startsWith('#option-'))
-  );
-  const [activeConceptId, setActiveConceptId] = useState('bento');
+  // Studio Mode (accessible via #studio or floating toggle)
+  const [showStudio, setShowStudio] = useState(false);
 
   useEffect(() => {
     const handleHash = () => {
-      const hash = window.location.hash;
+      const hash = window.location.hash.toLowerCase();
+
       if (hash === '#studio') {
         setShowStudio(true);
-      } else if (hash.startsWith('#option-')) {
-        const opt = hash.replace('#option-', '');
-        if (CONCEPTS_DATA.some((c) => c.id === opt)) {
-          setActiveConceptId(opt);
-          setShowStudio(true);
-        }
-      } else if (hash === '#live' || hash === '#hero' || hash === '#work' || hash === '#ask') {
-        setShowStudio(false);
+        return;
+      }
+
+      if (hash.startsWith('#option-')) {
+        setShowStudio(true);
+        return;
+      }
+
+      setShowStudio(false);
+
+      if (hash === '#work' || hash === '#case-studies' || hash === '#trade') {
+        setActiveSheet('trade');
+        setActiveSection('work');
+      } else if (hash === '#projects' || hash === '#initiatives') {
+        setActiveSheet('initiatives');
+        setActiveSection('work');
+      } else if (hash === '#journey' || hash === '#career' || hash === '#skills' || hash === '#capabilities') {
+        setActiveSheet('career');
+        setActiveSection('journey');
+      } else if (hash === '#ai' || hash === '#ai-journey') {
+        setActiveSheet('ai');
+        setActiveSection('journey');
+      } else if (hash === '#credentials' || hash === '#identity' || hash === '#engineering' || hash === '#certifications') {
+        setActiveSheet('credentials');
+        setActiveSection('journey');
+      } else if (hash === '#ask' || hash === '#terminal') {
+        setActiveSheet('terminal');
+        setActiveSection('ask');
+      } else if (hash === '#contact') {
+        setActiveSheet('contact');
+        setActiveSection('contact');
+      } else if (hash === '#hero' || hash === '') {
+        setActiveSection('hero');
       }
     };
 
@@ -46,22 +66,10 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (showStudio) return;
-
     const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
+      setScrolled(window.scrollY > 40);
 
-      const sectionIds = [
-        'hero',
-        'ask',
-        'work',
-        'journey',
-        'contact'
-      ];
-
-      const scrollPos = window.scrollY + 250;
-
-      // Ensure contact is highlighted if user reaches the bottom of the page
+      // Bottom of page activates contact
       if (
         typeof document !== 'undefined' &&
         document.documentElement &&
@@ -71,22 +79,14 @@ export default function App() {
         return;
       }
 
-      for (let sec of sectionIds) {
-        const el = document.getElementById(sec);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPos >= top && scrollPos < top + height) {
-            setActiveSection(sec);
-            break;
-          }
-        }
+      if (window.scrollY < 400) {
+        setActiveSection('hero');
       }
     };
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [showStudio]);
+  }, []);
 
   const triggerToast = (msg) => {
     setToastMsg(msg);
@@ -96,97 +96,88 @@ export default function App() {
     setToastTimer(timer);
   };
 
-  const handleSelectConcept = (id) => {
-    setActiveConceptId(id);
-    setShowStudio(true);
-  };
+  const handleSelectSheet = (sheetId) => {
+    setActiveSheet(sheetId);
+    setShowStudio(false);
 
-  const handleFinalizeSelection = (concept) => {
-    triggerToast(`Selected Option ${concept.num}: ${concept.name}! Ready to build this layout.`);
+    // Sync section highlight
+    if (sheetId === 'trade' || sheetId === 'initiatives') {
+      setActiveSection('work');
+    } else if (sheetId === 'career' || sheetId === 'ai' || sheetId === 'credentials') {
+      setActiveSection('journey');
+    } else if (sheetId === 'terminal') {
+      setActiveSection('ask');
+    } else if (sheetId === 'contact') {
+      setActiveSection('contact');
+    }
+
+    // Smoothly scroll down to canvas if currently near top
+    const canvasEl = document.getElementById('canvas-workspace');
+    if (canvasEl && window.scrollY < 200) {
+      canvasEl.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   return (
-    <div className="portfolio-app">
-      {/* Persistent Studio Preview Top Banner */}
-      <div className="studio-top-banner">
-        <div className="studio-banner-content">
-          <div className="studio-banner-left">
-            <span className="studio-banner-badge">
-              <i className="fa-solid fa-layer-group"></i> 5 Concise UI Concepts
+    <div className="portfolio-app ai-native-theme">
+      {/* Top AI-Native System Bar */}
+      <div className="ai-system-top-ribbon">
+        <div className="container ribbon-flex">
+          <div className="ribbon-left">
+            <span className="ribbon-terminal-tag">
+              <i className="fa-solid fa-microchip text-cyan"></i> AI-NATIVE DYNAMIC WORKSPACE v3.0
             </span>
-            <span className="studio-banner-text">
-              Previewing: <strong>{showStudio ? `Option: ${CONCEPTS_DATA.find((c) => c.id === activeConceptId)?.name}` : 'Current Live Layout'}</strong>
+            <span className="ribbon-status">
+              <span className="live-dot"></span> T+1 DTCC VERIFIED · PRODUCTION ARTIFACTS
             </span>
           </div>
 
-          <div className="studio-banner-pills">
-            {CONCEPTS_DATA.map((c) => (
-              <button
-                key={c.id}
-                type="button"
-                className={`banner-pill-btn ${showStudio && activeConceptId === c.id ? 'active' : ''}`}
-                onClick={() => handleSelectConcept(c.id)}
-              >
-                <span>{c.num}</span> {c.name.split(' ')[0]}
-              </button>
-            ))}
-
+          <div className="ribbon-right">
             <button
               type="button"
-              className={`banner-pill-btn pill-return ${!showStudio ? 'active' : ''}`}
+              className="ribbon-studio-btn"
               onClick={() => setShowStudio(!showStudio)}
+              title="Compare all 5 UI design prototypes"
             >
-              {showStudio ? (
-                <>
-                  <i className="fa-solid fa-eye"></i> View Current Live Layout
-                </>
-              ) : (
-                <>
-                  <i className="fa-solid fa-wand-magic-sparkles text-gold"></i> Open UI Studio
-                </>
-              )}
+              <i className="fa-solid fa-wand-magic-sparkles text-gold"></i>
+              {showStudio ? ' Exit Concept Studio' : ' Compare All 5 UI Concepts'}
             </button>
           </div>
         </div>
       </div>
 
-      {!showStudio ? (
-        <>
-          <Navbar scrolled={scrolled} activeSection={activeSection} />
-          <main>
-            {/* 01 — Hero */}
-            <Hero />
+      <Navbar scrolled={scrolled} activeSection={activeSection} />
 
-            {/* 02 — Interactive Q&A Console */}
-            <AskShubham />
-
-            {/* 03 — Selected Work */}
-            <SelectedWork />
-
-            {/* 04 — Journey & Core Capabilities */}
-            <JourneyAndCapabilities />
-
-            {/* Resume Call-to-Action */}
-            <ResumeCta />
-
-            {/* 05 — Contact */}
-            <Contact triggerToast={triggerToast} />
-          </main>
-
-          <Footer />
-          <RecruiterDock activeSection={activeSection} />
-          <BackToTop scrolled={scrolled} />
-        </>
-      ) : (
-        <main>
+      <main>
+        {showStudio ? (
           <UIConceptShowcase
-            activeConceptId={activeConceptId}
-            onSelectConcept={(id) => setActiveConceptId(id)}
+            activeConceptId="canvas"
+            onSelectConcept={() => {}}
             onCloseStudio={() => setShowStudio(false)}
-            onFinalizeSelection={handleFinalizeSelection}
+            onFinalizeSelection={(c) => triggerToast(`Building Option ${c.num}: ${c.name}!`)}
           />
-        </main>
-      )}
+        ) : (
+          <>
+            {/* 01 — Anchor Shim & Command Deck (Hero + System Prompt + Command Chips) */}
+            <span id="hero" className="anchor-shim"></span>
+            <CommandDeck
+              activeSheet={activeSheet}
+              onSelectSheet={handleSelectSheet}
+            />
+
+            {/* 02 — Dynamic Glowing Canvas Sheet (Projects Selected Deliverable) */}
+            <DynamicCanvasSheet
+              activeSheet={activeSheet}
+              onSelectSheet={handleSelectSheet}
+              triggerToast={triggerToast}
+            />
+          </>
+        )}
+      </main>
+
+      <Footer />
+      <RecruiterDock activeSection={activeSection} />
+      <BackToTop scrolled={scrolled} />
 
       <div className={`toast ${showToast ? 'show' : ''}`} role="alert" aria-live="assertive">
         <i className="fa-solid fa-circle-check"></i> {toastMsg}
@@ -194,4 +185,3 @@ export default function App() {
     </div>
   );
 }
-

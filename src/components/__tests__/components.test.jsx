@@ -767,7 +767,7 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
   });
 
   // =========================================================================
-  // 19. FULL APP INTEGRATION & SCROLL LISTENER
+  // 19. FULL APP INTEGRATION & OPTION 5 ARCHITECTURE
   // =========================================================================
   describe('Full App Integration', () => {
     test('renders complete application with toast container and scroll handler', () => {
@@ -775,7 +775,8 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       
       expect(container.querySelector('.portfolio-app')).toBeInTheDocument();
       expect(screen.getByRole('navigation')).toBeInTheDocument();
-      expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/TECHNO-FUNCTIONAL/i);
+      expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(/Shubham Sharma/i);
+      expect(screen.getByRole('heading', { level: 2, name: /Techno-Functional/i })).toBeInTheDocument();
 
       // Scroll trigger test
       act(() => {
@@ -787,29 +788,53 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       expect(container.querySelector('.navbar')).toHaveClass('scrolled');
     });
 
-    test('toggles Concise UI Studio and switches between 5 UI options', () => {
+    test('toggles Concept Studio and switches between 5 UI options', () => {
       render(<App />);
 
-      expect(screen.getByText(/5 Concise UI Concepts/i)).toBeInTheDocument();
+      // Top ribbon compare button
+      const studioBtn = screen.getByRole('button', { name: /Compare All 5 UI Concepts/i });
+      expect(studioBtn).toBeInTheDocument();
 
-      // Click Option 01 Bento
-      const bentoPill = screen.getByRole('button', { name: /01 Bento/i });
-      fireEvent.click(bentoPill);
+      fireEvent.click(studioBtn);
 
       expect(screen.getByText(/Select Your/i)).toBeInTheDocument();
+      expect(screen.getByRole('heading', { name: /AI-Native Dynamic Canvas & Command Deck/i })).toBeInTheDocument();
+
+      // Click Option 01 Bento
+      const bentoTab = screen.getByRole('tab', { name: /Bento Grid Command/i });
+      fireEvent.click(bentoTab);
+
       expect(screen.getByRole('heading', { name: /Bento Grid Command Dashboard/i })).toBeInTheDocument();
 
-      // Click Option 02 FinTech Workstation
-      const workstationTab = screen.getByRole('tab', { name: /FinTech Workstation/i });
-      fireEvent.click(workstationTab);
-
-      expect(screen.getByRole('heading', { name: /FinTech Workstation \/ OS Multi-Pane/i })).toBeInTheDocument();
-
       // Return to live layout
-      const returnBtn = screen.getByRole('button', { name: /View Current Live Layout/i });
+      const returnBtn = screen.getByRole('button', { name: /Back to Current View/i });
       fireEvent.click(returnBtn);
 
       expect(screen.getByRole('navigation')).toBeInTheDocument();
+    });
+
+    test('navigates through dynamic canvas sheets via command deck chips and center tabs', () => {
+      render(<App />);
+
+      // Verify Command Deck chips (role="tab")
+      const tradeChip = screen.getByRole('tab', { name: /\/\/ trade_lifecycle/i });
+      const initiativesChip = screen.getByRole('tab', { name: /\/\/ initiatives/i });
+      expect(tradeChip).toBeInTheDocument();
+      expect(initiativesChip).toBeInTheDocument();
+
+      // Switch to initiatives sheet
+      fireEvent.click(initiativesChip);
+
+      // Canvas updates with technical initiatives
+      expect(screen.getByText(/canvas\/technical_initiatives\.json/i)).toBeInTheDocument();
+      expect(screen.getByRole('heading', { name: /Technical Initiatives/i })).toBeInTheDocument();
+
+      // Switch to terminal sheet via command chip
+      const terminalChip = screen.getByRole('tab', { name: /\/\/ ask_terminal/i });
+      fireEvent.click(terminalChip);
+
+      // Verify Ask Shubham interactive terminal is projected in canvas
+      expect(screen.getByText(/canvas\/ask_shubham_cli\.sh/i)).toBeInTheDocument();
     });
   });
 
