@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import contactImg from '../assets/shubham_contact.jpg';
-import resumePdf from '../assets/Shubham_Sharma_Resume.pdf';
 import { PERSONAL_INFO } from '../data/portfolioData';
 
 export const RECRUITER_PRESETS = [
@@ -239,23 +238,34 @@ export default function Contact({ triggerToast, isEmbedded = false }) {
                 </div>
               </div>
 
-              {/* Resume Download CTA */}
-              <div className="contact-item-card resume-direct-card">
+              {/* GitHub Profile */}
+              <div className="contact-item-card">
                 <div className="contact-item-icon bg-purple">
-                  <i className="fa-solid fa-file-pdf"></i>
+                  <i className="fa-brands fa-github"></i>
                 </div>
                 <div className="contact-item-info">
-                  <span className="contact-lbl">Curriculum Vitae</span>
-                  <span className="contact-val">Comprehensive Profile PDF</span>
+                  <div className="contact-item-header-row">
+                    <span className="contact-lbl">GitHub Profile</span>
+                    <span className="verified-channel-tag text-purple">Code & Repos</span>
+                  </div>
+                  <a
+                    href={PERSONAL_INFO.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="contact-val"
+                  >
+                    github.com/shubhaam-shaarmaa
+                  </a>
                 </div>
                 <a
-                  href={resumePdf}
-                  download="Shubham_Sharma_Resume.pdf"
-                  className="contact-download-btn"
-                  title="Download Resume PDF"
-                  aria-label="Download Resume"
+                  href={PERSONAL_INFO.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="contact-action-link"
+                  title="Open GitHub profile"
+                  aria-label="Open GitHub"
                 >
-                  <i className="fa-solid fa-download"></i>
+                  <i className="fa-solid fa-arrow-up-right-from-square"></i>
                 </a>
               </div>
             </div>

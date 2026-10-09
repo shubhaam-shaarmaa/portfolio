@@ -430,6 +430,7 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       render(<Contact triggerToast={mockToast} />);
 
       expect(screen.getAllByText(/shub\.tech10@gmail\.com/i).length).toBeGreaterThan(0);
+      expect(screen.getByRole('link', { name: /github\.com\/shubhaam-shaarmaa/i })).toBeInTheDocument();
       
       const copyBtn = screen.getByRole('button', { name: /Copy email/i });
       fireEvent.click(copyBtn);
