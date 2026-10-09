@@ -11,7 +11,7 @@ export const COMMANDS = [
   { id: 'ai', cmd: '// ai_roadmap', label: 'AI Roadmap & Systems', icon: 'fa-brain', sheet: 'ai', badge: 'GenAI' },
   { id: 'credentials', cmd: '// credentials', label: 'Positioning & Certs', icon: 'fa-award', sheet: 'credentials', badge: 'Consulting' },
   { id: 'ask', cmd: '// ask_terminal', label: 'Ask Shubham Terminal', icon: 'fa-terminal', sheet: 'terminal', badge: 'Interactive' },
-  { id: 'contact', cmd: '// contact_shubham', label: 'Direct Message Form', icon: 'fa-paper-plane', sheet: 'contact', badge: 'shub.tech10' }
+  { id: 'contact', cmd: '// contact_shubham', label: 'Verified Contact Gateway', icon: 'fa-paper-plane', sheet: 'contact', badge: 'Verified' }
 ];
 
 export default function CommandDeck({ activeSheet, onSelectSheet }) {

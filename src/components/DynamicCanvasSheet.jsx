@@ -20,7 +20,7 @@ export const CANVAS_SHEETS = [
   { id: 'ai', num: '04', title: 'AI Roadmap & Systems', short: 'AI Systems', icon: 'fa-brain', fileTag: 'ai_architecture_roadmap.json', accent: 'purple' },
   { id: 'credentials', num: '05', title: 'Positioning & Credentials', short: 'Credentials', icon: 'fa-award', fileTag: 'positioning_and_certs.json', accent: 'gold' },
   { id: 'terminal', num: '06', title: 'Ask Shubham Terminal', short: 'Ask Terminal', icon: 'fa-terminal', fileTag: 'ask_shubham_cli.sh', accent: 'cyan' },
-  { id: 'contact', num: '07', title: 'Direct Contact Engine', short: 'Contact', icon: 'fa-paper-plane', fileTag: 'direct_contact_form.json', accent: 'emerald' }
+  { id: 'contact', num: '07', title: 'Verified Contact Gateway', short: 'Contact', icon: 'fa-paper-plane', fileTag: 'verified_contact_hub.json', accent: 'emerald' }
 ];
 
 export default function DynamicCanvasSheet({
@@ -155,16 +155,16 @@ export default function DynamicCanvasSheet({
               </div>
             )}
 
-            {/* Sheet 7: Direct Contact Engine */}
+            {/* Sheet 7: Verified Contact Gateway */}
             {activeSheet === 'contact' && (
               <div className="canvas-pane-wrapper fade-in" id="contact">
                 <div className="canvas-pane-intro">
-                  <div className="pane-mono-header">// direct_communications_gateway/</div>
+                  <div className="pane-mono-header">// verified_contact_gateway/</div>
                   <h3 className="pane-title">
-                    Direct Contact & <span>Role Opportunities</span>
+                    Direct Contact & <span>Verified Communications</span>
                   </h3>
                   <p className="pane-desc">
-                    Send a direct message forwarded to shub.tech10@gmail.com with zero intermediaries.
+                    Connect directly via authenticated email launchers (Gmail, Outlook, Mail app) or verified professional networks with zero spam intermediaries.
                   </p>
                 </div>
                 <Contact triggerToast={triggerToast} isEmbedded={true} />

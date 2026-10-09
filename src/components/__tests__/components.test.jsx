@@ -436,42 +436,60 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       expect(mockToast).toHaveBeenCalled();
     });
 
-    test('updates form inputs and submits message directly to shub.tech10@gmail.com with toast feedback', async () => {
+    test('updates form inputs and triggers authenticated email launcher with pre-filled parameters', () => {
       const mockToast = vi.fn();
-      window.fetch = vi.fn().mockResolvedValue({ ok: true, json: async () => ({ success: true }) });
+      const originalOpen = window.open;
+      window.open = vi.fn();
 
       render(<Contact triggerToast={mockToast} />);
 
-      const nameInput = screen.getByLabelText(/Full Name/i);
-      const emailInput = screen.getByLabelText(/Email Address/i);
-      const subjectInput = screen.getByLabelText(/Subject/i);
-      const msgInput = screen.getByLabelText(/Message/i);
-      const submitBtn = screen.getByRole('button', { name: /Send Direct Message/i });
+      const nameInput = screen.getByLabelText(/Your Name & Organization/i);
+      const subjectInput = screen.getByLabelText(/Subject Line/i);
+      const msgInput = screen.getByLabelText(/Message Details/i);
 
-      fireEvent.change(nameInput, { target: { value: 'Alex Morgan' } });
-      fireEvent.change(emailInput, { target: { value: 'alex@capitalpartners.com' } });
+      fireEvent.change(nameInput, { target: { value: 'Alex Morgan (Capital Partners)' } });
       fireEvent.change(subjectInput, { target: { value: 'Senior BA Discussion' } });
-      fireEvent.change(msgInput, { target: { value: 'We would love to discuss a Senior BA role.' } });
+      fireEvent.change(msgInput, { target: { value: 'We would love to discuss a Senior BA opportunity.' } });
 
-      await act(async () => {
-        fireEvent.click(submitBtn);
-      });
+      // Test Gmail dispatch button
+      const gmailBtn = screen.getByRole('button', { name: /Send via Gmail/i });
+      fireEvent.click(gmailBtn);
 
-      expect(window.fetch).toHaveBeenCalledWith(
-        expect.stringContaining('formsubmit.co'),
-        expect.objectContaining({ method: 'POST' })
+      expect(window.open).toHaveBeenCalledWith(
+        expect.stringContaining('mail.google.com/mail'),
+        '_blank',
+        expect.stringContaining('noopener')
       );
-      expect(mockToast).toHaveBeenCalledWith(expect.stringContaining('Your message has been sent directly'));
+      expect(mockToast).toHaveBeenCalledWith(expect.stringContaining('Opening Gmail'));
+
+      // Test Outlook dispatch button
+      const outlookBtn = screen.getByRole('button', { name: /Send via Outlook/i });
+      fireEvent.click(outlookBtn);
+
+      expect(window.open).toHaveBeenCalledWith(
+        expect.stringContaining('outlook.live.com'),
+        '_blank',
+        expect.stringContaining('noopener')
+      );
+      expect(mockToast).toHaveBeenCalledWith(expect.stringContaining('Opening Outlook'));
+
+      // Test Copy Draft button
+      const copyDraftBtn = screen.getByRole('button', { name: /Copy Draft/i });
+      fireEvent.click(copyDraftBtn);
+      expect(mockToast).toHaveBeenCalled();
+
+      window.open = originalOpen;
     });
 
     test('auto-populates subject and message when recruiter preset chip is selected', () => {
       const mockToast = vi.fn();
       render(<Contact triggerToast={mockToast} />);
 
-      const presetChip = screen.getByRole('button', { name: /Senior BA Role/i });
+      const presetChip = screen.getByRole('button', { name: /Capital Markets Project/i });
       fireEvent.click(presetChip);
 
-      expect(screen.getByLabelText(/Subject/i)).toHaveValue('Senior Business Analyst Opportunity — Techno-Functional');
+      expect(screen.getByLabelText(/Subject Line/i)).toHaveValue('Capital Markets Domain Project / Consulting');
+      expect(screen.getByLabelText(/Message Details/i).value).toContain('Middle-Office Trade Lifecycle');
       expect(mockToast).toHaveBeenCalledWith(expect.stringContaining('Template loaded'));
     });
   });
@@ -689,7 +707,7 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
       expect(screen.getByRole('heading', { name: /Interactive Q&A Terminal Console/i })).toBeInTheDocument();
 
       rerender(<DynamicCanvasSheet activeSheet="contact" onSelectSheet={vi.fn()} triggerToast={vi.fn()} />);
-      expect(screen.getByRole('heading', { name: /Direct Contact & Role Opportunities/i })).toBeInTheDocument();
+      expect(screen.getByRole('heading', { name: /Direct Contact & Verified Communications/i })).toBeInTheDocument();
     });
   });
 
@@ -762,7 +780,7 @@ describe('Techno-Functional Portfolio Comprehensive Regression Suite', () => {
         window.location.hash = '#contact';
         window.dispatchEvent(new Event('hashchange'));
       });
-      expect(screen.getByText(/\/\/\s*direct_contact_form\.json/i)).toBeInTheDocument();
+      expect(screen.getByText(/\/\/\s*verified_contact_hub\.json/i)).toBeInTheDocument();
     });
   });
 
