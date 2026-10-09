@@ -198,6 +198,37 @@ export default function Contact({ triggerToast, isEmbedded = false }) {
                 </a>
               </div>
 
+              {/* GitHub Profile */}
+              <div className="contact-item-card">
+                <div className="contact-item-icon bg-purple">
+                  <i className="fa-brands fa-github"></i>
+                </div>
+                <div className="contact-item-info">
+                  <div className="contact-item-header-row">
+                    <span className="contact-lbl">GitHub Profile</span>
+                    <span className="verified-channel-tag text-purple">Code & Repos</span>
+                  </div>
+                  <a
+                    href={PERSONAL_INFO.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="contact-val"
+                  >
+                    github.com/shubhaam-shaarmaa
+                  </a>
+                </div>
+                <a
+                  href={PERSONAL_INFO.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="contact-action-link"
+                  title="Open GitHub profile"
+                  aria-label="Open GitHub"
+                >
+                  <i className="fa-solid fa-arrow-up-right-from-square"></i>
+                </a>
+              </div>
+
               {/* Direct Email */}
               <div className="contact-item-card">
                 <div className="contact-item-icon bg-cyan">
@@ -236,37 +267,6 @@ export default function Contact({ triggerToast, isEmbedded = false }) {
                     Remote & Hybrid Ready · Aligned with US & EMEA Trading Hours
                   </span>
                 </div>
-              </div>
-
-              {/* GitHub Profile */}
-              <div className="contact-item-card">
-                <div className="contact-item-icon bg-purple">
-                  <i className="fa-brands fa-github"></i>
-                </div>
-                <div className="contact-item-info">
-                  <div className="contact-item-header-row">
-                    <span className="contact-lbl">GitHub Profile</span>
-                    <span className="verified-channel-tag text-purple">Code & Repos</span>
-                  </div>
-                  <a
-                    href={PERSONAL_INFO.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="contact-val"
-                  >
-                    github.com/shubhaam-shaarmaa
-                  </a>
-                </div>
-                <a
-                  href={PERSONAL_INFO.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="contact-action-link"
-                  title="Open GitHub profile"
-                  aria-label="Open GitHub"
-                >
-                  <i className="fa-solid fa-arrow-up-right-from-square"></i>
-                </a>
               </div>
             </div>
           </div>
