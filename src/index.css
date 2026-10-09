@@ -2407,21 +2407,6 @@ input, textarea, select {
   margin-bottom: 0.35rem;
 }
 
-.composer-security-pill {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.45rem;
-  padding: 0.3rem 0.75rem;
-  border-radius: var(--radius-full);
-  background: var(--accent-emerald-dim);
-  border: 1px solid var(--accent-emerald-border);
-  color: var(--accent-emerald);
-  font-size: 0.75rem;
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
 .contact-item-header-row {
   display: flex;
   align-items: center;
@@ -2591,10 +2576,6 @@ input, textarea, select {
   color: #ffffff;
   transform: translateY(-1px);
   box-shadow: 0 4px 14px rgba(245, 158, 11, 0.25);
-}
-
-.composer-guarantee-note {
-  font-size: 0.78rem;
 }
 
 @media (max-width: 640px) {

@@ -278,9 +278,6 @@ export default function Contact({ triggerToast, isEmbedded = false }) {
                 <h3 className="form-card-title">
                   <i className="fa-solid fa-paper-plane text-cyan"></i> Direct Email Composer
                 </h3>
-                <span className="composer-security-pill">
-                  <i className="fa-solid fa-shield-halved text-emerald"></i> 100% Anti-Spam Verified
-                </span>
               </div>
 
               <p className="form-card-subtitle">
@@ -390,12 +387,6 @@ export default function Contact({ triggerToast, isEmbedded = false }) {
                       <i className="fa-regular fa-copy"></i>
                       <span>Copy Draft</span>
                     </button>
-                  </div>
-
-                  <div className="composer-guarantee-note mt-2 text-center">
-                    <span className="text-xs text-dim">
-                      <i className="fa-solid fa-lock text-cyan"></i> Sent from your verified email account to <strong>{targetEmail}</strong>. Zero bots, zero spam.
-                    </span>
                   </div>
                 </div>
               </div>
