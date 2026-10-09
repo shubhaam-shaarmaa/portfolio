@@ -19,10 +19,10 @@ export const AI_ROADMAP_PROJECTS = [
     projectTitle: "BFSI Research Assistant",
     mapping: "RAG → Research Assistant",
     purpose: "Research financial-services documents, fund filings, and regulatory guidelines with source-grounded answers and exact citations.",
-    status: "CURRENTLY BUILDING",
-    statusBadge: "building",
-    plannedStack: ["FastAPI", "PostgreSQL", "pgvector", "Jina AI", "Groq", "Next.js"],
-    keyMilestone: "Multi-document semantic retrieval pipeline with citation verification and hallucination scoring.",
+    status: "COMPLETED",
+    statusBadge: "completed",
+    plannedStack: ["Python 3.11+", "FastAPI", "ChromaDB", "Qdrant", "BM25", "Cross-Encoder", "React 19"],
+    keyMilestone: "Multi-document hybrid retrieval pipeline (RRF) with clause-level citation verification, 33 unit tests, and golden benchmark evals.",
     deliverableType: "Document Question-Answering Engine"
   },
   {

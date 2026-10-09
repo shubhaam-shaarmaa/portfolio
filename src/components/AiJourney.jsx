@@ -49,19 +49,23 @@ export default function AiJourney({ isEmbedded = false }) {
         {/* 8-Project Capability Mapping Grid */}
         <div className="ai-cards-grid mt-4">
           {AI_ROADMAP_PROJECTS.map((item) => {
+            const isCompleted = item.status === 'COMPLETED';
             const isBuilding = item.status === 'CURRENTLY BUILDING';
+            const cardClass = isCompleted ? 'card-completed' : isBuilding ? 'card-active-building' : 'card-planned';
+            const pillClass = isCompleted ? 'pill-completed' : isBuilding ? 'pill-building' : 'pill-planned';
 
             return (
               <div
                 key={item.step}
-                className={`ai-project-card ${isBuilding ? 'card-active-building' : 'card-planned'}`}
+                className={`ai-project-card ${cardClass}`}
               >
                 <div className="ai-card-top">
                   <div className="ai-card-step-badge">
                     <span className="badge-step-num">Step {item.step}</span>
                     <span className="badge-cap-name">{item.capability}</span>
                   </div>
-                  <span className={`ai-status-pill ${isBuilding ? 'pill-building' : 'pill-planned'}`}>
+                  <span className={`ai-status-pill ${pillClass}`}>
+                    {isCompleted && <i className="fa-solid fa-circle-check text-emerald" style={{ marginRight: '4px' }}></i>}
                     {isBuilding && <span className="status-pulse-dot"></span>}
                     {item.status}
                   </span>
@@ -130,7 +134,7 @@ export default function AiJourney({ isEmbedded = false }) {
           <div className="arch-disclaimer-strip mt-3">
             <i className="fa-solid fa-circle-info text-dim"></i>
             <span>
-              Credibility Note: This diagram represents a structured engineering roadmap currently being assembled capability by capability. Active development is underway on Step 01 (BFSI Research Assistant RAG Pipeline).
+              Credibility Note: Step 01 (BFSI Research Assistant RAG Pipeline) is fully built, tested, and published to GitHub. Active progression is now underway toward Step 02 (Banking Support Agent).
             </span>
           </div>
         </div>
